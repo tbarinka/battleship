@@ -1,5 +1,5 @@
-const Ship = require('../appLogic.js');
-const Gameboard = require('../appLogic.js');
+const Ship = require('../ship.js');
+const Gameboard = require('../gameboard.js');
 
 //tests for Ship class
 test('ship name is Bob', () => {
@@ -17,3 +17,7 @@ test('ship.hits == []', () => {
 test('ship is sunk', () => {
   expect(new Ship('Bob', 1).hit()).toEqual('sunk!');
 });
+
+test('gameboard.receiveAttack returns "test"', () => {
+  expect(new Gameboard("input").receiveAttack()).toEqual("test")
+})
