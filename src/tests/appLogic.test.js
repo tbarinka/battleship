@@ -18,6 +18,10 @@ test('ship is sunk', () => {
   expect(new Ship('Bob', 1).hit()).toEqual('sunk!');
 });
 
-test('gameboard.receiveAttack returns "test"', () => {
-  expect(new Gameboard("input").receiveAttack()).toEqual("test")
+test('gameboard.grid yields array containing J10', () => {
+  expect(new Gameboard("input").grid[99]).toEqual(expect.objectContaining({
+    X: "J",
+    Y: 10,
+    isHit: false,
+  }));
 })
