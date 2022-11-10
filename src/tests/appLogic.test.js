@@ -1,5 +1,7 @@
 import { Ship } from '../ship.js';
 import { Gameboard } from '../gameboard.js';
+let board = new Gameboard();
+board.populateShip('Bob', 1, 'A', 1);
 
 //tests for Ship class
 test('ship name is Bob', () => {
@@ -33,13 +35,6 @@ test('gameboard.grid yields array containing J10', () => {
     X: "J",
     Y: 10,
     isHit: false,
-  }));
-})
-test('gameboard.receiveAttack(C, 8) returns true', () => {
-  expect(new Gameboard().receiveAttack('C', 8)).toEqual(expect.objectContaining({
-    X: "C",
-    Y: 8,
-    isHit: true,
   }));
 })
 
@@ -161,12 +156,11 @@ test('populate ship at C1-A1 with size of 3 squares pointing west', () => {
 
 
 
-test.skip('receive attack at A1 yields [hit]', () => {
-  expect(new Gameboard().populateShip('Bob', 1, 'A', 1).receiveAttack("A", 1))
+test('receive attack at A1 yields ship with 1 [hit]', () => {
+  expect(board.receiveAttack("A", 1))
     .toEqual(expect.objectContaining({
     xStart: "A",
     yStart: 1,
     hits: ["hit"]
-    //containsShip: true,
   }))
 })

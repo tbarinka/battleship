@@ -19,11 +19,11 @@ class Gameboard {
     receiveAttack(xLetter, yNum) {
         let found = this.grid.find(square => (square.X == xLetter && square.Y == yNum));
         found.isHit = true;
-        if (this.ship) {
-            this.ship.hit();
-            return this.ship;
+        if (found.containsShip == true) {
+            found.ship.hit();
+            return found.ship;
         }
-        return found;
+        return found.ship;
     }
     makeGrid() {
         let grid = [];
@@ -77,5 +77,6 @@ class Gameboard {
         //add some code to account for size > 1 and direction
     }
 }
+
 
 export { Gameboard }
