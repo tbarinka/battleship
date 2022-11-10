@@ -1,7 +1,5 @@
 import { Ship } from '../ship.js';
 import { Gameboard } from '../gameboard.js';
-//const Ship = require('../ship.js');
-//const Gameboard = require('../gameboard.js');
 
 //tests for Ship class
 test('ship name is Bob', () => {
@@ -9,9 +7,6 @@ test('ship name is Bob', () => {
 });
 test('ship length is 3', () => {
   expect(new Ship('Bob', 3).size).toBe(3);
-});
-test('ship.hits == [hit]', () => {
-  expect(new Ship('Bob', 3).hit()).toEqual(['hit']);
 });
 test('ship.hits == []', () => {
   expect(new Ship('Bob', 3).hits).toEqual([]);
@@ -24,10 +19,9 @@ test('ship is at A1', () => {
     X: "A",
     Y: 1,
     isHit: false,
-    containsShip: true,
-    shipName: 'Bob',
   }));
 });
+
 
 test.skip('ship is at A1-A3', () => {
   //put some code in here
@@ -47,4 +41,30 @@ test('gameboard.receiveAttack(C, 8) returns true', () => {
     Y: 8,
     isHit: true,
   }));
+})
+
+
+
+
+
+test.skip('gameboard.populateShips() yields ship object', () => {
+  expect(new Gameboard().populateShip('Bob', 1, 'A', 1)).toEqual(expect.objectContaining({
+    name: "Bob",
+    xStart: "A",
+    yStart: 1,
+    hits: [],
+    //containsShip: true,
+  }))
+})
+test.skip('gameboard.populateShips() yields ship at A1', () => {
+  expect(new Gameboard().populateShip('Bob', 1, 'A', 1)).toEqual(expect.objectContaining({
+    X: "A",
+    Y: 1,
+    containsShip: true
+    //containsShip: true,
+  }))
+})
+
+test.skip('receive attack at A1 yields [hit!]', () => {
+  expect(new Gameboard())
 })

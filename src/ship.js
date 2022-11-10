@@ -15,7 +15,7 @@ class Ship {
     if (this.hits.length == this.size) {
       return this.isSunk();
     } else {
-      return this.hits;
+      return this.hit;
     }
   }
   isSunk() {
@@ -24,7 +24,7 @@ class Ship {
   calculatePosition() {
     let found = board.grid.find(square => (square.X == this.xStart && square.Y == this.yStart));
     found.containsShip = true;
-    found.shipName = this.name;
+    found.ship = this;
 
     //add some code to account for size and direction
 
@@ -32,5 +32,4 @@ class Ship {
   }
   } 
 
-//module.exports = Ship;
 export { Ship }
