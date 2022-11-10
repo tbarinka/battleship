@@ -23,7 +23,7 @@ class Ship {
   calculatePosition() {
     let found = board.grid.find(square => (square.X == this.xStart && square.Y == this.yStart));
     found.containsShip = true;
-    found.shipName = 'Bob';
+    found.shipName = this.name;
     return found; 
   }
 } module.exports = Ship;
