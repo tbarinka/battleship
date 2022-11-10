@@ -4,11 +4,7 @@ class Square {
         this.Y = Y;
         this.isHit = false;
     }
-    checkSquare(square, xLetter, yNum) {
-        return (square.X == xLetter && square.Y == yNum)
-    }
 }
-
 
 class Gameboard {
     constructor(input) {
