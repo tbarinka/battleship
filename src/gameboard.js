@@ -1,11 +1,12 @@
-const Ship = require('./ship.js');
+import { Ship } from './ship.js';
 
 class Square {
     constructor(X, Y) {
         this.X = X;
         this.Y = Y;
         this.isHit = false;
-        this.ship = null;
+        this.containsShip = false;
+        this.shipName = null;
     }
 }
 
@@ -18,7 +19,7 @@ class Gameboard {
     receiveAttack(xLetter, yNum) {
         let found = this.grid.find(square => (square.X == xLetter && square.Y == yNum));
         found.isHit = true;
-        if (this.ship) {
+        if (this.containsShip) {
 
         }
         return found;
@@ -35,4 +36,4 @@ class Gameboard {
     }
 }
 
-module.exports = Gameboard;
+export { Gameboard }

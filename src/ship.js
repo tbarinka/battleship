@@ -1,4 +1,5 @@
-const Gameboard = require('./gameboard.js');
+import { Gameboard } from './gameboard.js';
+//const Gameboard = require('./gameboard.js');
 let board = new Gameboard();
 
 class Ship {
@@ -31,4 +32,5 @@ class Ship {
   }
   } 
 
-  module.exports = Ship;
+//module.exports = Ship;
+export { Ship }
