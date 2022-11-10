@@ -43,10 +43,34 @@ class Gameboard {
         startingSquare.ship = newShip;
         squaresContainingNewShip.push(startingSquare);
         while (size > 1) {
-            if (direction == "up") {
-                let newYStart = yStart + 1;
-                let newSize = size - 1;
-                this.populateShip(name, newSize, xStart, newYStart, direction);
+            if (direction == "north") {
+                yStart = yStart + 1;
+                let square = this.grid.find(square => (square.X == newShip.xStart && square.Y == yStart))
+                square.containsShip = true;
+                square.ship = newShip;
+                squaresContainingNewShip.push(square)
+                size = size - 1;
+            } else if (direction == "south") {
+                yStart = yStart - 1;
+                let square = this.grid.find(square => (square.X == newShip.xStart && square.Y == yStart))
+                square.containsShip = true;
+                square.ship = newShip;
+                squaresContainingNewShip.push(square)
+                size = size - 1;
+            } else if (direction == "east") {
+                xStart = this.xAxis[this.xAxis.indexOf(xStart) + 1];
+                let square = this.grid.find(square => (square.X == xStart && square.Y == newShip.yStart))
+                square.containsShip = true;
+                square.ship = newShip;
+                squaresContainingNewShip.push(square)
+                size = size - 1;
+            } else if (direction == "west") {
+                xStart = this.xAxis[this.xAxis.indexOf(xStart) - 1];
+                let square = this.grid.find(square => (square.X == xStart && square.Y == newShip.yStart))
+                square.containsShip = true;
+                square.ship = newShip;
+                squaresContainingNewShip.push(square)
+                size = size - 1;
             }
         }
         return squaresContainingNewShip;

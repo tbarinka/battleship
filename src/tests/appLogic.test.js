@@ -44,8 +44,8 @@ test('gameboard.receiveAttack(C, 8) returns true', () => {
 })
 
 
-
-test('gameboard.populateShips() yields array with A1 square object as only element', () => {
+//Testing Gameboard.populateShip() method
+test('populates ship at A1 with size of 1 square', () => {
   expect(new Gameboard().populateShip('Bob', 1, 'A', 1)).toEqual(expect.arrayContaining(
     [{
       X: "A",
@@ -57,24 +57,109 @@ test('gameboard.populateShips() yields array with A1 square object as only eleme
   ))
 });
 
-test.skip('gameboard.populateShips() yields array with A1 square & A2 square as sole two elements', () => {
-  expect(new Gameboard().populateShip('Bob', 2, 'A', 1, 'up')).toEqual(expect.arrayContaining(
+test('populate ship at A3-A1 with size of 3 squares pointing south', () => {
+  expect(new Gameboard().populateShip('Bob', 3, 'A', 3, 'south')).toEqual(expect.arrayContaining(
     [{
       X: "A",
-      Y: 1,
+      Y: 3,
       containsShip: true,
       isHit: false,
-      ship: { "hits": [], "name": "Bob", "size": 2, "xStart": "A", "yStart": 1 }
+      ship: { "hits": [], "name": "Bob", "size": 3, "xStart": "A", "yStart": 3 }
     },
     {
       X: "A",
       Y: 2,
       containsShip: true,
       isHit: false,
-      ship: { "hits": [], "name": "Bob", "size": 2, "xStart": "A", "yStart": 1 }
+      ship: { "hits": [], "name": "Bob", "size": 3, "xStart": "A", "yStart": 3 }
+    },
+    {
+      X: "A",
+      Y: 1,
+      containsShip: true,
+      isHit: false,
+      ship: { "hits": [], "name": "Bob", "size": 3, "xStart": "A", "yStart": 3 }
     }]
   ))
 });
+test('populate ship at A1-A3 with size of 3 squares pointing north', () => {
+  expect(new Gameboard().populateShip('Bob', 3, 'A', 1, 'north')).toEqual(expect.arrayContaining(
+    [{
+      X: "A",
+      Y: 1,
+      containsShip: true,
+      isHit: false,
+      ship: { "hits": [], "name": "Bob", "size": 3, "xStart": "A", "yStart": 1 }
+    },
+    {
+      X: "A",
+      Y: 2,
+      containsShip: true,
+      isHit: false,
+      ship: { "hits": [], "name": "Bob", "size": 3, "xStart": "A", "yStart": 1 }
+    },
+    {
+      X: "A",
+      Y: 3,
+      containsShip: true,
+      isHit: false,
+      ship: { "hits": [], "name": "Bob", "size": 3, "xStart": "A", "yStart": 1 }
+    }]
+  ))
+});
+
+test('populate ship at A1-C1 with size of 3 squares pointing east', () => {
+  expect(new Gameboard().populateShip('Bob', 3, 'A', 1, 'east')).toEqual(expect.arrayContaining(
+    [{
+      X: "A",
+      Y: 1,
+      containsShip: true,
+      isHit: false,
+      ship: { "hits": [], "name": "Bob", "size": 3, "xStart": "A", "yStart": 1 }
+    },
+    {
+      X: "B",
+      Y: 1,
+      containsShip: true,
+      isHit: false,
+      ship: { "hits": [], "name": "Bob", "size": 3, "xStart": "A", "yStart": 1 }
+    },
+    {
+      X: "C",
+      Y: 1,
+      containsShip: true,
+      isHit: false,
+      ship: { "hits": [], "name": "Bob", "size": 3, "xStart": "A", "yStart": 1 }
+    }]
+  ))
+});
+test('populate ship at C1-A1 with size of 3 squares pointing west', () => {
+  expect(new Gameboard().populateShip('Bob', 3, 'C', 1, 'west')).toEqual(expect.arrayContaining(
+    [{
+      X: "C",
+      Y: 1,
+      containsShip: true,
+      isHit: false,
+      ship: { "hits": [], "name": "Bob", "size": 3, "xStart": "C", "yStart": 1 }
+    },
+    {
+      X: "B",
+      Y: 1,
+      containsShip: true,
+      isHit: false,
+      ship: { "hits": [], "name": "Bob", "size": 3, "xStart": "C", "yStart": 1 }
+    },
+    {
+      X: "A",
+      Y: 1,
+      containsShip: true,
+      isHit: false,
+      ship: { "hits": [], "name": "Bob", "size": 3, "xStart": "C", "yStart": 1 }
+    }]
+  ))
+});
+
+
 
 test.skip('receive attack at A1 yields [hit]', () => {
   expect(new Gameboard().populateShip('Bob', 1, 'A', 1).receiveAttack("A", 1))
