@@ -21,6 +21,7 @@ class Gameboard {
         found.isHit = true;
         if (this.ship) {
             this.ship.hit();
+            return this.ship;
         }
         return found;
     }
@@ -34,13 +35,22 @@ class Gameboard {
         }
         return grid;
     }
-    populateShip(name, size, xStart, yStart) {
+    populateShip(name, size, xStart, yStart, direction) {
         let newShip = new Ship(name, size, xStart, yStart);
         let startingSquare = this.grid.find(square => (square.X == newShip.xStart && square.Y == newShip.yStart));
+        let squaresContainingNewShip = [];
         startingSquare.containsShip = true;
         startingSquare.ship = newShip;
+        squaresContainingNewShip.push(startingSquare);
+        while (size > 1) {
+            if (direction == "up") {
+                let newYStart = yStart + 1;
+                let newSize = size - 1;
+                this.populateShip(name, newSize, xStart, newYStart, direction);
+            }
+        }
+        return squaresContainingNewShip;
         //add some code to account for size > 1 and direction
-        return startingSquare.ship;
     }
 }
 
