@@ -4,7 +4,11 @@ class Square {
         this.Y = Y;
         this.isHit = false;
     }
+    checkSquare(square, xLetter, yNum) {
+        return (square.X == xLetter && square.Y == yNum)
+    }
 }
+
 
 class Gameboard {
     constructor(input) {
@@ -12,8 +16,10 @@ class Gameboard {
         this.yAxis = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         this.grid = this.makeGrid()
     }
-    receiveAttack(xNum, yNum) {
-        
+    receiveAttack(xLetter, yNum) {
+        let found = this.grid.find(square => (square.X == xLetter && square.Y == yNum));
+        found.isHit = true;
+        return found;
     }
     makeGrid() {
         let grid = [];

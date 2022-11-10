@@ -25,3 +25,10 @@ test('gameboard.grid yields array containing J10', () => {
     isHit: false,
   }));
 })
+test('gameboard.receiveAttack(C, 8) returns true', () => {
+  expect(new Gameboard("input").receiveAttack('C', 8)).toEqual(expect.objectContaining({
+    X: "C",
+    Y: 8,
+    isHit: true,
+  }));
+})
