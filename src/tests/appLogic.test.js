@@ -27,6 +27,10 @@ test('ship is at A1', () => {
   }));
 });
 
+test.skip('ship is at A1-A3', () => {
+  //put some code in here
+})
+
 
 test('gameboard.grid yields array containing J10', () => {
   expect(new Gameboard().grid[99]).toEqual(expect.objectContaining({

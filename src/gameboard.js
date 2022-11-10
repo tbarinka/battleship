@@ -5,8 +5,7 @@ class Square {
         this.X = X;
         this.Y = Y;
         this.isHit = false;
-        this.containsShip = false;
-        this.shipName = null;
+        this.ship = null;
     }
 }
 
@@ -19,7 +18,7 @@ class Gameboard {
     receiveAttack(xLetter, yNum) {
         let found = this.grid.find(square => (square.X == xLetter && square.Y == yNum));
         found.isHit = true;
-        if (this.containsShip) {
+        if (this.ship) {
 
         }
         return found;
