@@ -6,7 +6,15 @@ class AI {
         this.board = new Gameboard();
         this.opponent = opponent;
     }
-    makeMove(opponent, x, y) {
+    makeMove(opponent) {
+        let array = this.randomParameter(opponent);
+        let x = array[0];
+        let y = array[1];
+        opponent.board.receiveAttack(x, y);
+        let hitSquare = opponent.board.grid.find(square => (square.X == x && square.Y == y));
+        return hitSquare;
+    }
+    makeMoveNonRandom(opponent, x, y) {
         opponent.board.receiveAttack(x, y);
         let hitSquare = opponent.board.grid.find(square => (square.X == x && square.Y == y));
         return hitSquare;
