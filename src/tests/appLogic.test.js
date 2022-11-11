@@ -147,7 +147,7 @@ test('receiveAttack at A1 yields ship with 1 [hit]', () => {
 });
 
 //testing player makeMove
-test('player.board.receiveAttack yields a hit', () => {
+test('ai.board.receiveAttack yields a hit via player.makeMove()', () => {
   let player = new Player('John');
   let ai = new AI();
   //ai.board.populateShip(1, 'A', 1);
@@ -158,7 +158,7 @@ test('player.board.receiveAttack yields a hit', () => {
     isHit: true,
   }));
 });
-test('player.board.receiveAttack sinks AI ship', () => {
+test('ai.board.receiveAttack sinks AI ship via player.makeMove()', () => {
   let player = new Player('John');
   let ai = new AI();
   ai.board.populateShip(1, 'A', 1);
@@ -168,6 +168,21 @@ test('player.board.receiveAttack sinks AI ship', () => {
 });
 
 //testing AI makeMove
-test.skip('.board.receiveAttack yields a hit', () => {
-
+test('player.board.receiveAttack yields a hit via ai.makeMove()', () => {
+  let player = new Player('John');
+  let ai = new AI();
+  ai.makeMove(player, 'A', 1);
+  expect(player.board.grid.find(square => (square.X == 'A' && square.Y == 1))).toEqual(expect.objectContaining({
+    X: 'A',
+    Y: 1,
+    isHit: true,
+  }));
+});
+test('player.board.receiveAttack sinks player ship via ai.makeMove()', () => {
+  let player = new Player('John');
+  let ai = new AI();
+  player.board.populateShip(1, 'A', 1);
+  ai.makeMove(player, 'A', 1);
+  let hitSquare = player.board.grid.find(square => (square.X == 'A' && square.Y == 1))
+  expect(hitSquare.ship.isSunk()).toBe('sunk!');
 })
