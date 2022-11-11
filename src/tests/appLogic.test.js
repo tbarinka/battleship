@@ -1,5 +1,8 @@
 import { Ship } from '../ship.js';
 import { Gameboard } from '../gameboard.js';
+import { Player } from '../playerControls/player.js';
+import { AI } from '../playerControls/ai.js';
+
 let board = new Gameboard();
 board.populateShip(1, 'A', 1);
 
