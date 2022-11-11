@@ -38,7 +38,7 @@ class Gameboard {
     populateShip(size, xStart, yStart, direction) {
         if (size > 1) {
             if (direction == "north") {
-                if (yStart > ((9 - size) + 1)) {
+                if (yStart > (9 - size + 1)) {
                     return 'overflow!'
                 }
                 //if size is two, start at 8 or below
@@ -46,6 +46,9 @@ class Gameboard {
                 //if size is four, start at 6 or below
             }
             if (direction == "south") {
+                if (yStart < (0 + size - 1)) {
+                    return 'overflow!'
+                }
             }
         }
         

@@ -137,9 +137,18 @@ test('populate ship at C1-A1 with size of 3 squares pointing west', () => {
     }]
   ))
 });
-test('return "overflow!" for a ship that overflows the grid', () => {
+test('return "overflow!" for a ship that overflows north side of grid', () => {
   expect(new Gameboard().populateShip(3, 'A', '8', "north")).toEqual('overflow!');
 })
+test('return "overflow!" for a ship that overflows south side of grid', () => {
+  expect(new Gameboard().populateShip(3, 'A', '1', "south")).toEqual('overflow!');
+})
+test('return "overflow!" for a ship that overflows west side of grid', () => {
+  expect(new Gameboard().populateShip(3, 'A', '1', "west")).toEqual('overflow!');
+});
+test('return "overflow!" for a ship that overflows east side of grid', () => {
+  expect(new Gameboard().populateShip(3, 'H', '1', "east")).toEqual('overflow!');
+});
 
 test('receiveAttack at A1 yields ship with 1 [hit]', () => {
   expect(board.receiveAttack("A", 1))
