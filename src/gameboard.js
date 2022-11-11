@@ -35,8 +35,8 @@ class Gameboard {
         }
         return grid;
     }
-    populateShip(name, size, xStart, yStart, direction) {
-        let newShip = new Ship(name, size, xStart, yStart);
+    populateShip(size, xStart, yStart, direction) {
+        let newShip = new Ship(size, xStart, yStart);
         let startingSquare = this.grid.find(square => (square.X == newShip.xStart && square.Y == newShip.yStart));
         let squaresContainingNewShip = [];
         startingSquare.containsShip = true;

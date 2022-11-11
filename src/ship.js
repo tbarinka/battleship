@@ -1,10 +1,8 @@
 import { Gameboard } from './gameboard.js';
 //const Gameboard = require('./gameboard.js');
-let board = new Gameboard();
 
 class Ship {
-  constructor(name, size, xStart, yStart, direction) {
-    this.name = name
+  constructor(size, xStart, yStart, direction) {
     this.size = size
     this.hits = []
     this.xStart = xStart
@@ -20,15 +18,6 @@ class Ship {
   }
   isSunk() {
     return 'sunk!'
-  }
-  calculatePosition() {
-    let found = board.grid.find(square => (square.X == this.xStart && square.Y == this.yStart));
-    found.containsShip = true;
-    found.ship = this;
-
-    //add some code to account for size and direction
-
-    return found; 
   }
   } 
 
