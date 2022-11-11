@@ -186,3 +186,14 @@ test('player.board.receiveAttack sinks player ship via ai.makeMove()', () => {
   let hitSquare = player.board.grid.find(square => (square.X == 'A' && square.Y == 1))
   expect(hitSquare.ship.isSunk()).toBe('sunk!');
 })
+
+//testing AI.randomParameter() for executing makeMove
+test('AI.randomParameter() yields an array with a letter at arr[0] and number at arr[1]', () => {
+  let ai = new AI();
+  let player = new Player();
+  let array = ai.randomParameter(player);
+  let boolean;
+  if (typeof array[0] === 'string') { boolean = true }
+  //expect(array).toEqual(2);
+  expect(array).toEqual(null);
+})

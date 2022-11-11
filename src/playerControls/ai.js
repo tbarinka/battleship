@@ -11,6 +11,12 @@ class AI {
         let hitSquare = opponent.board.grid.find(square => (square.X == x && square.Y == y));
         return hitSquare;
     }
+    randomParameter(opponent) {
+        let x = opponent.board.xAxis[Math.trunc(Math.random() * 9)];
+        let y = opponent.board.yAxis[Math.trunc(Math.random() * 9)];
+        //let square = opponent.board.grid.find(square => (square.X == x && square.Y == y));
+        return [x, y];
+    }
 }
 
 export { AI }
