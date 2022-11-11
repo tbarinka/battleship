@@ -16,13 +16,6 @@ test('ship.hits == []', () => {
 test('ship is sunk', () => {
   expect(new Ship(1).hit()).toEqual('sunk!');
 });
-
-
-test.skip('ship is at A1-A3', () => {
-  //put some code in here
-})
-
-
 test('gameboard.grid yields array containing J10', () => {
   expect(new Gameboard().grid[99]).toEqual(expect.objectContaining({
     X: "J",
@@ -144,8 +137,7 @@ test('populate ship at C1-A1 with size of 3 squares pointing west', () => {
     }]
   ))
 });
-
-test('receive attack at A1 yields ship with 1 [hit]', () => {
+test('receiveAttack at A1 yields ship with 1 [hit]', () => {
   expect(board.receiveAttack("A", 1))
     .toEqual(expect.objectContaining({
       xStart: "A",
@@ -154,12 +146,13 @@ test('receive attack at A1 yields ship with 1 [hit]', () => {
     }))
 });
 
-//testing player and AI functions
+//testing player makeMove
 test('player.board.receiveAttack yields a hit', () => {
   let player = new Player('John');
   let ai = new AI();
-  ai.board.populateShip(1, 'A', 1);
-  expect(player.makeMove(ai, 'A', 1)).toEqual(expect.objectContaining({
+  //ai.board.populateShip(1, 'A', 1);
+  player.makeMove(ai, 'A', 1);
+  expect(ai.board.grid.find(square => (square.X == 'A' && square.Y == 1))).toEqual(expect.objectContaining({
     X: 'A',
     Y: 1,
     isHit: true,
@@ -169,10 +162,12 @@ test('player.board.receiveAttack sinks AI ship', () => {
   let player = new Player('John');
   let ai = new AI();
   ai.board.populateShip(1, 'A', 1);
-  expect(player.makeMove(ai, 'A', 1)).toEqual(expect.objectContaining({
-    X: 'A',
-    Y: 1,
-    isHit: true,
-    ship: { "hits": ["hit"], "size": 1, "xStart": "A", "yStart": 1 }
-  }));
+  player.makeMove(ai, 'A', 1);
+  let hitSquare = ai.board.grid.find(square => (square.X == 'A' && square.Y == 1))
+  expect(hitSquare.ship.isSunk()).toBe('sunk!');
 });
+
+//testing AI makeMove
+test.skip('.board.receiveAttack yields a hit', () => {
+
+})
