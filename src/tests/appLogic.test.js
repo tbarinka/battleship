@@ -44,7 +44,6 @@ test('populates ship at A1 with size of 1 square', () => {
     }]
   ))
 });
-
 test('populate ship at A3-A1 with size of 3 squares pointing south', () => {
   expect(new Gameboard().populateShip(3, 'A', 3, 'south')).toEqual(expect.arrayContaining(
     [{
@@ -95,7 +94,6 @@ test('populate ship at A1-A3 with size of 3 squares pointing north', () => {
     }]
   ))
 });
-
 test('populate ship at A1-C1 with size of 3 squares pointing east', () => {
   expect(new Gameboard().populateShip(3, 'A', 1, 'east')).toEqual(expect.arrayContaining(
     [{
@@ -147,13 +145,34 @@ test('populate ship at C1-A1 with size of 3 squares pointing west', () => {
   ))
 });
 
-
-
 test('receive attack at A1 yields ship with 1 [hit]', () => {
   expect(board.receiveAttack("A", 1))
     .toEqual(expect.objectContaining({
-    xStart: "A",
-    yStart: 1,
-    hits: ["hit"]
-  }))
-})
+      xStart: "A",
+      yStart: 1,
+      hits: ["hit"]
+    }))
+});
+
+//testing player and AI functions
+test('player.board.receiveAttack yields a hit', () => {
+  let player = new Player('John');
+  let ai = new AI();
+  ai.board.populateShip(1, 'A', 1);
+  expect(player.makeMove(ai, 'A', 1)).toEqual(expect.objectContaining({
+    X: 'A',
+    Y: 1,
+    isHit: true,
+  }));
+});
+test('player.board.receiveAttack sinks AI ship', () => {
+  let player = new Player('John');
+  let ai = new AI();
+  ai.board.populateShip(1, 'A', 1);
+  expect(player.makeMove(ai, 'A', 1)).toEqual(expect.objectContaining({
+    X: 'A',
+    Y: 1,
+    isHit: true,
+    ship: { "hits": ["hit"], "size": 1, "xStart": "A", "yStart": 1 }
+  }));
+});
