@@ -46,12 +46,21 @@ class Gameboard {
                 //if size is four, start at 6 or below
             }
             if (direction == "south") {
-                if (yStart < (0 + size - 1)) {
+                if (yStart < (size - 1)) {
+                    return 'overflow!'
+                }
+            }
+            if (direction == "west") {
+                if (this.xAxis.indexOf(xStart) < (size - 1)) {
+                    return 'overflow!'
+                }
+            }
+            if (direction == "east") {
+                if (this.xAxis.indexOf(xStart) > (9 - size + 1)) {
                     return 'overflow!'
                 }
             }
         }
-        
         let newShip = new Ship(size, xStart, yStart);
         let startingSquare = this.grid.find(square => (square.X == newShip.xStart && square.Y == newShip.yStart));
         let squaresContainingNewShip = [];
