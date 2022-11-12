@@ -12,7 +12,7 @@ class Square {
 
 class Gameboard {
     constructor(input) {
-        this.xAxis = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H,', 'I', 'J']
+        this.xAxis = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
         this.yAxis = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         this.grid = this.makeGrid()
     }
@@ -104,4 +104,4 @@ class Gameboard {
 }
 
 
-export { Gameboard }
+export { Gameboard, Square }
