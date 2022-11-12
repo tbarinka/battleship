@@ -1,4 +1,4 @@
-import { Gameboard } from '../gameboard.js';
+import { Gameboard } from '../gameAppLogic/gameboard.js';
 import { Player } from './player.js';
 
 class AI {

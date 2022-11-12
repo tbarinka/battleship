@@ -1,5 +1,5 @@
-import { Ship } from '../ship.js';
-import { Gameboard } from '../gameboard.js';
+import { Ship } from '../gameAppLogic/ship.js';
+import { Gameboard } from '../gameAppLogic/gameboard.js';
 import { Player } from '../playerControls/player.js';
 import { AI } from '../playerControls/ai.js';
 
