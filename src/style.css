@@ -8,7 +8,25 @@ body {
 }
 .boards-container {
     display: flex;
+    flex-direction: column;
+}
+.xCoordinateContainer {
+    display: flex;
+}
+.xCoordinateContainerDouble {
+    display: flex;
+    margin: 10px;
+    margin-bottom: -40px;
+    margin-left: 30px;
+    gap: 20px;
+}
+.boards-subcontainer {
+    display: flex;
     flex-direction: row;
+}
+.upperSquare {
+    height: 60px;
+    width: 60px;
 }
 .square {
     border: solid black;
@@ -20,7 +38,7 @@ body {
     height: 600px;
     width: 600px;
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(10, 1fr);
+    grid-template-columns: repeat(10, 60px);
+    grid-template-rows: repeat(10, 60px);
     grid-auto-flow: column;
 }
