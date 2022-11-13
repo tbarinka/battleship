@@ -18,7 +18,7 @@ class squareDOM {
 function squareLoader(coordinate) {
     let square = document.createElement('div');
     square.classList.add('square');
-    square.textContent = coordinate.X + coordinate.Y;
+    square.textContent = coordinate.isHit;
     return square
 }
 function singleBoardLoaderDOM(board) {
@@ -32,18 +32,6 @@ function singleBoardLoaderDOM(board) {
     //document.body.appendChild(container);
     return container;
 };
-function twoBoardLoader(playerBoard, opponentBoard) {
-    let container = document.createElement('div');
-    container.classList.add('boards-container');
-    let subcontainer = document.createElement('div');
-    subcontainer.classList.add('boards-subcontainer');
-    subcontainer.appendChild(singleBoardLoaderDOM(playerBoard));
-    subcontainer.appendChild(singleBoardLoaderDOM(opponentBoard));
-
-    container.appendChild(xCoordinateDoubler());
-    container.appendChild(subcontainer);
-    document.body.appendChild(container)
-}
 function xCoordinateLoader() {
     let arrayOfXCoordinates = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     let container = document.createElement('div');
@@ -64,8 +52,39 @@ function xCoordinateDoubler() {
     return container;
 }
 function yCoordinateLoader() {
-
+    let arrayOfXCoordinates = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    let container = document.createElement('div');
+    container.classList.add('yCoordinateContainer');
+    arrayOfXCoordinates.forEach((coordinate) => {
+        let square = document.createElement('div');
+        square.classList.add('leftSquare');
+        square.textContent = coordinate;
+        container.appendChild(square);
+    });
+    return container;
 }
+function yCoordinateDoubler() {
+     let container = document.createElement('div');
+    container.classList.add('yCoordinateContainerDouble');
+    container.appendChild(yCoordinateLoader());
+    container.appendChild(yCoordinateLoader());
+    return container;
+}
+function twoBoardLoader(playerBoard, opponentBoard) {
+    let container = document.createElement('div');
+    container.classList.add('boards-container');
+    let subcontainer = document.createElement('div');
+    subcontainer.classList.add('boards-subcontainer');
+    subcontainer.appendChild(yCoordinateLoader());
+    subcontainer.appendChild(singleBoardLoaderDOM(playerBoard));
+    subcontainer.appendChild(yCoordinateLoader());
+    subcontainer.appendChild(singleBoardLoaderDOM(opponentBoard));
+
+    container.appendChild(xCoordinateDoubler());
+    container.appendChild(subcontainer);
+    document.body.appendChild(container)
+}
+
 class gameBoardLoader {
     constructor(board, player, opponent) {
         this.playerBoard = new Gameboard();

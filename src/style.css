@@ -17,16 +17,29 @@ body {
     display: flex;
     margin: 10px;
     margin-bottom: -40px;
-    margin-left: 30px;
-    gap: 20px;
-}
-.boards-subcontainer {
-    display: flex;
-    flex-direction: row;
+    margin-left: 97px;
+    gap: 85px;
 }
 .upperSquare {
     height: 60px;
     width: 60px;
+}
+.yCoordinateContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    padding-right: 5px;
+}
+.leftSquare {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    height: 60px;
+    width: 60px;
+}
+.boards-subcontainer {
+    display: flex;
+    flex-direction: row;
 }
 .square {
     border: solid black;
