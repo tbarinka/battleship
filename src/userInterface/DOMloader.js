@@ -2,8 +2,8 @@ import { Gameboard, Square } from '../gameAppLogic/gameboard.js';
 import { AI } from '../playerControls/ai.js';
 import { Player } from '../playerControls/player.js';
 
-//let body = document.getElementById('body');
 
+//suite of functions for loading the two DOM boards
 class squareDOM {
     constructor(object) {
         this.coordinate = object;
@@ -14,14 +14,13 @@ class squareDOM {
     }
 
 }
-
 function squareLoader(coordinate) {
     let square = document.createElement('div');
     square.classList.add('square');
     square.textContent = coordinate.isHit;
     return square
 }
-function singleBoardLoaderDOM(board) {
+function boardLoader(board) {
     let arrayOfGridCoordinates = board.grid;
     let container = document.createElement('div');
     container.classList.add('grid-container');
@@ -70,21 +69,26 @@ function yCoordinateDoubler() {
     container.appendChild(yCoordinateLoader());
     return container;
 }
-function twoBoardLoader(playerBoard, opponentBoard) {
-    let container = document.createElement('div');
-    container.classList.add('boards-container');
-    let subcontainer = document.createElement('div');
-    subcontainer.classList.add('boards-subcontainer');
-    subcontainer.appendChild(yCoordinateLoader());
-    subcontainer.appendChild(singleBoardLoaderDOM(playerBoard));
-    subcontainer.appendChild(yCoordinateLoader());
-    subcontainer.appendChild(singleBoardLoaderDOM(opponentBoard));
 
-    container.appendChild(xCoordinateDoubler());
+function singleCoordinatedBoardLoader(board) {
+    let container = document.createElement('div');
+    container.classList.add('singleBoardContainer')
+    let subcontainer = document.createElement('div');
+    subcontainer.classList.add('subcontainer');
+    subcontainer.appendChild(yCoordinateLoader());
+    subcontainer.appendChild(boardLoader(board));
+    container.appendChild(xCoordinateLoader());
     container.appendChild(subcontainer);
-    document.body.appendChild(container)
+    return container;
 }
 
+function twoBoardLoader(playerBoard, opponentBoard) {
+    let container = document.createElement('div');
+    container.classList.add('doubleBoardContainer')
+    container.appendChild(singleCoordinatedBoardLoader(playerBoard));
+    container.appendChild(singleCoordinatedBoardLoader(opponentBoard));
+    document.body.appendChild(container)
+}
 class gameBoardLoader {
     constructor(board, player, opponent) {
         this.playerBoard = new Gameboard();
@@ -94,6 +98,9 @@ class gameBoardLoader {
         twoBoardLoader(this.playerBoard, this.opponentBoard);
     }
 }
+
+//suite of functions for loading controller info
+
 
 
 export { gameBoardLoader }

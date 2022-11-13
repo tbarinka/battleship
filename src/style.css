@@ -6,52 +6,54 @@ body {
 body {
 
 }
-.boards-container {
+.doubleBoardContainer {
+    display: flex;
+    gap: 175px;
+    padding: 10px;
+}
+.singleBoardContainer {
     display: flex;
     flex-direction: column;
 }
 .xCoordinateContainer {
     display: flex;
-}
-.xCoordinateContainerDouble {
-    display: flex;
-    margin: 10px;
-    margin-bottom: -40px;
-    margin-left: 97px;
-    gap: 85px;
-}
-.upperSquare {
-    height: 60px;
-    width: 60px;
+    gap: 3px;
+    margin-left: 35px;
+    margin-bottom: -10px;
 }
 .yCoordinateContainer {
     display: flex;
     flex-direction: column;
+    gap: 3px;
     margin-top: 10px;
-    padding-right: 5px;
 }
 .leftSquare {
     display: flex;
-    align-items: center;
-    justify-content: right;
-    height: 60px;
-    width: 60px;
+    justify-content: center;
 }
-.boards-subcontainer {
+.leftSquare, .upperSquare {
+    height: 35px;
+    width: 35px;
     display: flex;
-    flex-direction: row;
+    justify-content: center;
+}
+.subcontainer {
+    display: flex;
 }
 .square {
     border: solid black;
     color: black;
-    padding: 3px;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .grid-container {
-    margin: 10px;
-    height: 600px;
-    width: 600px;
+    height: 350px;
+    width: 350px;
     display: grid;
-    grid-template-columns: repeat(10, 60px);
-    grid-template-rows: repeat(10, 60px);
+    grid-template-columns: repeat(10, 35px);
+    grid-template-rows: repeat(10, 35px);
     grid-auto-flow: column;
+    gap: 3px;
 }
