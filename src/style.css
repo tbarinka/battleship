@@ -6,6 +6,10 @@ body {
 body {
 
 }
+.boards-container {
+    display: flex;
+    flex-direction: row;
+}
 .square {
     border: solid black;
     color: black;

@@ -1,6 +1,6 @@
 import './style.css';
-import { gameBoardLoaderDOM } from './userInterface/gameLoop.js'
+import { gameBoardLoader } from './userInterface/DOMloader.js'
 
 
-gameBoardLoaderDOM();
+new gameBoardLoader();
 

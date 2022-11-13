@@ -21,23 +21,33 @@ function squareLoader(coordinate) {
     square.textContent = coordinate.X + coordinate.Y;
     return square
 }
-
-function gridColumnLoader(array) {
-    let column = document.createElement('div');
-    column.classList.add('grid-container-column');
-    return column;
-}
-
-function gameBoardLoaderDOM() {
-    let gameBoard = new Gameboard();
-    let arrayOfGridCoordinates = gameBoard.grid;
+function singleBoardLoaderDOM(board) {
+    let arrayOfGridCoordinates = board.grid;
     let container = document.createElement('div');
     container.classList.add('grid-container');
     arrayOfGridCoordinates.forEach((coordinate) => {
         let square = squareLoader(coordinate);
         container.appendChild(square);
     })
-    document.body.appendChild(container);
+    //document.body.appendChild(container);
+    return container;
 };
+function twoBoardLoader(playerBoard, opponentBoard) {
+    let container = document.createElement('div');
+    container.classList.add('boards-container')
+    container.appendChild(singleBoardLoaderDOM(playerBoard));
+    container.appendChild(singleBoardLoaderDOM(opponentBoard));
+    document.body.appendChild(container)
+}
+class gameBoardLoader {
+    constructor(board, player, opponent) {
+        this.playerBoard = new Gameboard();
+        this.player = player;
+        this.opponentBoard = new Gameboard();
+        this.opponent = opponent
+        twoBoardLoader(this.playerBoard, this.opponentBoard);
+    }
+}
 
-export { gameBoardLoaderDOM }
+
+export { gameBoardLoader }
