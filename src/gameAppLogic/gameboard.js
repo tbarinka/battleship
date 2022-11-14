@@ -39,7 +39,7 @@ class Gameboard {
         if (size > 1) {
             if (direction == "north") {
                 if (yStart < size) {
-                    console.log('overflow at' + xStart + yStart);
+                    console.log('overflow at ' + xStart + yStart);
                     return 'overflow!'
                 }
                 //if size is two, start at 8 or below
@@ -48,17 +48,19 @@ class Gameboard {
             }
             if (direction == "south") {
                 if ((yStart - 1) > (10 - size)) {
-                    console.log('overflow at' + xStart + yStart);
+                    console.log('overflow at ' + xStart + yStart);
                     return 'overflow!'
                 }
             }
             if (direction == "west") {
                 if (this.xAxis.indexOf(xStart) < (size - 1)) {
+                    console.log('overflow at ' + xStart + yStart);
                     return 'overflow!'
                 }
             }
             if (direction == "east") {
-                if (this.xAxis.indexOf(xStart) > (9 - size + 1)) {
+                if (this.xAxis.indexOf(xStart) > (10 - size)) {
+                    console.log('overflow at ' + xStart + yStart);
                     return 'overflow!'
                 }
             }

@@ -138,7 +138,7 @@ test('populate ship at C1-A1 with size of 3 squares pointing west', () => {
   ))
 });
 test('return "overflow!" for a ship that overflows north side of grid', () => {
-  expect(new Gameboard().populateShip(3, 'A', 8, "north")).toEqual('overflow!');
+  expect(new Gameboard().populateShip(3, 'A', 1, "north")).toEqual('overflow!');
 })
 test('return "overflow!" for a ship that overflows south side of grid', () => {
   expect(new Gameboard().populateShip(3, 'A', 10, "south")).toEqual('overflow!');
