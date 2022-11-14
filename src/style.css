@@ -6,6 +6,10 @@ body {
 body {
 
 }
+#container {
+    display: flex;
+    justify-content: center;
+}
 /*styles for the two grids and coordinates */
 .doubleBoardContainer {
     display: flex;
@@ -66,4 +70,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.buttonContainer {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
 }
