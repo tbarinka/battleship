@@ -38,7 +38,8 @@ class Gameboard {
     populateShip(size, xStart, yStart, direction) {
         if (size > 1) {
             if (direction == "north") {
-                if (yStart > (9 - size + 1)) {
+                if (yStart < size) {
+                    console.log('overflow at' + xStart + yStart);
                     return 'overflow!'
                 }
                 //if size is two, start at 8 or below
