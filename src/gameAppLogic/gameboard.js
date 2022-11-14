@@ -70,7 +70,7 @@ class Gameboard {
         squaresContainingNewShip.push(startingSquare);
         while (size > 1) {
             if (direction == "north") {
-                yStart = yStart + 1;
+                yStart = yStart - 1;
                 let square = this.grid.find(square => (square.X == newShip.xStart && square.Y == yStart))
                 square.containsShip = true;
                 square.ship = newShip;

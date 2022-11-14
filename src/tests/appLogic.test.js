@@ -63,27 +63,27 @@ test('populate ship at A1-A3 with size of 3 squares pointing south', () => {
   ))
 });
 test('populate ship at A1-A3 with size of 3 squares pointing north', () => {
-  expect(new Gameboard().populateShip(3, 'A', 1, 'north')).toEqual(expect.arrayContaining(
+  expect(new Gameboard().populateShip(3, 'A', 3, 'north')).toEqual(expect.arrayContaining(
     [{
       X: "A",
-      Y: 1,
+      Y: 3,
       containsShip: true,
       isHit: false,
-      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 1 }
+      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 3 }
     },
     {
       X: "A",
       Y: 2,
       containsShip: true,
       isHit: false,
-      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 1 }
+      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 3 }
     },
     {
       X: "A",
       Y: 3,
       containsShip: true,
       isHit: false,
-      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 1 }
+      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 3 }
     }]
   ))
 });

@@ -100,7 +100,9 @@ class gameBoardLoader {
     }
     simplePopulate() {
         this.playerBoard.populateShip(1, 'A', 1);
-        this.playerBoard.populateShip(1, 'B', 8);
+        this.playerBoard.populateShip(2, 'B', 8, "south");
+        this.playerBoard.populateShip(2, 'B', 2, "north");
+        this.playerBoard.populateShip(2, 'D', 1, "north");
         let container = document.getElementById('container');
         container.removeChild(container.firstChild);
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);
