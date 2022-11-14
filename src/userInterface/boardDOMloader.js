@@ -9,7 +9,6 @@ function squareLoader(coordinate) {
     let square = document.createElement('div');
     square.classList.add('square');
     square.textContent = coordinate.containsShip;
-    square.style.backgroundColor = "red";
     if (square.textContent == "true") {
         square.style.backgroundColor = "red";
     }
@@ -101,6 +100,7 @@ class gameBoardLoader {
     }
     simplePopulate() {
         this.playerBoard.populateShip(1, 'A', 1);
+        this.playerBoard.populateShip(1, 'B', 8);
         let container = document.getElementById('container');
         container.removeChild(container.firstChild);
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);

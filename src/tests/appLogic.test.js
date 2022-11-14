@@ -37,28 +37,28 @@ test('populates ship at A1 with size of 1 square', () => {
     }]
   ))
 });
-test('populate ship at A3-A1 with size of 3 squares pointing south', () => {
-  expect(new Gameboard().populateShip(3, 'A', 3, 'south')).toEqual(expect.arrayContaining(
+test('populate ship at A1-A3 with size of 3 squares pointing south', () => {
+  expect(new Gameboard().populateShip(3, 'A', 1, 'south')).toEqual(expect.arrayContaining(
     [{
       X: "A",
-      Y: 3,
+      Y: 1,
       containsShip: true,
       isHit: false,
-      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 3 }
+      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 1 }
     },
     {
       X: "A",
       Y: 2,
       containsShip: true,
       isHit: false,
-      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 3 }
+      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 1 }
     },
     {
       X: "A",
-      Y: 1,
+      Y: 3,
       containsShip: true,
       isHit: false,
-      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 3 }
+      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 1 }
     }]
   ))
 });
@@ -141,7 +141,7 @@ test('return "overflow!" for a ship that overflows north side of grid', () => {
   expect(new Gameboard().populateShip(3, 'A', 8, "north")).toEqual('overflow!');
 })
 test('return "overflow!" for a ship that overflows south side of grid', () => {
-  expect(new Gameboard().populateShip(3, 'A', 1, "south")).toEqual('overflow!');
+  expect(new Gameboard().populateShip(3, 'A', 10, "south")).toEqual('overflow!');
 })
 test('return "overflow!" for a ship that overflows west side of grid', () => {
   expect(new Gameboard().populateShip(3, 'A', 1, "west")).toEqual('overflow!');

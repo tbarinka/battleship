@@ -46,7 +46,8 @@ class Gameboard {
                 //if size is four, start at 6 or below
             }
             if (direction == "south") {
-                if (yStart < (size - 1)) {
+                if ((yStart - 1) > (10 - size)) {
+                    console.log('overflow at' + xStart + yStart);
                     return 'overflow!'
                 }
             }
@@ -76,7 +77,7 @@ class Gameboard {
                 squaresContainingNewShip.push(square)
                 size = size - 1;
             } else if (direction == "south") {
-                yStart = yStart - 1;
+                yStart = yStart + 1;
                 let square = this.grid.find(square => (square.X == newShip.xStart && square.Y == yStart))
                 square.containsShip = true;
                 square.ship = newShip;
