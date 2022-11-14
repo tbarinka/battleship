@@ -99,7 +99,31 @@ class gameBoardLoader {
         this.playerBoard.populateShip(size, xStart, yStart, direction);
     }
     simplePopulate() {
-        this.playerBoard.populateShip(3, 'A', 1, "west");
+        this.playerBoard.populateShip(1, 'J', 1, "west");
+        this.playerBoard.populateShip(1, 'A', 3);
+        this.playerBoard.populateShip(2, 'C', 3, "east");
+        this.playerBoard.populateShip(1, 'G', 3);
+        this.playerBoard.populateShip(2, 'I', 4, "east");
+        this.playerBoard.populateShip(1, 'A', 5);
+        this.playerBoard.populateShip(4, 'C', 5, "east");
+        this.playerBoard.populateShip(3, 'J', 6, "south");
+        this.playerBoard.populateShip(3, 'B', 8, "south");
+        this.playerBoard.populateShip(2, 'E', 9, "east");
+        let container = document.getElementById('container');
+        container.removeChild(container.firstChild);
+        twoBoardDOMLoader(this.playerBoard, this.aiBoard);
+    }
+    simplePopulateAI() {
+        this.aiBoard.populateShip(1, 'J', 1, "west");
+        this.aiBoard.populateShip(1, 'A', 3);
+        this.aiBoard.populateShip(2, 'C', 3, "east");
+        this.aiBoard.populateShip(1, 'G', 3);
+        this.aiBoard.populateShip(2, 'I', 4, "east");
+        this.aiBoard.populateShip(1, 'A', 5);
+        this.aiBoard.populateShip(4, 'C', 5, "east");
+        this.aiBoard.populateShip(3, 'J', 6, "south");
+        this.aiBoard.populateShip(3, 'B', 8, "south");
+        this.aiBoard.populateShip(2, 'E', 9, "east");
         let container = document.getElementById('container');
         container.removeChild(container.firstChild);
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);
