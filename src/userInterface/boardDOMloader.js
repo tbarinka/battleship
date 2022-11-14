@@ -1,23 +1,18 @@
 import { Gameboard, Square } from '../gameAppLogic/gameboard.js';
 import { AI } from '../playerControls/ai.js';
 import { Player } from '../playerControls/player.js';
+import { generateHUD } from './controller.js';
 
 
 //suite of functions for loading the two DOM boards
-class squareDOM {
-    constructor(object) {
-        this.coordinate = object;
-        this.isHit = false;
-    };
-    hit() {
-        this.isHit = true;
-    }
-
-}
 function squareLoader(coordinate) {
     let square = document.createElement('div');
     square.classList.add('square');
-    square.textContent = coordinate.isHit;
+    square.textContent = coordinate.containsShip;
+    square.style.backgroundColor = "red";
+    if (square.textContent == "true") {
+        square.style.backgroundColor = "red";
+    }
     return square
 }
 function boardLoader(board) {
@@ -75,27 +70,40 @@ function singleCoordinatedBoardLoader(board) {
     container.classList.add('singleBoardContainer')
     let subcontainer = document.createElement('div');
     subcontainer.classList.add('subcontainer');
-    subcontainer.appendChild(yCoordinateLoader());
-    subcontainer.appendChild(boardLoader(board));
-    container.appendChild(xCoordinateLoader());
-    container.appendChild(subcontainer);
+        subcontainer.appendChild(yCoordinateLoader());
+        subcontainer.appendChild(boardLoader(board));
+        container.appendChild(xCoordinateLoader());
+        container.appendChild(subcontainer);
     return container;
 }
-
-function twoBoardLoader(playerBoard, opponentBoard) {
+function twoBoardContentGenerator(playerBoard, opponentBoard) {
     let container = document.createElement('div');
-    container.classList.add('doubleBoardContainer')
+    container.classList.add('doubleBoardContainer');
     container.appendChild(singleCoordinatedBoardLoader(playerBoard));
     container.appendChild(singleCoordinatedBoardLoader(opponentBoard));
-    document.body.appendChild(container)
+    return container;
+}
+function twoBoardDOMLoader(playerBoard, opponentBoard) {
+    let container = document.getElementById('container');
+    container.appendChild(twoBoardContentGenerator(playerBoard, opponentBoard));
+    //document.body.appendChild(twoBoardContentGenerator(playerBoard, opponentBoard));
 }
 class gameBoardLoader {
-    constructor(board, player, opponent) {
-        this.playerBoard = new Gameboard();
+    constructor(playerBoard, player, aiBoard, ai) {
+        this.playerBoard = playerBoard;
         this.player = player;
-        this.opponentBoard = new Gameboard();
-        this.opponent = opponent
-        twoBoardLoader(this.playerBoard, this.opponentBoard);
+        this.aiBoard = aiBoard;
+        this.ai = ai
+        twoBoardDOMLoader(this.playerBoard, this.aiBoard);
+    }
+    populatePlayer(size, xStart, yStart, direction) {
+        this.playerBoard.populateShip(size, xStart, yStart, direction);
+    }
+    simplePopulate() {
+        this.playerBoard.populateShip(1, 'A', 1);
+        let container = document.getElementById('container');
+        container.removeChild(container.firstChild);
+        twoBoardDOMLoader(this.playerBoard, this.aiBoard);
     }
 }
 

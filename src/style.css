@@ -6,6 +6,7 @@ body {
 body {
 
 }
+/*styles for the two grids and coordinates */
 .doubleBoardContainer {
     display: flex;
     gap: 175px;
@@ -56,4 +57,13 @@ body {
     grid-template-rows: repeat(10, 35px);
     grid-auto-flow: column;
     gap: 3px;
+}
+
+/*styles for game controller hud*/
+.populateButton {
+    height: 40px;
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
