@@ -12,6 +12,9 @@ function squareLoader(coordinate) {
     if (square.textContent == "true") {
         square.style.backgroundColor = "red";
     }
+    if (coordinate.isHit == true) {
+        square.textContent = "X";
+    }
     return square
 }
 function boardLoader(board) {
@@ -63,7 +66,6 @@ function yCoordinateDoubler() {
     container.appendChild(yCoordinateLoader());
     return container;
 }
-
 function singleCoordinatedBoardLoader(board) {
     let container = document.createElement('div');
     container.classList.add('singleBoardContainer')
@@ -82,10 +84,27 @@ function twoBoardContentGenerator(playerBoard, opponentBoard) {
     container.appendChild(singleCoordinatedBoardLoader(opponentBoard));
     return container;
 }
+
 function twoBoardDOMLoader(playerBoard, opponentBoard) {
     let container = document.getElementById('container');
-    container.appendChild(twoBoardContentGenerator(playerBoard, opponentBoard));
-    //document.body.appendChild(twoBoardContentGenerator(playerBoard, opponentBoard));
+    container.prepend(twoBoardContentGenerator(playerBoard, opponentBoard)); 
+}
+function ScoreKeeperGenerator(player, input) {
+    let container = document.createElement('div');
+    let label = document.createElement('div');
+    let score = document.createElement('div');
+    label.textContent = player + " score: "
+    container.appendChild(label);
+    score.textContent = input;
+    return container
+}
+function doubleScoreKeeperGenerator(player1, input1, player2, input2) {
+    let scoreContainer = document.createElement('div');
+    scoreContainer.classList.add('scoreKeeperContainer');
+    scoreContainer.appendChild(ScoreKeeperGenerator(player1, input1));
+    scoreContainer.appendChild(ScoreKeeperGenerator(player2, input2));
+    let container = document.getElementById('container');
+    container.appendChild(scoreContainer)
 }
 class gameBoardLoader {
     constructor(playerBoard, player, aiBoard, ai) {
@@ -94,9 +113,10 @@ class gameBoardLoader {
         this.aiBoard = aiBoard;
         this.ai = ai
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);
+        doubleScoreKeeperGenerator("Player", "", "AI", "");
     }
     populatePlayer(size, xStart, yStart, direction) {
-        this.playerBoard.populateShip(size, xStart, yStart, direction);
+        //this.playerBoard.populateShip(size, xStart, yStart, direction);
     }
     simplePopulate() {
         this.playerBoard.populateShip(1, 'J', 1, "west");
@@ -125,6 +145,16 @@ class gameBoardLoader {
         this.aiBoard.populateShip(3, 'B', 8, "south");
         this.aiBoard.populateShip(2, 'E', 9, "east");
         let container = document.getElementById('container');
+        container.removeChild(container.firstChild);
+        twoBoardDOMLoader(this.playerBoard, this.aiBoard);
+    }
+    attackAI(x, y) {
+        this.aiBoard.receiveAttack(x, y);
+        container.removeChild(container.firstChild);
+        twoBoardDOMLoader(this.playerBoard, this.aiBoard);
+    }
+    attackPlayer(x, y) {
+        this.playerBoard.receiveAttack(x, y);
         container.removeChild(container.firstChild);
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);
     }
