@@ -84,7 +84,6 @@ function twoBoardContentGenerator(playerBoard, opponentBoard) {
     container.appendChild(singleCoordinatedBoardLoader(opponentBoard));
     return container;
 }
-
 function twoBoardDOMLoader(playerBoard, opponentBoard) {
     let container = document.getElementById('container');
     container.prepend(twoBoardContentGenerator(playerBoard, opponentBoard)); 
@@ -105,6 +104,10 @@ function doubleScoreKeeperGenerator(player1, input1, player2, input2) {
     scoreContainer.appendChild(ScoreKeeperGenerator(player2, input2));
     let container = document.getElementById('container');
     container.appendChild(scoreContainer)
+}
+function removeDuplicates(array) {
+    return array.filter((item,
+        index) => arr.indexOf(item) === index);
 }
 class gameBoardLoader {
     constructor(playerBoard, player, aiBoard, ai) {
@@ -152,11 +155,54 @@ class gameBoardLoader {
         this.aiBoard.receiveAttack(x, y);
         container.removeChild(container.firstChild);
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);
+        this.keepScore()
     }
     attackPlayer(x, y) {
         this.playerBoard.receiveAttack(x, y);
         container.removeChild(container.firstChild);
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);
+        this.keepScore()
+    }
+    produceArrayOfPlayerShips() {
+        let playerShips = []
+        this.playerBoard.grid.forEach((square) => {
+            if (square.ship != null) {
+                playerShips.push(square.ship);
+            }
+        })
+        //playerShips contains duplicates of each ship, so I filter the array below
+        let playerShipsFiltered = [];
+        playerShips.forEach(ship => {
+            if (!playerShipsFiltered.includes(ship)) {
+                playerShipsFiltered.push(ship);
+            }
+        })
+        console.log(playerShipsFiltered);
+        return playerShipsFiltered;
+    }
+    produceArrayOfAiShips() {
+        let aiShips = []
+        this.aiBoard.grid.forEach((square) => {
+            if (square.ship != null) {
+                aiShips.push(square.ship);
+            }
+        })
+        //playerShips contains duplicates of each ship, so I filter the array below
+        let aiShipsFiltered = [];
+        aiShips.forEach(ship => {
+            if (!aiShipsFiltered.includes(ship)) {
+                aiShipsFiltered.push(ship);
+            }
+        })
+        console.log(aiShipsFiltered);
+        return aiShipsFiltered;
+    }
+    keepScore() {
+        this.produceArrayOfPlayerShips();
+        this.produceArrayOfAiShips();
+        //construct a list of gameboard.grid ships
+        //for any ship, if ship.hits == size, add +1 to score
+        //input score in doubleScoreKeeperGenerator
     }
 }
 
