@@ -4,7 +4,7 @@ import { Player } from '../playerControls/player.js';
 import { generateHUD } from './controller.js';
 
 
-//suite of functions for loading the two DOM boards
+//suite of functions for loading the two DOM boards & score keeper card
 function squareLoader(coordinate) {
     let square = document.createElement('div');
     square.classList.add('square');
@@ -88,7 +88,7 @@ function twoBoardDOMLoader(playerBoard, opponentBoard) {
     let container = document.getElementById('container');
     container.prepend(twoBoardContentGenerator(playerBoard, opponentBoard)); 
 }
-function ScoreKeeperGenerator(player, input) {
+function scoreKeeperGenerator(player, input) {
     let container = document.createElement('div');
     container.classList.add('singleBoardScoreContainer')
     let label = document.createElement('div');
@@ -96,14 +96,14 @@ function ScoreKeeperGenerator(player, input) {
     label.textContent = player + " score: "
     container.appendChild(label);
     container.appendChild(score);
-    score.textContent = input;
+    score.textContent = input + "/10";
     return container
 }
 function doubleScoreKeeperGenerator(player1, input1, player2, input2) {
     let scoreContainer = document.createElement('div');
     scoreContainer.classList.add('scoreKeeperContainer');
-    scoreContainer.appendChild(ScoreKeeperGenerator(player1, input1));
-    scoreContainer.appendChild(ScoreKeeperGenerator(player2, input2));
+    scoreContainer.appendChild(scoreKeeperGenerator(player1, input1));
+    scoreContainer.appendChild(scoreKeeperGenerator(player2, input2));
     let container = document.getElementById('container');
     container.appendChild(scoreContainer)
 }
@@ -111,6 +111,13 @@ function removeDuplicates(array) {
     return array.filter((item,
         index) => arr.indexOf(item) === index);
 }
+function announceWinner(text) {
+    let card = document.createElement('div');
+    card.classList.add('winnerCard');
+    card.textContent = text;
+    container.firstChild.appendChild(card);
+}
+
 class gameBoardLoader {
     constructor(playerBoard, player, aiBoard, ai) {
         this.playerBoard = playerBoard;
@@ -118,7 +125,7 @@ class gameBoardLoader {
         this.aiBoard = aiBoard;
         this.ai = ai
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);
-        doubleScoreKeeperGenerator("Player", "", "AI", "");
+        doubleScoreKeeperGenerator("Player", 0, "AI", 0);
     }
     populatePlayer(size, xStart, yStart, direction) {
         //this.playerBoard.populateShip(size, xStart, yStart, direction);
@@ -213,9 +220,12 @@ class gameBoardLoader {
             }
         });
         container.removeChild(container.firstChild.nextSibling);
-        console.log(playerTally)
-        console.log(aiTally);
         doubleScoreKeeperGenerator("Player", playerTally, "AI", aiTally);
+        if (playerTally == 10) {
+            announceWinner("You win!");
+        } else if (aiTally == 10) {
+            announceWinner("AI wins!");
+        }
         //construct a list of gameboard.grid ships
         //for any ship, if ship.hits == size, add +1 to score
         //input score in doubleScoreKeeperGenerator
