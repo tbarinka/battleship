@@ -65,6 +65,12 @@ body {
     grid-auto-flow: column;
     gap: 3px;
 }
+/* styles for score card */
+.singleBoardScoreContainer {
+    display: flex;
+    gap: 5px;
+    justify-content: left;
+}
 
 /*styles for game controller hud*/
 .populateButton {

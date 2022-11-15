@@ -90,10 +90,12 @@ function twoBoardDOMLoader(playerBoard, opponentBoard) {
 }
 function ScoreKeeperGenerator(player, input) {
     let container = document.createElement('div');
+    container.classList.add('singleBoardScoreContainer')
     let label = document.createElement('div');
     let score = document.createElement('div');
     label.textContent = player + " score: "
     container.appendChild(label);
+    container.appendChild(score);
     score.textContent = input;
     return container
 }
@@ -177,7 +179,6 @@ class gameBoardLoader {
                 playerShipsFiltered.push(ship);
             }
         })
-        console.log(playerShipsFiltered);
         return playerShipsFiltered;
     }
     produceArrayOfAiShips() {
@@ -194,12 +195,27 @@ class gameBoardLoader {
                 aiShipsFiltered.push(ship);
             }
         })
-        console.log(aiShipsFiltered);
         return aiShipsFiltered;
     }
     keepScore() {
-        this.produceArrayOfPlayerShips();
-        this.produceArrayOfAiShips();
+        let playerShips = this.produceArrayOfPlayerShips();
+        let aiShips = this.produceArrayOfAiShips();
+        let playerTally = 0
+        let aiTally = 0
+        playerShips.forEach((ship) => {
+            if (ship.hits.length == ship.size) {
+                playerTally += 1
+            }
+        })
+        aiShips.forEach((ship) => {
+            if (ship.hits.length == ship.size) {
+                aiTally += 1;
+            }
+        });
+        container.removeChild(container.firstChild.nextSibling);
+        console.log(playerTally)
+        console.log(aiTally);
+        doubleScoreKeeperGenerator("Player", playerTally, "AI", aiTally);
         //construct a list of gameboard.grid ships
         //for any ship, if ship.hits == size, add +1 to score
         //input score in doubleScoreKeeperGenerator
