@@ -48,9 +48,22 @@ function generateButtons() {
         let y = yInput.value;
         boards.attackAI(x, y);
     }
+//array = globally available copy of playerBoard grid, for use by AI
+//every time the AI attacks player, selects one element at random from the array and then removes it
+//so that future invocations cannot attack the same location
+const array = boards.playerBoard.grid.slice();
     function attackPlayer() {
-        let x = boards.randomParameterProducer()[0];
-        let y = boards.randomParameterProducer()[1];
+        if (array.length == 0) return alert('game over!')
+        let random = array[Math.floor(Math.random() * array.length)];
+        let x = random.X;
+        let y = random.Y;
+        console.log(x + y);
+        console.log(array);
+        let index = array.indexOf(random);
+        array.splice(index, 1);
+        //let x = boards.randomParameterProducer()[0];
+        //let y = boards.randomParameterProducer()[1];
+        //let found = boards.aiBoard.grid.find(square => (square.X == x && square.Y == y))
         boards.attackPlayer(x, y);
     }
 

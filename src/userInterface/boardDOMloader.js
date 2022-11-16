@@ -151,12 +151,18 @@ class gameBoardLoader {
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);
     }
     attackAI(x, y) {
+        if (this.aiBoard.X == x || this.aiBoard.Y == y) {
+            console.log('try again');
+        }
         this.aiBoard.receiveAttack(x, y);
         container.removeChild(container.firstChild);
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);
         this.keepScore()
     }
     attackPlayer(x, y) {
+        if (this.aiBoard.X == x || this.aiBoard.Y == y) {
+            console.log('try again');
+        }
         this.playerBoard.receiveAttack(x, y);
         container.removeChild(container.firstChild);
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);
@@ -221,8 +227,8 @@ class gameBoardLoader {
         //input score in doubleScoreKeeperGenerator
     }
     randomParameterProducer() {
-        let x = this.playerBoard.xAxis[Math.trunc(Math.random() * 9)];
-        let y = this.playerBoard.yAxis[Math.trunc(Math.random() * 9)];
+        let x = this.playerBoard.xAxis[Math.trunc(Math.random() * 10)];
+        let y = this.playerBoard.yAxis[Math.trunc(Math.random() * 10)];
         //let square = opponent.board.grid.find(square => (square.X == x && square.Y == y));
         return [x, y];
 }
