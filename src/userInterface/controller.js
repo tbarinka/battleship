@@ -47,15 +47,21 @@ function generateButtons() {
 //every time the AI attacks player, selects one element at random from the array and then removes it
 //so that future invocations cannot attack the same location
 const aiArray = boards.playerBoard.grid.slice();
-function attackAI() {
-    let x = xInput.value;
-    let y = yInput.value;
+function attackAI(x, y) {
     let found = boards.aiBoard.grid.find(square => (square.X == x && square.Y == y));
+    console.log(found);
     if (found.isHit == true) { alert("You have already attacked that square! Try another.") }
-    let index = boards.aiBoard.grid.indexOf(found);
-    aiArray.splice(index, 1);
-    boards.attackAI(x, y);
+    if (found.isHit == false) {
+        let index = boards.aiBoard.grid.indexOf(found);
+        aiArray.splice(index, 1);
+        boards.attackAI(x, y);
+        setTimeout(() => {
+            attackPlayer();
+        }, "500");
+    }
 }
+
+
 //playerArray below contains globally available copy of playerBoard grid, for use by AI
 //every time the AI attacks player, selects one element at random from the array and then removes it
 //so that future invocations cannot attack the same location
@@ -104,4 +110,9 @@ function generateForm() {
     return container
 }
 
-export { generateHUD }
+//put an event listener on the AI board, such that each square, when you click it,
+//yields X and Y values which it plugs into attackAI()
+
+
+
+export { generateHUD, boards, attackPlayer, attackAI, aiArray }

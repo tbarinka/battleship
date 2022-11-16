@@ -1,7 +1,8 @@
 import { Gameboard, Square } from '../gameAppLogic/gameboard.js';
 import { AI } from '../playerControls/ai.js';
 import { Player } from '../playerControls/player.js';
-import { generateHUD } from './controller.js';
+import { generateHUD, boards, attackAI } from './controller.js';
+
 
 
 //suite of functions for loading the two DOM boards & score keeper card
@@ -15,8 +16,14 @@ function squareLoader(coordinate) {
     if (coordinate.isHit == true) {
         square.textContent = "X";
     }
+    square.addEventListener('click', function () {
+        let x = coordinate.X;
+        let y = coordinate.Y;
+        attackAI(x, y);
+    });
     return square
 }
+
 function boardLoader(board) {
     let arrayOfGridCoordinates = board.grid;
     let container = document.createElement('div');
@@ -152,17 +159,16 @@ class gameBoardLoader {
     }
     attackAI(x, y) {
         if (this.aiBoard.X == x || this.aiBoard.Y == y) {
-            console.log('try again');
+            return console.log('repeat hit');
         }
-        this.aiBoard.receiveAttack(x, y);
-        container.removeChild(container.firstChild);
-        twoBoardDOMLoader(this.playerBoard, this.aiBoard);
-        this.keepScore()
+        else {
+            this.aiBoard.receiveAttack(x, y);
+            container.removeChild(container.firstChild);
+            twoBoardDOMLoader(this.playerBoard, this.aiBoard);
+            this.keepScore()
+        }
     }
     attackPlayer(x, y) {
-        if (this.aiBoard.X == x || this.aiBoard.Y == y) {
-            console.log('try again');
-        }
         this.playerBoard.receiveAttack(x, y);
         container.removeChild(container.firstChild);
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);
