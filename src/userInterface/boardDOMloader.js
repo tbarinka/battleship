@@ -131,12 +131,7 @@ class gameBoardLoader {
         //this.playerBoard.populateShip(size, xStart, yStart, direction);
     }
     simplePopulate() {
-        this.playerBoard.populateShip(1, 'J', 1, "west");
-        this.playerBoard.populateShip(1, 'A', 3);
-        this.playerBoard.populateShip(2, 'C', 3, "east");
-        this.playerBoard.populateShip(1, 'G', 3);
         this.playerBoard.populateShip(2, 'I', 4, "east");
-        this.playerBoard.populateShip(1, 'A', 5);
         this.playerBoard.populateShip(4, 'C', 5, "east");
         this.playerBoard.populateShip(3, 'J', 6, "south");
         this.playerBoard.populateShip(3, 'B', 8, "south");
@@ -146,12 +141,7 @@ class gameBoardLoader {
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);
     }
     simplePopulateAI() {
-        this.aiBoard.populateShip(1, 'J', 1, "west");
-        this.aiBoard.populateShip(1, 'A', 3);
-        this.aiBoard.populateShip(2, 'C', 3, "east");
-        this.aiBoard.populateShip(1, 'G', 3);
         this.aiBoard.populateShip(2, 'I', 4, "east");
-        this.aiBoard.populateShip(1, 'A', 5);
         this.aiBoard.populateShip(4, 'C', 5, "east");
         this.aiBoard.populateShip(3, 'J', 6, "south");
         this.aiBoard.populateShip(3, 'B', 8, "south");
@@ -221,16 +211,23 @@ class gameBoardLoader {
         });
         container.removeChild(container.firstChild.nextSibling);
         doubleScoreKeeperGenerator("Player", playerTally, "AI", aiTally);
-        if (playerTally == 10) {
+        if (playerTally == 5) {
             announceWinner("You win!");
-        } else if (aiTally == 10) {
+        } else if (aiTally == 5) {
             announceWinner("AI wins!");
         }
         //construct a list of gameboard.grid ships
         //for any ship, if ship.hits == size, add +1 to score
         //input score in doubleScoreKeeperGenerator
     }
+    randomParameterProducer() {
+        let x = this.playerBoard.xAxis[Math.trunc(Math.random() * 9)];
+        let y = this.playerBoard.yAxis[Math.trunc(Math.random() * 9)];
+        //let square = opponent.board.grid.find(square => (square.X == x && square.Y == y));
+        return [x, y];
 }
+}
+
 
 //suite of functions for loading controller info
 

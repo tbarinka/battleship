@@ -9,7 +9,6 @@ class Square {
         this.ship = null;
     }
 }
-
 class Gameboard {
     constructor(input) {
         this.xAxis = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']

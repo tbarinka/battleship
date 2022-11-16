@@ -49,8 +49,8 @@ function generateButtons() {
         boards.attackAI(x, y);
     }
     function attackPlayer() {
-        let x = xInput.value;
-        let y = yInput.value;
+        let x = boards.randomParameterProducer()[0];
+        let y = boards.randomParameterProducer()[1];
         boards.attackPlayer(x, y);
     }
 
