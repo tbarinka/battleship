@@ -43,29 +43,32 @@ function generateButtons() {
     function simplePopulateAI() {
         boards.simplePopulateAI();
     }
-    function attackAI() {
-        let x = xInput.value;
-        let y = yInput.value;
-        boards.attackAI(x, y);
-    }
-//array = globally available copy of playerBoard grid, for use by AI
+//aiArray below contains globally available copy of playerBoard grid, for use by AI
 //every time the AI attacks player, selects one element at random from the array and then removes it
 //so that future invocations cannot attack the same location
-const array = boards.playerBoard.grid.slice();
-    function attackPlayer() {
-        if (array.length == 0) return alert('game over!')
-        let random = array[Math.floor(Math.random() * array.length)];
-        let x = random.X;
-        let y = random.Y;
-        console.log(x + y);
-        console.log(array);
-        let index = array.indexOf(random);
-        array.splice(index, 1);
-        //let x = boards.randomParameterProducer()[0];
-        //let y = boards.randomParameterProducer()[1];
-        //let found = boards.aiBoard.grid.find(square => (square.X == x && square.Y == y))
-        boards.attackPlayer(x, y);
-    }
+const aiArray = boards.playerBoard.grid.slice();
+function attackAI() {
+    let x = xInput.value;
+    let y = yInput.value;
+    let found = boards.aiBoard.grid.find(square => (square.X == x && square.Y == y));
+    if (found.isHit == true) { alert("You have already attacked that square! Try another.") }
+    let index = boards.aiBoard.grid.indexOf(found);
+    aiArray.splice(index, 1);
+    boards.attackAI(x, y);
+}
+//playerArray below contains globally available copy of playerBoard grid, for use by AI
+//every time the AI attacks player, selects one element at random from the array and then removes it
+//so that future invocations cannot attack the same location
+const playerArray = boards.playerBoard.grid.slice();
+function attackPlayer() {
+    if (playerArray.length == 0) return alert('game over!')
+    let random = playerArray[Math.floor(Math.random() * playerArray.length)];
+    let x = random.X;
+    let y = random.Y;
+    let index = playerArray.indexOf(random);
+    playerArray.splice(index, 1);
+    boards.attackPlayer(x, y);
+}
 
 //scripting forms for inputting coordinates
 let xLabel = document.createElement('label');
