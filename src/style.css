@@ -13,6 +13,11 @@ body {
     align-items: center;
     margin: 10px;
 }
+/*styles for the placement module */
+.placementModuleLoader {
+    position: absolute;
+}
+
 /*styles for the two grids and coordinates */
 .doubleBoardContainer {
     display: flex;

@@ -5,6 +5,25 @@ import { generateHUD, attackAI } from './controller.js';
 
 
 
+//suite for loading carrier placement module before game begins
+let placementContainer = document.createElement('div');
+container.classList.add('placement-module-container');
+function placementModuleLoader() {
+    container.appendChild(infoTextLoader());
+    container.appendChild(placementBoardLoader());
+    return container;
+}
+function infoTextLoader() {
+    let place = document.createElement('div');
+    place.classList.add('placementText');
+    place.textContent = "Place Your Ships";
+    return place
+}
+function placementBoardLoader() {
+    let board = new Gameboard();
+    return playerCoordinatedBoardLoader(board);
+}
+
 //suite of functions for loading the two DOM boards & score keeper card
 function squareLoader(coordinate, player = "ai") {
     let square = document.createElement('div');
@@ -243,10 +262,4 @@ class gameBoardLoader {
         return [x, y];
 }
 }
-
-
-//suite of functions for loading controller info
-
-
-
-export { gameBoardLoader }
+export { gameBoardLoader, placementModuleLoader }
