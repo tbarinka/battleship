@@ -61,7 +61,6 @@ function attackAI(x, y) {
     }
 }
 
-
 //playerArray below contains globally available copy of playerBoard grid, for use by AI
 //every time the AI attacks player, selects one element at random from the array and then removes it
 //so that future invocations cannot attack the same location
@@ -75,7 +74,6 @@ function attackPlayer() {
     playerArray.splice(index, 1);
     boards.attackPlayer(x, y);
 }
-
 //scripting forms for inputting coordinates
 let xLabel = document.createElement('label');
 xLabel.classList.add('attackLabel');
@@ -115,4 +113,4 @@ function generateForm() {
 
 
 
-export { generateHUD, boards, attackPlayer, attackAI, aiArray }
+export { generateHUD, attackAI}

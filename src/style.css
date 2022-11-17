@@ -56,6 +56,18 @@ body {
     justify-content: center;
     align-items: center;
 }
+.square:hover {
+    border: solid black;
+    color: black;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+}
+.squareContainer {
+
+}
 .grid-container {
     height: 350px;
     width: 350px;

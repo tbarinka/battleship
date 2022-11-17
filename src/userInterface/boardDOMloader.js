@@ -1,7 +1,7 @@
 import { Gameboard, Square } from '../gameAppLogic/gameboard.js';
 import { AI } from '../playerControls/ai.js';
 import { Player } from '../playerControls/player.js';
-import { generateHUD, boards, attackAI } from './controller.js';
+import { generateHUD, attackAI } from './controller.js';
 
 
 
@@ -9,8 +9,7 @@ import { generateHUD, boards, attackAI } from './controller.js';
 function squareLoader(coordinate) {
     let square = document.createElement('div');
     square.classList.add('square');
-    square.textContent = coordinate.containsShip;
-    if (square.textContent == "true") {
+    if (coordinate.containsShip == true) {
         square.style.backgroundColor = "red";
     }
     if (coordinate.isHit == true) {
@@ -20,8 +19,9 @@ function squareLoader(coordinate) {
         let x = coordinate.X;
         let y = coordinate.Y;
         attackAI(x, y);
+        console.log(x + y)
     });
-    return square
+    return square;
 }
 
 function boardLoader(board) {
