@@ -6,7 +6,7 @@ import { generateHUD, attackAI } from './controller.js';
 
 
 //suite of functions for loading the two DOM boards & score keeper card
-function squareLoader(coordinate) {
+function squareLoader(coordinate, player = "ai") {
     let square = document.createElement('div');
     square.classList.add('square');
     if (coordinate.containsShip == true) {
@@ -15,24 +15,24 @@ function squareLoader(coordinate) {
     if (coordinate.isHit == true) {
         square.textContent = "X";
     }
-    square.addEventListener('click', function () {
-        let x = coordinate.X;
-        let y = coordinate.Y;
-        attackAI(x, y);
-        console.log(x + y)
-    });
+    if (player == "ai") {
+        square.addEventListener('click', function () {
+            let x = coordinate.X;
+            let y = coordinate.Y;
+            attackAI(x, y);
+            console.log(x + y)
+        });
+    }
     return square;
 }
-
-function boardLoader(board) {
+function boardLoader(board, player) {
     let arrayOfGridCoordinates = board.grid;
     let container = document.createElement('div');
     container.classList.add('grid-container');
     arrayOfGridCoordinates.forEach((coordinate) => {
-        let square = squareLoader(coordinate);
+        let square = squareLoader(coordinate, player);
         container.appendChild(square);
     })
-    //document.body.appendChild(container);
     return container;
 };
 function xCoordinateLoader() {
@@ -66,14 +66,18 @@ function yCoordinateLoader() {
     });
     return container;
 }
-function yCoordinateDoubler() {
-     let container = document.createElement('div');
-    container.classList.add('yCoordinateContainerDouble');
-    container.appendChild(yCoordinateLoader());
-    container.appendChild(yCoordinateLoader());
+function playerCoordinatedBoardLoader(board) {
+    let container = document.createElement('div');
+    container.classList.add('singleBoardContainer')
+    let subcontainer = document.createElement('div');
+    subcontainer.classList.add('subcontainer');
+        subcontainer.appendChild(yCoordinateLoader());
+        subcontainer.appendChild(boardLoader(board, "player"));
+        container.appendChild(xCoordinateLoader());
+        container.appendChild(subcontainer);
     return container;
 }
-function singleCoordinatedBoardLoader(board) {
+function aiCoordinatedBoardLoader(board) {
     let container = document.createElement('div');
     container.classList.add('singleBoardContainer')
     let subcontainer = document.createElement('div');
@@ -87,8 +91,8 @@ function singleCoordinatedBoardLoader(board) {
 function twoBoardContentGenerator(playerBoard, opponentBoard) {
     let container = document.createElement('div');
     container.classList.add('doubleBoardContainer');
-    container.appendChild(singleCoordinatedBoardLoader(playerBoard));
-    container.appendChild(singleCoordinatedBoardLoader(opponentBoard));
+    container.appendChild(playerCoordinatedBoardLoader(playerBoard));
+    container.appendChild(aiCoordinatedBoardLoader(opponentBoard));
     return container;
 }
 function twoBoardDOMLoader(playerBoard, opponentBoard) {
