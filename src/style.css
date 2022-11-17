@@ -4,7 +4,7 @@ body {
     height: 100%;
 }
 body {
-
+    position: relative;
 }
 #container {
     display: flex;
@@ -12,10 +12,22 @@ body {
     justify-content: center;
     align-items: center;
     margin: 10px;
+    position: relative
 }
 /*styles for the placement module */
-.placementModuleLoader {
-    position: absolute;
+.placement-module-container {
+    position: relative;
+    bottom: 70vh;
+    left: 59.5vh;
+    width: 430px;
+    background-color: grey;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    padding-right: 30px;
+    border-radius: 10px;
 }
 
 /*styles for the two grids and coordinates */
@@ -68,7 +80,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: red;
+    background-color: #cbd5e1;
 }
 .squareContainer {
 

@@ -7,11 +7,11 @@ import { generateHUD, attackAI } from './controller.js';
 
 //suite for loading carrier placement module before game begins
 let placementContainer = document.createElement('div');
-container.classList.add('placement-module-container');
+placementContainer.classList.add('placement-module-container');
 function placementModuleLoader() {
-    container.appendChild(infoTextLoader());
-    container.appendChild(placementBoardLoader());
-    return container;
+    placementContainer.appendChild(infoTextLoader());
+    placementContainer.appendChild(placementBoardLoader());
+    return placementContainer;
 }
 function infoTextLoader() {
     let place = document.createElement('div');
@@ -28,11 +28,9 @@ function placementBoardLoader() {
 function squareLoader(coordinate, player = "ai") {
     let square = document.createElement('div');
     square.classList.add('square');
-    if (coordinate.containsShip == true) {
-        square.style.backgroundColor = "red";
-    }
     if (coordinate.isHit == true) {
-        square.textContent = "X";
+        //square.textContent = "X";
+        square.style.backgroundColor = "#6ee7b7";
     }
     if (player == "ai") {
         square.addEventListener('click', function () {
@@ -41,6 +39,15 @@ function squareLoader(coordinate, player = "ai") {
             attackAI(x, y);
             console.log(x + y)
         });
+        if (coordinate.isHit == true && coordinate.containsShip == true) {
+            square.style.backgroundColor = "red";
+            square.textContent = "X";
+        }
+    }
+    else {
+        if (coordinate.containsShip == true) {
+            square.style.backgroundColor = "red";
+        }
     }
     return square;
 }
@@ -126,7 +133,7 @@ function scoreKeeperGenerator(player, input) {
     label.textContent = player + " score: "
     container.appendChild(label);
     container.appendChild(score);
-    score.textContent = input + "/10";
+    score.textContent = input + "/5";
     return container
 }
 function doubleScoreKeeperGenerator(player1, input1, player2, input2) {
@@ -245,11 +252,11 @@ class gameBoardLoader {
             }
         });
         container.removeChild(container.firstChild.nextSibling);
-        doubleScoreKeeperGenerator("Player", playerTally, "AI", aiTally);
+        doubleScoreKeeperGenerator("AI", playerTally, "Player", aiTally);
         if (playerTally == 5) {
-            announceWinner("You win!");
-        } else if (aiTally == 5) {
             announceWinner("AI wins!");
+        } else if (aiTally == 5) {
+            announceWinner("You win!");
         }
         //construct a list of gameboard.grid ships
         //for any ship, if ship.hits == size, add +1 to score
