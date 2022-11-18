@@ -41,9 +41,6 @@ class Gameboard {
                     console.log('overflow at ' + xStart + yStart);
                     return 'overflow!'
                 }
-                //if size is two, start at 8 or below
-                //if size is three, start at 7 or below
-                //if size is four, start at 6 or below
             }
             if (direction == "south") {
                 if ((yStart - 1) > (10 - size)) {

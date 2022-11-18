@@ -17,9 +17,13 @@ body {
 /*styles for the placement module */
 .placement-module-container {
     position: relative;
-    bottom: 70vh;
+    /*bottom: 70vh;
     left: 59.5vh;
-    width: 430px;
+    width: 430px;*/
+
+    bottom: 70vh;
+    left: 10vh;
+    width: 75%;
     background-color: grey;
     display: flex;
     flex-direction: column;
@@ -65,6 +69,15 @@ body {
 .subcontainer {
     display: flex;
 }
+.placementSquare {
+    height: 35px;
+    width: 35px;
+    background-color: red;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .square {
     border: solid black;
     color: black;
@@ -73,7 +86,7 @@ body {
     justify-content: center;
     align-items: center;
 }
-.square:hover {
+.square:hover, .placementSquare:hover {
     border: solid black;
     color: black;
     font-size: 12px;

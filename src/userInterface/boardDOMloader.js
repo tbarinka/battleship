@@ -1,7 +1,7 @@
 import { Gameboard, Square } from '../gameAppLogic/gameboard.js';
 import { AI } from '../playerControls/ai.js';
 import { Player } from '../playerControls/player.js';
-import { generateHUD, attackAI } from './controller.js';
+import { generateHUD, attackAI, generateForm } from './controller.js';
 
 
 //suite of functions for loading the two DOM boards & score keeper card
@@ -253,6 +253,8 @@ placementContainer.classList.add('placement-module-container');
 function placementModuleLoader() {
     placementContainer.appendChild(infoTextLoader());
     placementContainer.appendChild(placementBoardLoader());
+    placementContainer.appendChild(generateForm());
+    placementContainer.appendChild(shipMaker(2));
     return placementContainer;
 }
 function infoTextLoader() {
@@ -260,23 +262,28 @@ function infoTextLoader() {
     place.classList.add('placementText');
     place.textContent = "Place Your Ships";
     return place
-}
-function placementBoardLoader() {
-    let board = new Gameboard();
-    return selectShipPlayerCoordinatedBoardLoader(board);
-}
+};
 function selectShipSquareLoader(coordinate) {
     let square = document.createElement('div');
     square.classList.add('square');
-    square.addEventListener('mouseover', function (event) {
-        if (event.type == 'mouseover') {
-            square.style.backgroundColor = "red";
-        } else if (event.type == "click") {
-            console.log('click');
-        }
+    square.setAttribute('id', coordinate.X + coordinate.Y);
+    square.addEventListener("dragover", function (ev) {
+        console.log("dragOver");
+        ev.preventDefault();
+    });
+    square.addEventListener("drop", function (ev) {
+        console.log("Drop");
+        ev.preventDefault();
+        // Get the data, which is the id of the source element
+        const data = ev.dataTransfer.getData("text");
+        const source = document.getElementById(data);
+        let coordinate = ev.target.id;
+        console.log(coordinate);
+
+        //get the id of the target, and let the id be the coordinate of the target
     });
     return square;
-}
+};
 function selectShipBoardLoader(board) {
     let arrayOfGridCoordinates = board.grid;
     let container = document.createElement('div');
@@ -296,6 +303,41 @@ function selectShipPlayerCoordinatedBoardLoader(board) {
         subcontainer.appendChild(selectShipBoardLoader(board));
         container.appendChild(xCoordinateLoader());
         container.appendChild(subcontainer);
+    return container;
+};
+function placementBoardLoader() {
+    let board = new Gameboard();
+    return selectShipPlayerCoordinatedBoardLoader(board);
+};
+const source = "";
+function shipMaker(size) {
+    let container = document.createElement('div');
+    container.setAttribute('draggable', 'true');
+    container.setAttribute('id', 'ship')
+    while (size >= 1) {
+        let square = document.createElement('div');
+        square.classList.add('placementSquare');
+        container.appendChild(square);
+        size = size - 1;
+    }
+    container.addEventListener('dragstart', function (ev) {
+        console.log("dragStart");
+        // Change the source element's background color
+        // to show that drag has started
+        ev.currentTarget.classList.add("dragging");
+        // Clear the drag data cache (for all formats/types)
+        ev.dataTransfer.clearData();
+        // Set the drag's format and data.
+        // Use the event target's id for the data
+        ev.dataTransfer.setData("text/plain", ev.target.id);
+        const data = ev.dataTransfer.getData("text");
+        console.log(data);
+        source = document.getElementById(data);
+        console.log(source);
+    });
+    container.addEventListener("dragend", function (ev) {
+        ev.target.classList.remove("dragging");
+    });
     return container;
 }
 

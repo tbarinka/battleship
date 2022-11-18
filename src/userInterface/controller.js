@@ -113,4 +113,4 @@ function generateForm() {
 
 
 
-export { generateHUD, attackAI}
+export { generateHUD, attackAI, generateForm}
