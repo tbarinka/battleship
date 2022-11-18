@@ -5,4 +5,4 @@ import { button, boards, generateBoards, generateHUD } from './userInterface/con
 
 //new gameBoardLoader();
 generateHUD();
-//document.body.appendChild(placementModuleLoader());
+document.body.appendChild(placementModuleLoader());

@@ -4,32 +4,11 @@ import { Player } from '../playerControls/player.js';
 import { generateHUD, attackAI } from './controller.js';
 
 
-
-//suite for loading carrier placement module before game begins
-let placementContainer = document.createElement('div');
-placementContainer.classList.add('placement-module-container');
-function placementModuleLoader() {
-    placementContainer.appendChild(infoTextLoader());
-    placementContainer.appendChild(placementBoardLoader());
-    return placementContainer;
-}
-function infoTextLoader() {
-    let place = document.createElement('div');
-    place.classList.add('placementText');
-    place.textContent = "Place Your Ships";
-    return place
-}
-function placementBoardLoader() {
-    let board = new Gameboard();
-    return playerCoordinatedBoardLoader(board);
-}
-
 //suite of functions for loading the two DOM boards & score keeper card
 function squareLoader(coordinate, player = "ai") {
     let square = document.createElement('div');
     square.classList.add('square');
     if (coordinate.isHit == true) {
-        //square.textContent = "X";
         square.style.backgroundColor = "#6ee7b7";
     }
     if (player == "ai") {
@@ -39,15 +18,13 @@ function squareLoader(coordinate, player = "ai") {
             attackAI(x, y);
             console.log(x + y)
         });
-        if (coordinate.isHit == true && coordinate.containsShip == true) {
-            square.style.backgroundColor = "red";
-            square.textContent = "X";
-        }
     }
-    else {
-        if (coordinate.containsShip == true) {
-            square.style.backgroundColor = "red";
-        }
+    if (coordinate.isHit == true && coordinate.containsShip == true) {
+        square.style.backgroundColor = "red";
+        square.textContent = "X";
+    }
+    if (coordinate.containsShip == true) {
+        square.style.backgroundColor = "red";
     }
     return square;
 }
@@ -154,7 +131,6 @@ function announceWinner(text) {
     card.textContent = text;
     container.firstChild.appendChild(card);
 }
-
 class gameBoardLoader {
     constructor(playerBoard, player, aiBoard, ai) {
         this.playerBoard = playerBoard;
@@ -269,4 +245,62 @@ class gameBoardLoader {
         return [x, y];
 }
 }
+
+
+//suite for loading carrier placement module before game begins
+let placementContainer = document.createElement('div');
+placementContainer.classList.add('placement-module-container');
+function placementModuleLoader() {
+    placementContainer.appendChild(infoTextLoader());
+    placementContainer.appendChild(placementBoardLoader());
+    return placementContainer;
+}
+function infoTextLoader() {
+    let place = document.createElement('div');
+    place.classList.add('placementText');
+    place.textContent = "Place Your Ships";
+    return place
+}
+function placementBoardLoader() {
+    let board = new Gameboard();
+    return selectShipPlayerCoordinatedBoardLoader(board);
+}
+function selectShipSquareLoader(coordinate) {
+    let square = document.createElement('div');
+    square.classList.add('square');
+    square.addEventListener('mouseover', function (event) {
+        if (event.type == 'mouseover') {
+            square.style.backgroundColor = "red";
+        } else if (event.type == "click") {
+            console.log('click');
+        }
+    });
+    return square;
+}
+function selectShipBoardLoader(board) {
+    let arrayOfGridCoordinates = board.grid;
+    let container = document.createElement('div');
+    container.classList.add('grid-container');
+    arrayOfGridCoordinates.forEach((coordinate) => {
+        let square = selectShipSquareLoader(coordinate);
+        container.appendChild(square);
+    })
+    return container;
+};
+function selectShipPlayerCoordinatedBoardLoader(board) {
+    let container = document.createElement('div');
+    container.classList.add('singleBoardContainer')
+    let subcontainer = document.createElement('div');
+    subcontainer.classList.add('subcontainer');
+        subcontainer.appendChild(yCoordinateLoader());
+        subcontainer.appendChild(selectShipBoardLoader(board));
+        container.appendChild(xCoordinateLoader());
+        container.appendChild(subcontainer);
+    return container;
+}
+
+//create a function that places a two-square ship
+    //when mouseover square S, square turns red along with the southward square
+    //then add rotate functionality
+
 export { gameBoardLoader, placementModuleLoader }
