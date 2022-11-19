@@ -1,4 +1,4 @@
-import { gameBoardLoader } from './boardDOMloader.js';
+import { gameBoardLoader, placementModuleLoader } from './boardDOMloader.js';
 import { Gameboard } from '../gameAppLogic/gameboard.js';
 
 let playerBoard = new Gameboard();
@@ -28,6 +28,14 @@ function generateHUD() {
     document.body.appendChild(generateButtons());
     document.body.appendChild(generateForm());
 }
+function generateHUDwithShipPlacement() {
+    boards;
+    document.body.appendChild(generateButtons());
+    document.body.appendChild(generateForm());
+    document.body.appendChild(placementModuleLoader());
+}
+
+
 function generateButtons() {
     let container = document.createElement('div');
     container.classList.add('buttonContainer');
@@ -44,8 +52,8 @@ function generateButtons() {
         boards.simplePopulateAI();
     }
 function populatePlayer(size, x, y, direction) {
-        boards.playerBoard.populateShip(size, x, y, direction)
-}
+    boards.populatePlayer(size, x, y, direction)
+};
 //aiArray below contains globally available copy of playerBoard grid, for use by AI
 //every time the AI attacks player, selects one element at random from the array and then removes it
 //so that future invocations cannot attack the same location
@@ -116,4 +124,4 @@ function generateForm() {
 
 
 
-export { generateHUD, attackAI, generateForm, populatePlayer }
+export { generateHUD, attackAI, generateForm, populatePlayer, simplePopulate, generateHUDwithShipPlacement }

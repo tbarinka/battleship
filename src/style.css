@@ -20,10 +20,19 @@ body {
     /*bottom: 70vh;
     left: 59.5vh;
     width: 430px;*/
-
     bottom: 70vh;
     left: 10vh;
     width: 75%;
+    background-color: grey;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    padding-right: 30px;
+    border-radius: 10px;
+}
+.placement-module-subcontainer {
     background-color: grey;
     display: flex;
     flex-direction: column;

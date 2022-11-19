@@ -1,7 +1,7 @@
 import { Gameboard, Square } from '../gameAppLogic/gameboard.js';
 import { AI } from '../playerControls/ai.js';
 import { Player } from '../playerControls/player.js';
-import { generateHUD, attackAI, generateForm, populatePlayer, boards } from './controller.js';
+import { generateHUD, attackAI, generateForm, populatePlayer, boards, simplePopulate } from './controller.js';
 
 
 //suite of functions for loading the two DOM boards & score keeper card
@@ -140,8 +140,11 @@ class gameBoardLoader {
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);
         doubleScoreKeeperGenerator("Player", 0, "AI", 0);
     }
-    populatePlayer(size, xStart, yStart, direction) {
-        this.playerBoard.populateShip(size, xStart, yStart, direction);
+    populatePlayer(size, x, y, direction) {
+        this.playerBoard.populateShip(size, x, y, direction);
+        let container = document.getElementById('container');
+        container.removeChild(container.firstChild);
+        twoBoardDOMLoader(this.playerBoard, this.aiBoard);
     }
     simplePopulate() {
         this.playerBoard.populateShip(2, 'I', 4, "east");
@@ -248,10 +251,10 @@ class gameBoardLoader {
 
 
 //suite for loading carrier placement module before game begins
+
 let placementContainer = document.createElement('div');
 placementContainer.classList.add('placement-module-container');
 placementContainer.setAttribute('id', 'placementContainer');
-let placement = document.getElementById('placementContainer');
 function placementModuleLoader() {
     placementContainer.appendChild(infoTextLoader());
     placementContainer.appendChild(placementBoardLoader());
@@ -273,7 +276,7 @@ function selectShipSquareLoader(coordinate) {
         console.log("dragOver");
         ev.preventDefault();
     });
-    square.addEventListener("drop", function (ev) { 
+    square.addEventListener("drop", function (ev) {
         console.log("Drop");
         ev.preventDefault();
         const data = ev.dataTransfer.getData("text");
@@ -282,10 +285,17 @@ function selectShipSquareLoader(coordinate) {
         let size = data;
         let x = coordinate[0];
         let y = coordinate[1];
+        let container = document.getElementById('container');
+        document.body.removeChild(document.body.lastChild);
+        populatePlayer(size, x, y, "north");
     })
     return square;
-};
-
+}
+    function removeAllChildNodes(parent) {
+        while (parent.firstChild) {
+            parent.removeChild(parent.firstChild);
+        }
+    }
 function selectShipBoardLoader(board) {
     let arrayOfGridCoordinates = board.grid;
     let container = document.createElement('div');
