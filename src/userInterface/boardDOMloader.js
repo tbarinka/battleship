@@ -1,7 +1,7 @@
 import { Gameboard, Square } from '../gameAppLogic/gameboard.js';
 import { AI } from '../playerControls/ai.js';
 import { Player } from '../playerControls/player.js';
-import { generateHUD, attackAI, generateForm } from './controller.js';
+import { generateHUD, attackAI, generateForm, populatePlayer, boards } from './controller.js';
 
 
 //suite of functions for loading the two DOM boards & score keeper card
@@ -141,7 +141,7 @@ class gameBoardLoader {
         doubleScoreKeeperGenerator("Player", 0, "AI", 0);
     }
     populatePlayer(size, xStart, yStart, direction) {
-        //this.playerBoard.populateShip(size, xStart, yStart, direction);
+        this.playerBoard.populateShip(size, xStart, yStart, direction);
     }
     simplePopulate() {
         this.playerBoard.populateShip(2, 'I', 4, "east");
@@ -250,6 +250,8 @@ class gameBoardLoader {
 //suite for loading carrier placement module before game begins
 let placementContainer = document.createElement('div');
 placementContainer.classList.add('placement-module-container');
+placementContainer.setAttribute('id', 'placementContainer');
+let placement = document.getElementById('placementContainer');
 function placementModuleLoader() {
     placementContainer.appendChild(infoTextLoader());
     placementContainer.appendChild(placementBoardLoader());
@@ -271,19 +273,19 @@ function selectShipSquareLoader(coordinate) {
         console.log("dragOver");
         ev.preventDefault();
     });
-    square.addEventListener("drop", function (ev) {
+    square.addEventListener("drop", function (ev) { 
         console.log("Drop");
         ev.preventDefault();
-        // Get the data, which is the id of the source element
         const data = ev.dataTransfer.getData("text");
         const source = document.getElementById(data);
         let coordinate = ev.target.id;
-        console.log(coordinate);
-
-        //get the id of the target, and let the id be the coordinate of the target
-    });
+        let size = data;
+        let x = coordinate[0];
+        let y = coordinate[1];
+    })
     return square;
 };
+
 function selectShipBoardLoader(board) {
     let arrayOfGridCoordinates = board.grid;
     let container = document.createElement('div');
@@ -313,7 +315,7 @@ const source = "";
 function shipMaker(size) {
     let container = document.createElement('div');
     container.setAttribute('draggable', 'true');
-    container.setAttribute('id', 'ship')
+    container.setAttribute('id', size)
     while (size >= 1) {
         let square = document.createElement('div');
         square.classList.add('placementSquare');
