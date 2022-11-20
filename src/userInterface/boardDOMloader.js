@@ -279,15 +279,16 @@ function selectShipSquareLoader(coordinate) {
     square.addEventListener("drop", function (ev) {
         console.log("Drop");
         ev.preventDefault();
-        const data = ev.dataTransfer.getData("text");
-        const source = document.getElementById(data);
+        let data = ev.dataTransfer.getData("text");
+        let source = document.getElementById(data);
         let coordinate = ev.target.id;
         let size = data;
         let x = coordinate[0];
         let y = coordinate[1];
-        let container = document.getElementById('container');
-        document.body.removeChild(document.body.lastChild);
         populatePlayer(size, x, y, "north");
+        document.body.removeChild(document.body.lastChild);
+        document.body.removeChild(document.body.lastChild);
+        return
     })
     return square;
 }
@@ -333,14 +334,11 @@ function shipMaker(size) {
         size = size - 1;
     }
     container.addEventListener('dragstart', function (ev) {
-        console.log("dragStart");
         // Change the source element's background color
         // to show that drag has started
         ev.currentTarget.classList.add("dragging");
         // Clear the drag data cache (for all formats/types)
         ev.dataTransfer.clearData();
-        // Set the drag's format and data.
-        // Use the event target's id for the data
         ev.dataTransfer.setData("text/plain", ev.target.id);
         const data = ev.dataTransfer.getData("text");
         console.log(data);
