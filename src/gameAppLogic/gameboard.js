@@ -66,18 +66,25 @@ class Gameboard {
         let squaresContainingNewShip = [];
         startingSquare.containsShip = true;
         startingSquare.ship = newShip;
+        console.log(this.grid.indexOf(startingSquare));
+        console.log(this.grid[this.grid.indexOf(startingSquare) + 1]);
         squaresContainingNewShip.push(startingSquare);
+        let yIndex = this.grid.indexOf(startingSquare);
         while (size > 1) {
             if (direction == "north") {
                 yStart = yStart - 1;
-                let square = this.grid.find(square => (square.X == newShip.xStart && square.Y == yStart))
+                let square = this.grid.find(square => (square.X == newShip.xStart && square.Y == yStart));
                 square.containsShip = true;
                 square.ship = newShip;
                 squaresContainingNewShip.push(square)
                 size = size - 1;
-            } else if (direction == "south") {
-                yStart = yStart + 1;
-                let square = this.grid.find(square => (square.X == newShip.xStart && square.Y == yStart))
+            }
+            if (direction == "south") {
+                //yStart = yStart + 1;
+                yIndex += 1
+                //let square = this.grid.find(square => (square.X == newShip.xStart && square.Y == yStart));
+                let square = this.grid[yIndex];
+                //console.log(this.grid[this.grid.indexOf(startingSquare) + 10]);
                 square.containsShip = true;
                 square.ship = newShip;
                 squaresContainingNewShip.push(square)

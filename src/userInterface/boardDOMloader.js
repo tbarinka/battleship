@@ -260,7 +260,6 @@ const shipCount = [];
 function placementModuleLoader() {
     placementContainer.appendChild(infoTextLoader());
     placementContainer.appendChild(placementBoardLoader());
-    //placementContainer.appendChild(generateForm());
     placementContainer.appendChild(shipCounter());
     document.body.appendChild(placementContainer);
 }
@@ -290,8 +289,8 @@ function selectShipSquareLoader(coordinate) {
         let size = data;
         let x = coordinate[0];
         let y = coordinate[1];
-        populatePlayer(size, x, y, "north");
-        placementBoard.populateShip(size, x, y, "north");
+        populatePlayer(size, x, y, "south");
+        placementBoard.populateShip(size, x, y, "south");
         removeAllChildNodes(placementContainer);
         document.body.removeChild(placementContainer);
         shipCount.push(size);
@@ -382,6 +381,13 @@ function shipCounter() {
     }
     return shipContainer;
 }
+function altShipCunter() {
+    let shipContainer = document.createElement('div');
+    shipContainer.classList.add('shipContainer');
+    shipContainer.appendChild(sizeTwoShipCounter());
+    shipContainer.appendChild(sizeThreeShipCounter());
+    return shipContainer;
+}
 function sizeTwoShipCounter() {
     let shipContainer = document.createElement('div');
     shipContainer.classList.add('shipContainer');
@@ -391,6 +397,18 @@ function sizeTwoShipCounter() {
     }
     else if (shipCount.filter(x => x == 2).length == 1) {
         shipContainer.appendChild(shipMaker(2));
+    }
+    return shipContainer
+}
+function sizeThreeShipCounter() {
+        let shipContainer = document.createElement('div');
+    shipContainer.classList.add('shipContainer');
+    if (shipCount.filter(x => x == 3).length == 0) {
+        shipContainer.appendChild(shipMaker(3));
+        shipContainer.appendChild(shipMaker(3));
+    }
+    else if (shipCount.filter(x => x == 3).length == 1) {
+        shipContainer.appendChild(shipMaker(3));
     }
     return shipContainer
 }
