@@ -1,7 +1,7 @@
 import { Gameboard, Square } from '../gameAppLogic/gameboard.js';
 import { AI } from '../playerControls/ai.js';
 import { Player } from '../playerControls/player.js';
-import { generateHUD, attackAI, generateForm, populatePlayer, boards, simplePopulate } from './controller.js';
+import { generateHUD, attackAI, generateForm, populatePlayer, simplePopulate } from './controller.js';
 
 
 //suite of functions for loading the two DOM boards & score keeper card
@@ -258,9 +258,9 @@ placementContainer.setAttribute('id', 'placementContainer');
 function placementModuleLoader() {
     placementContainer.appendChild(infoTextLoader());
     placementContainer.appendChild(placementBoardLoader());
-    placementContainer.appendChild(generateForm());
+    //placementContainer.appendChild(generateForm());
     placementContainer.appendChild(shipMaker(2));
-    return placementContainer;
+    document.body.appendChild(placementContainer);
 }
 function infoTextLoader() {
     let place = document.createElement('div');
@@ -271,6 +271,9 @@ function infoTextLoader() {
 function selectShipSquareLoader(coordinate) {
     let square = document.createElement('div');
     square.classList.add('square');
+    if (coordinate.containsShip == true) {
+        square.style.backgroundColor = "red";
+    }
     square.setAttribute('id', coordinate.X + coordinate.Y);
     square.addEventListener("dragover", function (ev) {
         console.log("dragOver");
@@ -286,9 +289,12 @@ function selectShipSquareLoader(coordinate) {
         let x = coordinate[0];
         let y = coordinate[1];
         populatePlayer(size, x, y, "north");
-        document.body.removeChild(document.body.lastChild);
-        document.body.removeChild(document.body.lastChild);
-        return
+        placementBoard.populateShip(size, x, y, "north");
+        removeAllChildNodes(placementContainer);
+        document.body.removeChild(placementContainer);
+        //removeAllChildNodes(document.body.lastChild);
+        //document.body.removeChild(document.body.lastChild);
+        placementModuleLoader();
     })
     return square;
 }
@@ -318,11 +324,12 @@ function selectShipPlayerCoordinatedBoardLoader(board) {
         container.appendChild(subcontainer);
     return container;
 };
+const placementBoard = new Gameboard();
 function placementBoardLoader() {
-    let board = new Gameboard();
-    return selectShipPlayerCoordinatedBoardLoader(board);
+    return selectShipPlayerCoordinatedBoardLoader(placementBoard);
 };
 const source = "";
+
 function shipMaker(size) {
     let container = document.createElement('div');
     container.setAttribute('draggable', 'true');
@@ -350,6 +357,8 @@ function shipMaker(size) {
     });
     return container;
 }
+
+
 
 //create a function that places a two-square ship
     //when mouseover square S, square turns red along with the southward square

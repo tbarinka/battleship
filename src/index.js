@@ -3,5 +3,6 @@ import { gameBoardLoader, placementModuleLoader } from './userInterface/boardDOM
 import { button, boards, generateBoards, generateHUD, generateHUDwithShipPlacement } from './userInterface/controller.js'
 
 
-//new gameBoardLoader();
-generateHUDwithShipPlacement();
+generateHUD();
+placementModuleLoader();
+//generateHUDwithShipPlacement();
