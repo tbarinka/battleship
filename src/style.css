@@ -42,6 +42,16 @@ body {
     padding-right: 30px;
     border-radius: 10px;
 }
+.shipContainer {
+    display: flex;
+    gap: 3px;
+    
+}
+.ship {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
 
 /*styles for the two grids and coordinates */
 .doubleBoardContainer {
@@ -86,6 +96,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    opacity: 1;
 }
 .square {
     border: solid black;

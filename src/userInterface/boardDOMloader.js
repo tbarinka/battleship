@@ -255,11 +255,13 @@ class gameBoardLoader {
 let placementContainer = document.createElement('div');
 placementContainer.classList.add('placement-module-container');
 placementContainer.setAttribute('id', 'placementContainer');
+const placementBoard = new Gameboard();
+const shipCount = [];
 function placementModuleLoader() {
     placementContainer.appendChild(infoTextLoader());
     placementContainer.appendChild(placementBoardLoader());
     //placementContainer.appendChild(generateForm());
-    placementContainer.appendChild(shipMaker(2));
+    placementContainer.appendChild(shipCounter());
     document.body.appendChild(placementContainer);
 }
 function infoTextLoader() {
@@ -292,8 +294,7 @@ function selectShipSquareLoader(coordinate) {
         placementBoard.populateShip(size, x, y, "north");
         removeAllChildNodes(placementContainer);
         document.body.removeChild(placementContainer);
-        //removeAllChildNodes(document.body.lastChild);
-        //document.body.removeChild(document.body.lastChild);
+        shipCount.push(size);
         placementModuleLoader();
     })
     return square;
@@ -324,7 +325,6 @@ function selectShipPlayerCoordinatedBoardLoader(board) {
         container.appendChild(subcontainer);
     return container;
 };
-const placementBoard = new Gameboard();
 function placementBoardLoader() {
     return selectShipPlayerCoordinatedBoardLoader(placementBoard);
 };
@@ -332,6 +332,7 @@ const source = "";
 
 function shipMaker(size) {
     let container = document.createElement('div');
+    container.classList.add('ship');
     container.setAttribute('draggable', 'true');
     container.setAttribute('id', size)
     while (size >= 1) {
@@ -340,8 +341,14 @@ function shipMaker(size) {
         container.appendChild(square);
         size = size - 1;
     }
-    container.addEventListener('dragstart', function (ev) {
-        // Change the source element's background color
+    container.addEventListener('dragstart', transferDataOnDragstart);
+    container.addEventListener("dragend", function (ev) {
+        ev.target.classList.remove("dragging");
+    });
+    return container;
+}
+function transferDataOnDragstart(ev) {
+     // Change the source element's background color
         // to show that drag has started
         ev.currentTarget.classList.add("dragging");
         // Clear the drag data cache (for all formats/types)
@@ -351,13 +358,42 @@ function shipMaker(size) {
         console.log(data);
         source = document.getElementById(data);
         console.log(source);
-    });
-    container.addEventListener("dragend", function (ev) {
-        ev.target.classList.remove("dragging");
-    });
-    return container;
+        ev.currentTarget.removeEventListener("dragend", transferDataOnDragstart);
 }
-
+function shipCounter() {
+    let shipContainer = document.createElement('div');
+    shipContainer.classList.add('shipContainer');
+    console.log(shipCount.filter(x => x == 2).length);
+    if (shipCount.filter(x => x == 2).length == 0) {
+        shipContainer.appendChild(shipMaker(2));
+        shipContainer.appendChild(shipMaker(2));
+    }
+    else if (shipCount.filter(x => x == 2).length == 1) {
+        shipContainer.appendChild(shipMaker(2));
+    }
+    if (shipCount.filter(x => x == 3).length == 0) {
+        shipContainer.appendChild(shipMaker(3));
+        shipContainer.appendChild(shipMaker(3));
+    } else if (shipCount.filter(x => x == 3).length == 1) {
+        shipContainer.appendChild(shipMaker(3));
+    }
+    if (shipCount.filter(x => x == 4).length == 0) {
+        shipContainer.appendChild(shipMaker(4))
+    }
+    return shipContainer;
+}
+function sizeTwoShipCounter() {
+    let shipContainer = document.createElement('div');
+    shipContainer.classList.add('shipContainer');
+    if (shipCount.filter(x => x == 2).length == 0) {
+        shipContainer.appendChild(shipMaker(2));
+        shipContainer.appendChild(shipMaker(2));
+    }
+    else if (shipCount.filter(x => x == 2).length == 1) {
+        shipContainer.appendChild(shipMaker(2));
+    }
+    return shipContainer
+}
 
 
 //create a function that places a two-square ship
