@@ -40,6 +40,9 @@ body {
 .rightInfoSubcontainer {
     gap: 10px;
 }
+.rightInfoButtonsContainer {
+    
+}
 .shipAllClassesContainer {
     display: flex;
     flex-direction: row;
@@ -142,7 +145,7 @@ body {
 }
 
 /*styles for game controller hud*/
-.populateButton, .shiftShipButton {
+.populateButton, .placementButton {
     height: 40px;
     width: 60px;
     display: flex;

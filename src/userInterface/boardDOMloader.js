@@ -282,16 +282,30 @@ function topTextLoader() {
 function rightInfoLoader() {
     let container = document.createElement('div');
     container.classList.add('rightInfoSubcontainer');
-    container.appendChild(shiftShipBtnLoader());
+    container.appendChild(buttonsIntegrator());
     container.appendChild(textBoxLoader());
     return container
+};
+function buttonsIntegrator() {
+    let container = document.createElement('div');
+    container.classList.add('rightInfoButtonsContainer')
+    container.appendChild(shiftShipBtnLoader());
+    container.appendChild(beginGameBtnLoader());
+    return container;
 }
 function shiftShipBtnLoader() {
     let shiftShipBtn = document.createElement('button');
-    shiftShipBtn.classList.add('shiftShipButton');
+    shiftShipBtn.classList.add('placementButton');
     shiftShipBtn.textContent = "Clear Ships"
     return shiftShipBtn;
-}
+};
+function beginGameBtnLoader() {
+    let beginBtn = document.createElement('button');
+    beginBtn.classList.add('placementButton');
+    beginBtn.textContent = "Begin Game";
+    beginBtn.addEventListener('click', checkifShipsAreAllPlaced);
+    return beginBtn;
+};
 function textBoxLoader() {
     let textBox = document.createElement('div');
     textBox.textContent = "Include Directions Here";
@@ -409,6 +423,7 @@ function transferDataOnDragstart(ev) {
         console.log(source);
         ev.currentTarget.removeEventListener("dragend", transferDataOnDragstart);
 }
+
 function shipCounter() {
     let shipContainer = document.createElement('div');
     shipContainer.classList.add('shipAllClassesContainer');
@@ -441,6 +456,12 @@ function shipCounter() {
         shipContainer.appendChild(sizeFour);
     }
     return shipContainer;
+}
+function checkifShipsAreAllPlaced() {
+    if (shipCount.length == 5) {
+        removeAllChildNodes(placementContainer);
+        document.body.removeChild(placementContainer);
+    }
 }
 
 
