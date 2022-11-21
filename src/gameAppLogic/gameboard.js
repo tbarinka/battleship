@@ -109,6 +109,52 @@ class Gameboard {
         return squaresContainingNewShip;
         //add some code to account for size > 1 and direction
     }
+    depopulateShip(size, xStart, yStart, direction) {
+        let newShip = new Ship(size, xStart, yStart);
+        let startingSquare = this.grid.find(square => (square.X == newShip.xStart && square.Y == newShip.yStart));
+        let squaresContainingNewShip = [];
+        startingSquare.containsShip = false;
+        startingSquare.ship = null;
+        squaresContainingNewShip.push(startingSquare);
+        let yIndex = this.grid.indexOf(startingSquare);
+        while (size > 1) {
+            if (direction == "north") {
+                yStart = yStart - 1;
+                let square = this.grid.find(square => (square.X == newShip.xStart && square.Y == yStart));
+                square.containsShip = false;
+                square.ship = null;
+                squaresContainingNewShip.push(square)
+                size = size - 1;
+            }
+            if (direction == "south") {
+                //yStart = yStart + 1;
+                yIndex += 1
+                //let square = this.grid.find(square => (square.X == newShip.xStart && square.Y == yStart));
+                let square = this.grid[yIndex];
+                //console.log(this.grid[this.grid.indexOf(startingSquare) + 10]);
+                square.containsShip = false;
+                square.ship = null;
+                squaresContainingNewShip.push(square)
+                size = size - 1;
+            } else if (direction == "east") {
+                xStart = this.xAxis[this.xAxis.indexOf(xStart) + 1];
+                let square = this.grid.find(square => (square.X == xStart && square.Y == newShip.yStart))
+                square.containsShip = false;
+                square.ship = null;
+                squaresContainingNewShip.push(square);
+                size = size - 1;
+            } else if (direction == "west") {
+                xStart = this.xAxis[this.xAxis.indexOf(xStart) - 1];
+                let square = this.grid.find(square => (square.X == xStart && square.Y == newShip.yStart))
+                square.containsShip = false;
+                square.ship = null;
+                squaresContainingNewShip.push(square)
+                size = size - 1;
+            }
+        }
+        return squaresContainingNewShip;
+        //add some code to account for size > 1 and direction
+    }
 }
 
 

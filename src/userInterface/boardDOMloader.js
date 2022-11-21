@@ -300,7 +300,11 @@ function selectShipSquareLoader(coordinate) {
             let id = square.id;
             let data = id.split("");
             let startingSquare = placementBoard.grid.find(square => (square.X == data[0] && square.Y == data[1]));
-            placementBoard.populateShip(startingSquare.ship.size, startingSquare.ship.xStart, startingSquare.ship.yStart, "south");
+            let size = startingSquare.ship.size;
+            let x = startingSquare.ship.xStart;
+            let y = startingSquare.ship.yStart;
+            placementBoard.depopulateShip(size, x, y, "east")
+            placementBoard.populateShip(size, x, y, "south");
             removeAllChildNodes(placementContainer);
             document.body.removeChild(placementContainer);
             placementModuleLoader();
