@@ -52,8 +52,11 @@ function generateButtons() {
         boards.simplePopulateAI();
     }
 function populatePlayer(size, x, y, direction) {
-    boards.populatePlayer(size, x, y, direction)
+    boards.populatePlayer(size, x, y, direction);
 };
+function depopulatePlayer(size, x, y, direction) {
+    boards.depopulatePlayer(size, x, y, direction);
+}
 //aiArray below contains globally available copy of playerBoard grid, for use by AI
 //every time the AI attacks player, selects one element at random from the array and then removes it
 //so that future invocations cannot attack the same location
@@ -124,4 +127,4 @@ function generateForm() {
 
 
 
-export { generateHUD, attackAI, generateForm, populatePlayer, simplePopulate, generateHUDwithShipPlacement, playerBoard }
+export { generateHUD, attackAI, generateForm, populatePlayer, simplePopulate, generateHUDwithShipPlacement, depopulatePlayer }

@@ -1,7 +1,7 @@
 import { Gameboard, Square } from '../gameAppLogic/gameboard.js';
 import { AI } from '../playerControls/ai.js';
 import { Player } from '../playerControls/player.js';
-import { generateHUD, attackAI, generateForm, populatePlayer, simplePopulate } from './controller.js';
+import { generateHUD, attackAI, generateForm, populatePlayer, simplePopulate, depopulatePlayer } from './controller.js';
 
 
 //suite of functions for loading the two DOM boards & score keeper card
@@ -142,6 +142,12 @@ class gameBoardLoader {
     }
     populatePlayer(size, x, y, direction) {
         this.playerBoard.populateShip(size, x, y, direction);
+        let container = document.getElementById('container');
+        container.removeChild(container.firstChild);
+        twoBoardDOMLoader(this.playerBoard, this.aiBoard);
+    }
+    depopulatePlayer(size, x, y, direction) {
+        this.playerBoard.depopulateShip(size, x, y, direction);
         let container = document.getElementById('container');
         container.removeChild(container.firstChild);
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);
@@ -305,11 +311,15 @@ function selectShipSquareLoader(coordinate) {
             let y = startingSquare.ship.yStart;
             if (startingSquare.ship.direction == "east") {
                 placementBoard.depopulateShip(size, x, y, "east");
+                depopulatePlayer(size, x, y, "east");
+                //write depopulate player function
                 placementBoard.populateShip(size, x, y, "south");
+                populatePlayer(size, x, y, "south");
             } else if (startingSquare.ship.direction == "south") {
                 placementBoard.depopulateShip(size, x, y, "south");
+                depopulatePlayer(size, x, y, "south");
                 placementBoard.populateShip(size, x, y, "east");
-                
+                populatePlayer(size, x, y, "east");
             }
             removeAllChildNodes(placementContainer);
             document.body.removeChild(placementContainer);
