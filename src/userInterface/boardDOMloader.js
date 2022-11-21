@@ -361,33 +361,38 @@ function transferDataOnDragstart(ev) {
 }
 function shipCounter() {
     let shipContainer = document.createElement('div');
-    shipContainer.classList.add('shipContainer');
-    console.log(shipCount.filter(x => x == 2).length);
+    shipContainer.classList.add('shipAllClassesContainer');
+    let sizeTwo = document.createElement('div');
+    sizeTwo.classList.add('singleShipClassContainer');
+    let sizeThree = document.createElement('div');
+    sizeThree.classList.add('singleShipClassContainer');
+    let sizeFour = document.createElement('div');
+    sizeFour.classList.add('singleShipClassContainer');
+    //console.log(shipCount.filter(x => x == 2).length);
     if (shipCount.filter(x => x == 2).length == 0) {
-        shipContainer.appendChild(shipMaker(2));
-        shipContainer.appendChild(shipMaker(2));
+        sizeTwo.appendChild(shipMaker(2));
+        sizeTwo.appendChild(shipMaker(2));
+        shipContainer.appendChild(sizeTwo);
     }
     else if (shipCount.filter(x => x == 2).length == 1) {
-        shipContainer.appendChild(shipMaker(2));
+        sizeTwo.appendChild(shipMaker(2));
+        shipContainer.appendChild(sizeTwo);
     }
     if (shipCount.filter(x => x == 3).length == 0) {
-        shipContainer.appendChild(shipMaker(3));
-        shipContainer.appendChild(shipMaker(3));
+        sizeThree.appendChild(shipMaker(3));
+        sizeThree.appendChild(shipMaker(3));
+        shipContainer.appendChild(sizeThree);
     } else if (shipCount.filter(x => x == 3).length == 1) {
-        shipContainer.appendChild(shipMaker(3));
+        sizeThree.appendChild(shipMaker(3));
+        shipContainer.appendChild(sizeThree);
     }
     if (shipCount.filter(x => x == 4).length == 0) {
-        shipContainer.appendChild(shipMaker(4))
+        sizeFour.appendChild(shipMaker(4));
+        shipContainer.appendChild(sizeFour);
     }
     return shipContainer;
 }
-function altShipCunter() {
-    let shipContainer = document.createElement('div');
-    shipContainer.classList.add('shipContainer');
-    shipContainer.appendChild(sizeTwoShipCounter());
-    shipContainer.appendChild(sizeThreeShipCounter());
-    return shipContainer;
-}
+
 function sizeTwoShipCounter() {
     let shipContainer = document.createElement('div');
     shipContainer.classList.add('shipContainer');

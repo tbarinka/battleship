@@ -42,15 +42,24 @@ body {
     padding-right: 30px;
     border-radius: 10px;
 }
-.shipContainer {
+.shipAllClassesContainer {
     display: flex;
-    gap: 3px;
+    flex-direction: row;
+    grid-template-columns: repeat(5, 1fr);
+    background-color: rgba(0, 0, 255, 0);
+    gap: 20px;
     
+}
+.singleShipClassContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 .ship {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 3px;
+    border: solid black 2px;
 }
 
 /*styles for the two grids and coordinates */
