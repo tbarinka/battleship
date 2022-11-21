@@ -63,6 +63,7 @@ class Gameboard {
             }
         }
         let newShip = new Ship(size, xStart, yStart);
+        newShip.direction = direction;
         let startingSquare = this.grid.find(square => (square.X == newShip.xStart && square.Y == newShip.yStart));
         let squaresContainingNewShip = [];
         startingSquare.containsShip = true;

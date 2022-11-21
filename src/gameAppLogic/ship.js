@@ -7,6 +7,7 @@ class Ship {
     this.hits = []
     this.xStart = xStart
     this.yStart = yStart
+    this.direction = null
   }
   hit() {
     this.hits.push('hit');

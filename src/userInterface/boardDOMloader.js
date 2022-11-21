@@ -303,8 +303,14 @@ function selectShipSquareLoader(coordinate) {
             let size = startingSquare.ship.size;
             let x = startingSquare.ship.xStart;
             let y = startingSquare.ship.yStart;
-            placementBoard.depopulateShip(size, x, y, "east")
-            placementBoard.populateShip(size, x, y, "south");
+            if (startingSquare.ship.direction == "east") {
+                placementBoard.depopulateShip(size, x, y, "east");
+                placementBoard.populateShip(size, x, y, "south");
+            } else if (startingSquare.ship.direction == "south") {
+                placementBoard.depopulateShip(size, x, y, "south");
+                placementBoard.populateShip(size, x, y, "east");
+                
+            }
             removeAllChildNodes(placementContainer);
             document.body.removeChild(placementContainer);
             placementModuleLoader();
