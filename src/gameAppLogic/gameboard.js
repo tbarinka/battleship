@@ -7,6 +7,7 @@ class Square {
         this.isHit = false;
         this.containsShip = false;
         this.ship = null;
+        this.start = null
     }
 }
 class Gameboard {
@@ -94,7 +95,7 @@ class Gameboard {
                 let square = this.grid.find(square => (square.X == xStart && square.Y == newShip.yStart))
                 square.containsShip = true;
                 square.ship = newShip;
-                squaresContainingNewShip.push(square)
+                squaresContainingNewShip.push(square);
                 size = size - 1;
             } else if (direction == "west") {
                 xStart = this.xAxis[this.xAxis.indexOf(xStart) - 1];

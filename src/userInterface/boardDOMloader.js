@@ -296,6 +296,15 @@ function selectShipSquareLoader(coordinate) {
     square.classList.add('square');
     if (coordinate.containsShip == true) {
         square.style.backgroundColor = "red";
+        square.addEventListener('click', function () {
+            let id = square.id;
+            let data = id.split("");
+            let startingSquare = placementBoard.grid.find(square => (square.X == data[0] && square.Y == data[1]));
+            placementBoard.populateShip(startingSquare.ship.size, startingSquare.ship.xStart, startingSquare.ship.yStart, "south");
+            removeAllChildNodes(placementContainer);
+            document.body.removeChild(placementContainer);
+            placementModuleLoader();
+        })
     }
     square.setAttribute('id', coordinate.X + coordinate.Y);
     square.addEventListener("dragover", function (ev) {
@@ -311,7 +320,7 @@ function selectShipSquareLoader(coordinate) {
         let size = data;
         let x = coordinate[0];
         let y = coordinate[1];
-        populatePlayer(size, x, y, "south");
+        populatePlayer(size, x, y, "east");
         placementBoard.populateShip(size, x, y, "east");
         removeAllChildNodes(placementContainer);
         document.body.removeChild(placementContainer);
@@ -350,7 +359,6 @@ function placementBoardLoader() {
     return selectShipPlayerCoordinatedBoardLoader(placementBoard);
 };
 const source = "";
-
 function shipMaker(size) {
     let container = document.createElement('div');
     container.classList.add('ship');

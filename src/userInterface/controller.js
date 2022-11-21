@@ -124,4 +124,4 @@ function generateForm() {
 
 
 
-export { generateHUD, attackAI, generateForm, populatePlayer, simplePopulate, generateHUDwithShipPlacement }
+export { generateHUD, attackAI, generateForm, populatePlayer, simplePopulate, generateHUDwithShipPlacement, playerBoard }
