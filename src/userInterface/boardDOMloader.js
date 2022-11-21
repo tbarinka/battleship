@@ -258,17 +258,39 @@ placementContainer.setAttribute('id', 'placementContainer');
 const placementBoard = new Gameboard();
 const shipCount = [];
 function placementModuleLoader() {
-    placementContainer.appendChild(infoTextLoader());
-    placementContainer.appendChild(placementBoardLoader());
+    placementContainer.appendChild(topTextLoader());
+    let container = document.createElement('div');
+    container.classList.add('placement-module-subcontainer')
+    container.appendChild(placementBoardLoader());
+    container.appendChild(rightInfoLoader());
+    placementContainer.appendChild(container);
     placementContainer.appendChild(shipCounter());
     document.body.appendChild(placementContainer);
 }
-function infoTextLoader() {
+function topTextLoader() {
     let place = document.createElement('div');
     place.classList.add('placementText');
     place.textContent = "Place Your Ships";
     return place
 };
+function rightInfoLoader() {
+    let container = document.createElement('div');
+    container.classList.add('rightInfoSubcontainer');
+    container.appendChild(shiftShipBtnLoader());
+    container.appendChild(textBoxLoader());
+    return container
+}
+function shiftShipBtnLoader() {
+    let shiftShipBtn = document.createElement('button');
+    shiftShipBtn.classList.add('shiftShipButton');
+    shiftShipBtn.textContent = "Clear Ships"
+    return shiftShipBtn;
+}
+function textBoxLoader() {
+    let textBox = document.createElement('div');
+    textBox.textContent = "Include Directions Here";
+    return textBox;
+}
 function selectShipSquareLoader(coordinate) {
     let square = document.createElement('div');
     square.classList.add('square');
@@ -392,6 +414,7 @@ function shipCounter() {
     }
     return shipContainer;
 }
+
 
 
 

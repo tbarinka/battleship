@@ -32,15 +32,13 @@ body {
     padding-right: 30px;
     border-radius: 10px;
 }
-.placement-module-subcontainer {
-    background-color: grey;
+.placement-module-subcontainer, .rightInfoSubcontainer {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
     padding: 10px;
-    padding-right: 30px;
-    border-radius: 10px;
+}
+.rightInfoSubcontainer {
+    gap: 10px;
 }
 .shipAllClassesContainer {
     display: flex;
@@ -144,7 +142,7 @@ body {
 }
 
 /*styles for game controller hud*/
-.populateButton {
+.populateButton, .shiftShipButton {
     height: 40px;
     width: 60px;
     display: flex;
