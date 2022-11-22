@@ -1,7 +1,7 @@
 import { Gameboard, Square } from '../gameAppLogic/gameboard.js';
 import { AI } from '../playerControls/ai.js';
 import { Player } from '../playerControls/player.js';
-import { generateHUD, attackAI, generateForm, populatePlayer, simplePopulate, depopulatePlayer } from './controller.js';
+import { generateHUD, attackAI, generateForm, populatePlayer, simplePopulate, depopulatePlayer, reloadBoards } from './controller.js';
 
 
 //suite of functions for loading the two DOM boards & score keeper card
@@ -140,6 +140,13 @@ class gameBoardLoader {
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);
         doubleScoreKeeperGenerator("Player", 0, "AI", 0);
     }
+    reloadBoards() {
+        this.playerBoard = new Gameboard();
+        this.aiBoard = new Gameboard();
+        let container = document.getElementById('container');
+        container.removeChild(container.firstChild);
+        twoBoardDOMLoader(this.playerBoard, this.aiBoard);
+    }
     populatePlayer(size, x, y, direction) {
         this.playerBoard.populateShip(size, x, y, direction);
         let container = document.getElementById('container');
@@ -261,8 +268,8 @@ class gameBoardLoader {
 let placementContainer = document.createElement('div');
 placementContainer.classList.add('placement-module-container');
 placementContainer.setAttribute('id', 'placementContainer');
-const placementBoard = new Gameboard();
-const shipCount = [];
+let placementBoard = new Gameboard();
+let shipCount = [];
 function placementModuleLoader() {
     placementContainer.appendChild(topTextLoader());
     let container = document.createElement('div');
@@ -289,15 +296,16 @@ function rightInfoLoader() {
 function buttonsIntegrator() {
     let container = document.createElement('div');
     container.classList.add('rightInfoButtonsContainer')
-    container.appendChild(shiftShipBtnLoader());
+    container.appendChild(resetShipBtnLoader());
     container.appendChild(beginGameBtnLoader());
     return container;
 }
-function shiftShipBtnLoader() {
-    let shiftShipBtn = document.createElement('button');
-    shiftShipBtn.classList.add('placementButton');
-    shiftShipBtn.textContent = "Clear Ships"
-    return shiftShipBtn;
+function resetShipBtnLoader() {
+    let resetShipBtn = document.createElement('button');
+    resetShipBtn.classList.add('placementButton');
+    resetShipBtn.textContent = "Reset Ships";
+    resetShipBtn.addEventListener('click', resetShips)
+    return resetShipBtn;
 };
 function beginGameBtnLoader() {
     let beginBtn = document.createElement('button');
@@ -464,6 +472,19 @@ function checkifShipsAreAllPlaced() {
     }
 }
 
+function resetShips() {
+    placementBoard = new Gameboard();
+    clearShipCount();
+    removeAllChildNodes(placementContainer);
+    document.body.removeChild(placementContainer);
+    reloadBoards();
+    placementModuleLoader();
+}
+function clearShipCount() {
+    while (shipCount.length >= 1) {
+        shipCount.pop();
+    }
+}
 
 
 

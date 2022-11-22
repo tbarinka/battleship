@@ -26,7 +26,7 @@ attackPlayerButton.textContent = "Attack Player"
 function generateHUD() {
     boards;
     document.body.appendChild(generateButtons());
-    document.body.appendChild(generateForm());
+    //document.body.appendChild(generateForm());
 }
 function generateHUDwithShipPlacement() {
     boards;
@@ -34,8 +34,6 @@ function generateHUDwithShipPlacement() {
     document.body.appendChild(generateForm());
     document.body.appendChild(placementModuleLoader());
 }
-
-
 function generateButtons() {
     let container = document.createElement('div');
     container.classList.add('buttonContainer');
@@ -57,6 +55,14 @@ function populatePlayer(size, x, y, direction) {
 function depopulatePlayer(size, x, y, direction) {
     boards.depopulatePlayer(size, x, y, direction);
 }
+//this function is used with the ship placement module
+    //whenever you reset ship placement, you also need to reload player & ai boards
+    //to delete any ships placed during prior ship placement phase
+function reloadBoards() {
+    boards.reloadBoards();
+}
+
+
 //aiArray below contains globally available copy of playerBoard grid, for use by AI
 //every time the AI attacks player, selects one element at random from the array and then removes it
 //so that future invocations cannot attack the same location
@@ -127,4 +133,4 @@ function generateForm() {
 
 
 
-export { generateHUD, attackAI, generateForm, populatePlayer, simplePopulate, generateHUDwithShipPlacement, depopulatePlayer }
+export { reloadBoards, generateHUD, attackAI, generateForm, populatePlayer, simplePopulate, depopulatePlayer }
