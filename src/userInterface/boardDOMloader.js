@@ -371,8 +371,14 @@ function selectShipSquareLoader(coordinate) {
             let array = [coordinate[1], coordinate[2]]
             y = array.join('');
         }
-        populatePlayer(size, x, y, "east");
-        placementBoard.populateShip(size, x, y, "east");
+        if (rotationTracker == 0) {
+            populatePlayer(size, x, y, "east");
+            placementBoard.populateShip(size, x, y, "east");
+        }
+        else {
+            populatePlayer(size, x, y, "south");
+            placementBoard.populateShip(size, x, y, "south");
+        }
         removeAllChildNodes(placementContainer);
         document.body.removeChild(placementContainer);
         shipCount.push(size);
@@ -410,11 +416,45 @@ function placementBoardLoader() {
     return selectShipPlayerCoordinatedBoardLoader(placementBoard);
 };
 const source = "";
+function rotateShipButtonLoader() {
+    let button = document.createElement('button');
+    button.textContent = "Rotate Ship 90°";
+    button.classList.add('placementButton');
+    button.setAttribute('id', 'rotateShipButton');
+    button.addEventListener('click', () => {
+        rotateOnClick()
+    });
+    return button;
+}
+function rotateOnClick() {
+    console.log('test');
+    let classContainers = document.querySelectorAll("div.singleShipClassContainer");
+    let individualShipContainers = document.querySelectorAll("div.ship");
+    if (individualShipContainers.length == 5) {
+        individualShipContainers.forEach(function (node) {
+            if (node.style.flexDirection == "column") { node.style.flexDirection = "row"; rotationTracker = 0 }
+            else { node.style.flexDirection = "column"; rotationTracker = 1; console.log(rotationTracker) }
+        });
+    };
+}
+
+//This rotationTracker tells the shipCounter() & shipMaker() whether to position ships vertically or horizontally.
+    //0 commands shipMaker() to position ships horizontally, 1 vertically.
+    //It tracks whether / when rotateOnClick() has rotated ships vertically or horizontally.
+let rotationTracker = 0;
 function shipMaker(size) {
     let container = document.createElement('div');
     container.classList.add('ship');
     container.setAttribute('draggable', 'true');
-    container.setAttribute('id', size)
+    container.setAttribute('id', size);
+    console.log(rotationTracker);
+    if (rotationTracker == 1) {
+        console.log('test');
+        container.style.flexDirection = "column";
+    }
+    if (rotationTracker == 0) {
+        container.style.flexDirection = "row";
+    }
     while (size >= 1) {
         let square = document.createElement('div');
         square.classList.add('placementSquare');
@@ -440,38 +480,7 @@ function transferDataOnDragstart(ev) {
         console.log(source);
         ev.currentTarget.removeEventListener("dragend", transferDataOnDragstart);
 }
-function rotateShipButtonLoader() {
-    let button = document.createElement('button');
-    button.textContent = "Rotate Ship 90°";
-    button.classList.add('placementButton');
-    button.setAttribute('id', 'rotateShipButton');
-    button.addEventListener('click', () => {
-        rotateOnClick()
-    });
-    return button;
-}
-function rotateOnClick() {
-    let classContainers = document.querySelectorAll("div.singleShipClassContainer");
-    let individualShipContainersHorizontal = document.querySelectorAll("div.ship");
-    if (individualShipContainersHorizontal.length == 5) {
-        individualShipContainersHorizontal.forEach(function (node) {
-            if (node.style.flexDirection == "column") { node.style.flexDirection = "row"; }
-            else { node.style.flexDirection = "column"; }
-        });
-    };
-}
-function changeShipClasses() {
-    let individualShipContainersA = document.querySelectorAll("div.ship");
-    individualShipContainersA.forEach(function (node) {
-        node.classList.remove('ship');
-        node.classList.add('shipAlt');
-    });
-    let individualShipContainersB = document.querySelectorAll("div.shipAlt");
-    individualShipContainersB.forEach(function (node) {
-        node.classList.remove('shipAlt');
-        node.classList.add('ship');
-    });
-}
+
 function shipCounter() {
     let shipContainer = document.createElement('div');
     shipContainer.classList.add('shipAllClassesContainer');

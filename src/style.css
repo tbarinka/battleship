@@ -58,7 +58,6 @@ body {
 }
 .ship {
     display: flex;
-    flex-direction: row;
     gap: 3px;
     border: solid black 2px;
 }
