@@ -272,11 +272,7 @@ let placementBoard = new Gameboard();
 let shipCount = [];
 function placementModuleLoader() {
     placementContainer.appendChild(topTextLoader());
-    let container = document.createElement('div');
-    container.classList.add('placement-module-subcontainer')
-    container.appendChild(placementBoardLoader());
-    container.appendChild(rightInfoLoader());
-    placementContainer.appendChild(container);
+    placementContainer.appendChild(placementModuleMiddleSubContainerLoader());
     placementContainer.appendChild(shipCounter());
     document.body.appendChild(placementContainer);
 }
@@ -286,6 +282,13 @@ function topTextLoader() {
     place.textContent = "Place Your Ships";
     return place
 };
+function placementModuleMiddleSubContainerLoader() {
+    let container = document.createElement('div');
+    container.classList.add('placement-module-subcontainer')
+    container.appendChild(placementBoardLoader());
+    container.appendChild(rightInfoLoader());
+    return container;
+}
 function rightInfoLoader() {
     let container = document.createElement('div');
     container.classList.add('rightInfoSubcontainer');
@@ -437,7 +440,20 @@ function transferDataOnDragstart(ev) {
         console.log(source);
         ev.currentTarget.removeEventListener("dragend", transferDataOnDragstart);
 }
-
+function rotateShipButtonLoader() {
+    let button = document.createElement('button');
+    button.textContent = "Rotate Ship 90°";
+    button.classList.add('placementButton');
+    button.setAttribute('id', 'rotateShipButton');
+    button.addEventListener('click', () => {
+        rotateOnClick()
+    });
+    return button;
+}
+function rotateOnClick() {
+    containers = document.querySelectorAll('[class="shipAllClassesContainer"]');
+    console.log(containers);
+}
 function shipCounter() {
     let shipContainer = document.createElement('div');
     shipContainer.classList.add('shipAllClassesContainer');
@@ -447,7 +463,7 @@ function shipCounter() {
     sizeThree.classList.add('singleShipClassContainer');
     let sizeFour = document.createElement('div');
     sizeFour.classList.add('singleShipClassContainer');
-    //console.log(shipCount.filter(x => x == 2).length);
+    shipContainer.appendChild(rotateShipButtonLoader());
     if (shipCount.filter(x => x == 2).length == 0) {
         sizeTwo.appendChild(shipMaker(2));
         sizeTwo.appendChild(shipMaker(2));
@@ -477,7 +493,6 @@ function checkifShipsAreAllPlaced() {
         document.body.removeChild(placementContainer);
     }
 }
-
 function resetShips() {
     placementBoard = new Gameboard();
     clearShipCount();
