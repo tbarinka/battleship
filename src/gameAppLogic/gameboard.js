@@ -7,7 +7,7 @@ class Square {
         this.isHit = false;
         this.containsShip = false;
         this.ship = null;
-        this.start = null
+        //this.start = null
     }
 }
 class Gameboard {

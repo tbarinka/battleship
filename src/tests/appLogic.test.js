@@ -33,7 +33,9 @@ test('populates ship at A1 with size of 1 square', () => {
       Y: 1,
       containsShip: true,
       isHit: false,
-      ship: { "hits": [], "size": 1, "xStart": "A", "yStart": 1 }
+      ship: {
+        "hits": [], "size": 1, "xStart": "A", "yStart": 1,
+      }
     }]
   ))
 });
@@ -44,21 +46,21 @@ test('populate ship at A1-A3 with size of 3 squares pointing south', () => {
       Y: 1,
       containsShip: true,
       isHit: false,
-      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 1 }
+      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 1, direction: "south" }
     },
     {
       X: "A",
       Y: 2,
       containsShip: true,
       isHit: false,
-      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 1 }
+      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 1, direction: "south" }
     },
     {
       X: "A",
       Y: 3,
       containsShip: true,
       isHit: false,
-      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 1 }
+      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 1, direction: "south" }
     }]
   ))
 });
@@ -69,21 +71,21 @@ test('populate ship at A1-A3 with size of 3 squares pointing north', () => {
       Y: 3,
       containsShip: true,
       isHit: false,
-      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 3 }
+      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 3, direction: 'north' }
     },
     {
       X: "A",
       Y: 2,
       containsShip: true,
       isHit: false,
-      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 3 }
+      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 3, direction: 'north' }
     },
     {
       X: "A",
       Y: 3,
       containsShip: true,
       isHit: false,
-      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 3 }
+      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 3, direction: 'north' }
     }]
   ))
 });
@@ -94,21 +96,21 @@ test('populate ship at A1-C1 with size of 3 squares pointing east', () => {
       Y: 1,
       containsShip: true,
       isHit: false,
-      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 1 }
+      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 1, direction: 'east' }
     },
     {
       X: "B",
       Y: 1,
       containsShip: true,
       isHit: false,
-      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 1 }
+      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 1, direction: 'east' }
     },
     {
       X: "C",
       Y: 1,
       containsShip: true,
       isHit: false,
-      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 1 }
+      ship: { "hits": [], "size": 3, "xStart": "A", "yStart": 1, direction: 'east' }
     }]
   ))
 });
@@ -119,21 +121,21 @@ test('populate ship at C1-A1 with size of 3 squares pointing west', () => {
       Y: 1,
       containsShip: true,
       isHit: false,
-      ship: { "hits": [], "size": 3, "xStart": "C", "yStart": 1 }
+      ship: { "hits": [], "size": 3, "xStart": "C", "yStart": 1, direction: 'west' }
     },
     {
       X: "B",
       Y: 1,
       containsShip: true,
       isHit: false,
-      ship: { "hits": [], "size": 3, "xStart": "C", "yStart": 1 }
+      ship: { "hits": [], "size": 3, "xStart": "C", "yStart": 1, direction: 'west' }
     },
     {
       X: "A",
       Y: 1,
       containsShip: true,
       isHit: false,
-      ship: { "hits": [], "size": 3, "xStart": "C", "yStart": 1 }
+      ship: { "hits": [], "size": 3, "xStart": "C", "yStart": 1, direction: 'west' }
     }]
   ))
 });
