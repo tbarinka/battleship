@@ -430,15 +430,13 @@ function rotateOnClick() {
     console.log('test');
     let classContainers = document.querySelectorAll("div.singleShipClassContainer");
     let individualShipContainers = document.querySelectorAll("div.ship");
-    if (individualShipContainers.length == 5) {
-        individualShipContainers.forEach(function (node) {
+    individualShipContainers.forEach(function (node) {
             if (node.style.flexDirection == "column") { node.style.flexDirection = "row"; rotationTracker = 0 }
             else { node.style.flexDirection = "column"; rotationTracker = 1; console.log(rotationTracker) }
-        });
-    };
+    });
 }
 
-//This rotationTracker tells the shipCounter() & shipMaker() whether to position ships vertically or horizontally.
+//This rotationTracker tells the shipMaker() whether to position ships vertically or horizontally.
     //0 commands shipMaker() to position ships horizontally, 1 vertically.
     //It tracks whether / when rotateOnClick() has rotated ships vertically or horizontally.
 let rotationTracker = 0;
