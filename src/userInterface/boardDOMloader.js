@@ -328,6 +328,7 @@ function selectShipSquareLoader(coordinate) {
             let id = square.id;
             let data = id.split("");
             let startingSquare = placementBoard.grid.find(square => (square.X == data[0] && square.Y == data[1]));
+            console.log(startingSquare);
             let size = startingSquare.ship.size;
             let x = startingSquare.ship.xStart;
             let y = startingSquare.ship.yStart;
@@ -357,11 +358,16 @@ function selectShipSquareLoader(coordinate) {
         console.log("Drop");
         ev.preventDefault();
         let data = ev.dataTransfer.getData("text");
+        console.log("data = " + data);
         let source = document.getElementById(data);
         let coordinate = ev.target.id;
         let size = data;
         let x = coordinate[0];
         let y = coordinate[1];
+        if (coordinate[2] == 0) {
+            let array = [coordinate[1], coordinate[2]]
+            y = array.join('');
+        }
         populatePlayer(size, x, y, "east");
         placementBoard.populateShip(size, x, y, "east");
         removeAllChildNodes(placementContainer);

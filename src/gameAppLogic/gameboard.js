@@ -62,14 +62,17 @@ class Gameboard {
                 }
             }
         }
-        let newShip = new Ship(size, xStart, yStart);
+        let newShip = new Ship(size, xStart, yStart, direction);
+        console.log("new Ship y = " + newShip.yStart);
         newShip.direction = direction;
         let startingSquare = this.grid.find(square => (square.X == newShip.xStart && square.Y == newShip.yStart));
         let squaresContainingNewShip = [];
         startingSquare.containsShip = true;
         startingSquare.ship = newShip;
-        console.log(this.grid.indexOf(startingSquare));
-        console.log(this.grid[this.grid.indexOf(startingSquare) + 1]);
+        //console.log(this.grid);
+        //console.log(this.grid.indexOf(startingSquare));
+        //console.log(this.grid[this.grid.indexOf(startingSquare)]);
+        //console.log(this.grid[this.grid.indexOf(startingSquare) + 1]);
         squaresContainingNewShip.push(startingSquare);
         let yIndex = this.grid.indexOf(startingSquare);
         while (size > 1) {
