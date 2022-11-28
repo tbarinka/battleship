@@ -451,8 +451,26 @@ function rotateShipButtonLoader() {
     return button;
 }
 function rotateOnClick() {
-    containers = document.querySelectorAll('[class="shipAllClassesContainer"]');
-    console.log(containers);
+    let classContainers = document.querySelectorAll("div.singleShipClassContainer");
+    let individualShipContainersHorizontal = document.querySelectorAll("div.ship");
+    if (individualShipContainersHorizontal.length == 5) {
+        individualShipContainersHorizontal.forEach(function (node) {
+            if (node.style.flexDirection == "column") { node.style.flexDirection = "row"; }
+            else { node.style.flexDirection = "column"; }
+        });
+    };
+}
+function changeShipClasses() {
+    let individualShipContainersA = document.querySelectorAll("div.ship");
+    individualShipContainersA.forEach(function (node) {
+        node.classList.remove('ship');
+        node.classList.add('shipAlt');
+    });
+    let individualShipContainersB = document.querySelectorAll("div.shipAlt");
+    individualShipContainersB.forEach(function (node) {
+        node.classList.remove('shipAlt');
+        node.classList.add('ship');
+    });
 }
 function shipCounter() {
     let shipContainer = document.createElement('div');
