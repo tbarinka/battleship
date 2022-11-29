@@ -100,7 +100,7 @@ function twoBoardContentGenerator(playerBoard, opponentBoard) {
 }
 function twoBoardDOMLoader(playerBoard, opponentBoard) {
     let container = document.getElementById('container');
-    container.prepend(twoBoardContentGenerator(playerBoard, opponentBoard)); 
+    container.appendChild(twoBoardContentGenerator(playerBoard, opponentBoard)); 
 }
 function scoreKeeperGenerator(player, input) {
     let container = document.createElement('div');
@@ -119,7 +119,7 @@ function doubleScoreKeeperGenerator(player1, input1, player2, input2) {
     scoreContainer.appendChild(scoreKeeperGenerator(player1, input1));
     scoreContainer.appendChild(scoreKeeperGenerator(player2, input2));
     let container = document.getElementById('container');
-    container.appendChild(scoreContainer)
+    container.prepend(scoreContainer)
 }
 function removeDuplicates(array) {
     return array.filter((item,
@@ -137,14 +137,14 @@ class gameBoardLoader {
         this.player = player;
         this.aiBoard = aiBoard;
         this.ai = ai
-        twoBoardDOMLoader(this.playerBoard, this.aiBoard);
         doubleScoreKeeperGenerator("Player", 0, "AI", 0);
+        twoBoardDOMLoader(this.playerBoard, this.aiBoard);
     }
     reloadBoards() {
         this.playerBoard = new Gameboard();
         this.aiBoard = new Gameboard();
         let container = document.getElementById('container');
-        container.removeChild(container.firstChild);
+        container.removeChild(container.firstChild.nextSibling);
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);
     }
     populatePlayer(size, x, y, direction) {
@@ -185,14 +185,14 @@ class gameBoardLoader {
         }
         else {
             this.aiBoard.receiveAttack(x, y);
-            container.removeChild(container.firstChild);
+            container.removeChild(container.firstChild.nextSibling);
             twoBoardDOMLoader(this.playerBoard, this.aiBoard);
             this.keepScore()
         }
     }
     attackPlayer(x, y) {
         this.playerBoard.receiveAttack(x, y);
-        container.removeChild(container.firstChild);
+        container.removeChild(container.firstChild.nextSibling);
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);
         this.keepScore()
     }
@@ -243,7 +243,7 @@ class gameBoardLoader {
                 aiTally += 1;
             }
         });
-        container.removeChild(container.firstChild.nextSibling);
+        container.removeChild(container.firstChild);
         doubleScoreKeeperGenerator("Player", aiTally, "AI", playerTally);
         if (playerTally == 5) {
             announceWinner("AI wins!");
