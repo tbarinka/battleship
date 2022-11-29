@@ -277,11 +277,19 @@ function placementModuleLoader() {
     document.body.appendChild(placementContainer);
 }
 function topTextLoader() {
-    let place = document.createElement('div');
-    place.classList.add('placementText');
-    place.textContent = "Place Your Ships";
-    return place
+    let container = document.createElement('div');
+    container.classList.add('placementTextBox');
+    container.appendChild(topTextContentLoader('Place Your Ships!'))
+    return container;
 };
+function topTextContentLoader(text) {
+    let h = document.createElement('h1');
+    h.classList.add('placementTextContent');
+    h.setAttribute('id', 'placementHeading');
+    h.textContent = text;
+    h.style.color = "#22d3ee";
+    return h;
+}
 function placementModuleMiddleSubContainerLoader() {
     let container = document.createElement('div');
     container.classList.add('middleSubcontainer')
@@ -320,10 +328,20 @@ function beginGameBtnLoader() {
 function textBoxLoader() {
     let textBox = document.createElement('div');
     textBox.classList.add('placementInstructionBox');
-    textBox.appendChild(textBoxContentLoader("Place your ships on the battlefield by dragging and dropping them on your desired location."));
-    textBox.appendChild(textBoxContentLoader("There are two ways to rotate ships: (1) Prior to placement, click the rotate button at the bottom of board. (2) Click ships that have already been placed on the board to rotate them 90 degrees."));
-    textBox.appendChild(textBoxContentLoader("Once you have placed all five ships, press the Begin button to start your game!"));
+    textBox.appendChild(textBoxHeadingLoader());
+    textBox.appendChild(textBoxContentLoader("Place your ships by dragging them to your desired location."));
+    textBox.appendChild(textBoxContentLoader("Click the Rotate button to change orientation of ships waiting to be placed."));
+    textBox.appendChild(textBoxContentLoader("You can also rotate ships after placing them on the board by clicking on them."));
+    textBox.appendChild(textBoxContentLoader("Once you have placed all five ships, press the Begin Game button to start."));
     return textBox;
+}
+function textBoxHeadingLoader() {
+    let container = document.createElement('div');
+    container.classList.add('headingContainer');
+    let heading = document.createElement('h3');
+    heading.textContent = "Instructions";
+    container.appendChild(heading);
+    return container;
 }
 function textBoxContentLoader(text) {
     let content = document.createElement('p');
@@ -427,7 +445,7 @@ function placementBoardLoader() {
 const source = "";
 function rotateShipButtonLoader() {
     let button = document.createElement('button');
-    button.textContent = "Rotate Ship 90°";
+    button.textContent = "Rotate";
     button.classList.add('placementButton');
     button.setAttribute('id', 'rotateShipButton');
     button.addEventListener('click', () => {
@@ -549,6 +567,11 @@ function checkifShipsAreAllPlaced() {
         simplePopulateAI();
         removeAllChildNodes(placementContainer);
         document.body.removeChild(placementContainer);
+    }
+    else {
+        let h = document.getElementById('placementHeading');
+        h.textContent = "Place All Ships Before Starting the Game!"
+        h.style.color = "#ef4444";
     }
 }
 function resetShips() {
