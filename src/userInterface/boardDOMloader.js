@@ -273,7 +273,7 @@ let shipCount = [];
 function placementModuleLoader() {
     placementContainer.appendChild(topTextLoader());
     placementContainer.appendChild(placementModuleMiddleSubContainerLoader());
-    placementContainer.appendChild(shipCounter());
+    placementContainer.appendChild(bottomSubcontainerLoader());
     document.body.appendChild(placementContainer);
 }
 function topTextLoader() {
@@ -284,7 +284,7 @@ function topTextLoader() {
 };
 function placementModuleMiddleSubContainerLoader() {
     let container = document.createElement('div');
-    container.classList.add('placement-module-subcontainer')
+    container.classList.add('middleSubcontainer')
     container.appendChild(placementBoardLoader());
     container.appendChild(rightInfoLoader());
     return container;
@@ -443,6 +443,7 @@ function rotateOnClick() {
             if (node.style.flexDirection == "column") { node.style.flexDirection = "row"; rotationTracker = 0 }
             else { node.style.flexDirection = "column"; rotationTracker = 1; console.log(rotationTracker) }
     });
+    //classContainers.forEach(function)
 }
 
 //This rotationTracker tells the shipMaker() whether to position ships vertically or horizontally.
@@ -487,7 +488,13 @@ function transferDataOnDragstart(ev) {
         console.log(source);
         ev.currentTarget.removeEventListener("dragend", transferDataOnDragstart);
 }
-
+function bottomSubcontainerLoader() {
+    let container = document.createElement('div');
+    container.classList.add('bottomSubcontainer');
+    container.appendChild(rotateShipButtonLoader());
+    container.appendChild(shipCounter());
+    return container;
+}
 function shipCounter() {
     let shipContainer = document.createElement('div');
     shipContainer.classList.add('shipAllClassesContainer');
@@ -497,7 +504,6 @@ function shipCounter() {
     sizeThree.classList.add('singleShipClassContainer');
     let sizeFour = document.createElement('div');
     sizeFour.classList.add('singleShipClassContainer');
-    shipContainer.appendChild(rotateShipButtonLoader());
     if (shipCount.filter(x => x == 2).length == 0) {
         sizeTwo.appendChild(shipMaker(2));
         sizeTwo.appendChild(shipMaker(2));

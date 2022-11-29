@@ -34,12 +34,12 @@ body {
     padding-right: 30px;
     border-radius: 10px;
 }
-.placement-module-subcontainer, .rightInfoSubcontainer {
+.middleSubcontainer, .rightInfoSubcontainer {
     display: flex;
     align-items: center;
     padding: 10px;
 }
-.placement-module-subcontainer {
+.middleSubcontainer {
     gap: 30px;
 }
 .rightInfoSubcontainer {
@@ -56,12 +56,18 @@ body {
 .placementInstructionBox {
 
 }
+.bottomSubcontainer {
+    display: flex;
+    gap: 20px;
+    margin-left: -200px;
+}
 .shipAllClassesContainer {
     display: flex;
     flex-direction: row;
     grid-template-columns: repeat(5, 1fr);
     background-color: rgba(0, 0, 255, 0);
     gap: 20px;
+    width: 400px;
     
 }
 .singleShipClassContainer {
