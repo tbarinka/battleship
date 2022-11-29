@@ -25,8 +25,6 @@ attackPlayerButton.textContent = "Attack Player"
 
 function generateHUD() {
     boards;
-    document.body.appendChild(generateButtons());
-    //document.body.appendChild(generateForm());
 }
 function generateHUDwithShipPlacement() {
     boards;

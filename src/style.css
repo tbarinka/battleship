@@ -17,9 +17,6 @@ body {
 /*styles for the placement module */
 .placement-module-container {
     position: relative;
-    /*bottom: 70vh;
-    left: 59.5vh;
-    width: 430px;*/
     bottom: 70vh;
     left: 10vh;
     width: 75%;
@@ -58,13 +55,13 @@ body {
 }
 .ship {
     display: flex;
-    gap: 3px;
+    gap: 1px;
     border: solid black 2px;
 }
 .shipAlt {
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 1px;
     border: solid black 2px;
 }
 
@@ -80,14 +77,14 @@ body {
 }
 .xCoordinateContainer {
     display: flex;
-    gap: 3px;
+    gap: 1px;
     margin-left: 35px;
     margin-bottom: -10px;
 }
 .yCoordinateContainer {
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 1px;
     margin-top: 10px;
 }
 .leftSquare {
@@ -140,7 +137,7 @@ body {
     grid-template-columns: repeat(10, 35px);
     grid-template-rows: repeat(10, 35px);
     grid-auto-flow: column;
-    gap: 3px;
+    gap: 1px;
 }
 /* styles for score card */
 .singleBoardScoreContainer {
