@@ -1,7 +1,7 @@
 import { Gameboard, Square } from '../gameAppLogic/gameboard.js';
 import { AI } from '../playerControls/ai.js';
 import { Player } from '../playerControls/player.js';
-import { generateHUD, attackAI, populatePlayer, simplePopulateAI, depopulatePlayer, reloadBoards } from './controller.js';
+import { attackAI, populatePlayer, simplePopulateAI, depopulatePlayer, reloadBoards } from './controller.js';
 
 
 //suite of functions for loading the two DOM boards & score keeper card
@@ -319,8 +319,17 @@ function beginGameBtnLoader() {
 };
 function textBoxLoader() {
     let textBox = document.createElement('div');
-    textBox.textContent = "Include Directions Here";
+    textBox.classList.add('placementInstructionBox');
+    textBox.appendChild(textBoxContentLoader("Place your ships on the battlefield by dragging and dropping them on your desired location."));
+    textBox.appendChild(textBoxContentLoader("There are two ways to rotate ships: (1) Prior to placement, click the rotate button at the bottom of board. (2) Click ships that have already been placed on the board to rotate them 90 degrees."));
+    textBox.appendChild(textBoxContentLoader("Once you have placed all five ships, press the Begin button to start your game!"));
     return textBox;
+}
+function textBoxContentLoader(text) {
+    let content = document.createElement('p');
+    content.classList.add('instructionContent');
+    content.textContent = text;
+    return content;
 }
 function selectShipSquareLoader(coordinate) {
     let square = document.createElement('div');
