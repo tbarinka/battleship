@@ -105,9 +105,9 @@ function twoBoardDOMLoader(playerBoard, opponentBoard) {
 function scoreKeeperGenerator(player, input) {
     let container = document.createElement('div');
     container.classList.add('singleBoardScoreContainer')
-    let label = document.createElement('div');
-    let score = document.createElement('div');
-    label.textContent = player + " score: "
+    let label = document.createElement('h2');
+    let score = document.createElement('h2');
+    label.textContent = player + " Score: "
     container.appendChild(label);
     container.appendChild(score);
     score.textContent = input + "/5";
@@ -244,7 +244,7 @@ class gameBoardLoader {
             }
         });
         container.removeChild(container.firstChild.nextSibling);
-        doubleScoreKeeperGenerator("AI", playerTally, "Player", aiTally);
+        doubleScoreKeeperGenerator("Player", aiTally, "AI", playerTally);
         if (playerTally == 5) {
             announceWinner("AI wins!");
         } else if (aiTally == 5) {
@@ -287,7 +287,6 @@ function topTextContentLoader(text) {
     h.classList.add('placementTextContent');
     h.setAttribute('id', 'placementHeading');
     h.textContent = text;
-    h.style.color = "#22d3ee";
     return h;
 }
 function placementModuleMiddleSubContainerLoader() {

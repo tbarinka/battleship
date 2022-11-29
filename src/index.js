@@ -4,5 +4,4 @@ import { generateHUD } from './userInterface/controller.js'
 
 
 generateHUD();
-placementModuleLoader();
-//generateHUDwithShipPlacement();
+//placementModuleLoader();
