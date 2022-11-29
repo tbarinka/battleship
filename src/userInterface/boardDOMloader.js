@@ -1,7 +1,7 @@
 import { Gameboard, Square } from '../gameAppLogic/gameboard.js';
 import { AI } from '../playerControls/ai.js';
 import { Player } from '../playerControls/player.js';
-import { generateHUD, attackAI, generateForm, populatePlayer, simplePopulate, depopulatePlayer, reloadBoards } from './controller.js';
+import { generateHUD, attackAI, populatePlayer, simplePopulateAI, depopulatePlayer, reloadBoards } from './controller.js';
 
 
 //suite of functions for loading the two DOM boards & score keeper card
@@ -514,6 +514,7 @@ function shipCounter() {
 }
 function checkifShipsAreAllPlaced() {
     if (shipCount.length == 5) {
+        simplePopulateAI();
         removeAllChildNodes(placementContainer);
         document.body.removeChild(placementContainer);
     }

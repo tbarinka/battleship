@@ -133,4 +133,4 @@ function generateForm() {
 
 
 
-export { reloadBoards, generateHUD, attackAI, generateForm, populatePlayer, simplePopulate, depopulatePlayer }
+export { reloadBoards, generateHUD, attackAI, generateForm, populatePlayer, simplePopulate, simplePopulateAI, depopulatePlayer }
