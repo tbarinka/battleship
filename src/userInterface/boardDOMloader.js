@@ -436,16 +436,28 @@ function rotateShipButtonLoader() {
     return button;
 }
 function rotateOnClick() {
-    console.log('test');
-    let classContainers = document.querySelectorAll("div.singleShipClassContainer");
+    //let classContainers = document.querySelectorAll("div.singleShipClassContainer");
     let individualShipContainers = document.querySelectorAll("div.ship");
     individualShipContainers.forEach(function (node) {
-            if (node.style.flexDirection == "column") { node.style.flexDirection = "row"; rotationTracker = 0 }
-            else { node.style.flexDirection = "column"; rotationTracker = 1; console.log(rotationTracker) }
+        if (node.style.flexDirection == "column") { node.style.flexDirection = "row"; rotationTracker = 0; }
+        else { node.style.flexDirection = "column"; rotationTracker = 1; }
     });
-    //classContainers.forEach(function)
+    //classContainers.forEach(function (node) {
+        //if (rotationTracker == 1) { node.style.flexDirection = "row"; }
+        //else { node.style.flexDirection = "column"; }
+    //})
+    checkClassContainerOrientation();
 }
-
+//this function checks whether to arrange ships in rows or columns within their class containers
+function checkClassContainerOrientation() {
+    let classContainers = document.querySelectorAll("div.singleShipClassContainer");
+    classContainers.forEach(function (node) {
+        if (rotationTracker == 1) { node.style.flexDirection = "row"; }
+        else { node.style.flexDirection = "column"; }
+    });
+    console.log("next log is the test")
+    console.log(classContainers);
+}
 //This rotationTracker tells the shipMaker() whether to position ships vertically or horizontally.
     //0 commands shipMaker() to position ships horizontally, 1 vertically.
     //It tracks whether / when rotateOnClick() has rotated ships vertically or horizontally.
@@ -455,7 +467,6 @@ function shipMaker(size) {
     container.classList.add('ship');
     container.setAttribute('draggable', 'true');
     container.setAttribute('id', size);
-    console.log(rotationTracker);
     if (rotationTracker == 1) {
         console.log('test');
         container.style.flexDirection = "column";
@@ -504,6 +515,12 @@ function shipCounter() {
     sizeThree.classList.add('singleShipClassContainer');
     let sizeFour = document.createElement('div');
     sizeFour.classList.add('singleShipClassContainer');
+    console.log(rotationTracker + "= rotationTracker")
+    if (rotationTracker == 1) {
+        sizeTwo.style.flexDirection = "row";
+        sizeThree.style.flexDirection = "row";
+        sizeFour.style.flexDirection = "row";
+    }
     if (shipCount.filter(x => x == 2).length == 0) {
         sizeTwo.appendChild(shipMaker(2));
         sizeTwo.appendChild(shipMaker(2));

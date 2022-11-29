@@ -24,7 +24,7 @@ body {
     margin-left: auto;
     margin-right: auto;
     width: 800px;
-    height: 600px;
+    height: 650px;
     background-color: grey;
     display: flex;
     flex-direction: column;
@@ -33,6 +33,9 @@ body {
     padding: 10px;
     padding-right: 30px;
     border-radius: 10px;
+}
+.placementText {
+    height: 10%;
 }
 .middleSubcontainer, .rightInfoSubcontainer {
     display: flex;
@@ -53,13 +56,15 @@ body {
     gap: 10px;
     padding: 5px;
 }
-.placementInstructionBox {
-
-}
 .bottomSubcontainer {
     display: flex;
     gap: 20px;
     margin-left: -200px;
+    height: 25%;
+    margin-top: 20px;
+}
+.placementInstructionBox {
+
 }
 .shipAllClassesContainer {
     display: flex;
@@ -78,7 +83,6 @@ body {
 .ship {
     display: flex;
     gap: 1px;
-    border: solid black 2px;
 }
 .shipAlt {
     display: flex;
