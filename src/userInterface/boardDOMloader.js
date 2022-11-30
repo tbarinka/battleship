@@ -16,7 +16,6 @@ function squareLoader(coordinate, player = "ai") {
             let x = coordinate.X;
             let y = coordinate.Y;
             attackAI(x, y);
-            console.log(x + y)
         });
     }
     if (coordinate.isHit == true && coordinate.containsShip == true) {
@@ -121,16 +120,19 @@ function doubleScoreKeeperGenerator(player1, input1, player2, input2) {
     let container = document.getElementById('container');
     container.prepend(scoreContainer)
 }
-function removeDuplicates(array) {
-    return array.filter((item,
-        index) => arr.indexOf(item) === index);
-}
-function announceWinner(text) {
+function announceWinnerCard(text) {
     let card = document.createElement('div');
     card.classList.add('winnerCard');
-    card.textContent = text;
-    container.firstChild.appendChild(card);
+    card.appendChild(announceWinnerText(text));
+    container.appendChild(card);
 }
+function announceWinnerText(text) {
+    let announcement = document.createElement('h1');
+    announcement.classList.add('winnerAnnouncementText');
+    announcement.textContent = text;
+    return announcement;
+}
+
 class gameBoardLoader {
     constructor(playerBoard, player, aiBoard, ai) {
         this.playerBoard = playerBoard;
@@ -150,13 +152,13 @@ class gameBoardLoader {
     populatePlayer(size, x, y, direction) {
         this.playerBoard.populateShip(size, x, y, direction);
         let container = document.getElementById('container');
-        container.removeChild(container.firstChild);
+        container.removeChild(container.firstChild.nextSibling);
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);
     }
     depopulatePlayer(size, x, y, direction) {
         this.playerBoard.depopulateShip(size, x, y, direction);
         let container = document.getElementById('container');
-        container.removeChild(container.firstChild);
+        container.removeChild(container.firstChild.nextSibling);
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);
     }
     simplePopulate() {
@@ -166,7 +168,7 @@ class gameBoardLoader {
         this.playerBoard.populateShip(3, 'B', 8, "south");
         this.playerBoard.populateShip(2, 'E', 9, "east");
         let container = document.getElementById('container');
-        container.removeChild(container.firstChild);
+        container.removeChild(container.firstChild.nextSibling);
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);
     }
     simplePopulateAI() {
@@ -176,19 +178,19 @@ class gameBoardLoader {
         this.aiBoard.populateShip(3, 'B', 8, "south");
         this.aiBoard.populateShip(2, 'E', 9, "east");
         let container = document.getElementById('container');
-        container.removeChild(container.firstChild);
+        container.removeChild(container.firstChild.nextSibling);
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);
     }
     attackAI(x, y) {
-        if (this.aiBoard.X == x || this.aiBoard.Y == y) {
-            return console.log('repeat hit');
-        }
-        else {
-            this.aiBoard.receiveAttack(x, y);
-            container.removeChild(container.firstChild.nextSibling);
-            twoBoardDOMLoader(this.playerBoard, this.aiBoard);
-            this.keepScore()
-        }
+        //if (this.aiBoard.X == x || this.aiBoard.Y == y) {
+            //return console.log('repeat hit');
+        //}
+        //else { 
+        this.aiBoard.receiveAttack(x, y);
+        container.removeChild(container.firstChild.nextSibling);
+        twoBoardDOMLoader(this.playerBoard, this.aiBoard);
+        this.keepScore()
+        //}
     }
     attackPlayer(x, y) {
         this.playerBoard.receiveAttack(x, y);
@@ -245,10 +247,13 @@ class gameBoardLoader {
         });
         container.removeChild(container.firstChild);
         doubleScoreKeeperGenerator("Player", aiTally, "AI", playerTally);
+        console.log("aiTally = " + aiTally);
+        console.log("playerTally =" + playerTally);
+        if (aiTally == 5) {
+            announceWinnerCard("You win!");
+        }
         if (playerTally == 5) {
-            announceWinner("AI wins!");
-        } else if (aiTally == 5) {
-            announceWinner("You win!");
+            announceWinnerCard("AI wins!");
         }
         //construct a list of gameboard.grid ships
         //for any ship, if ship.hits == size, add +1 to score
@@ -357,7 +362,6 @@ function selectShipSquareLoader(coordinate) {
             let id = square.id;
             let data = id.split("");
             let startingSquare = placementBoard.grid.find(square => (square.X == data[0] && square.Y == data[1]));
-            console.log(startingSquare);
             let size = startingSquare.ship.size;
             let x = startingSquare.ship.xStart;
             let y = startingSquare.ship.yStart;
@@ -387,7 +391,6 @@ function selectShipSquareLoader(coordinate) {
         console.log("Drop");
         ev.preventDefault();
         let data = ev.dataTransfer.getData("text");
-        console.log("data = " + data);
         let source = document.getElementById(data);
         let coordinate = ev.target.id;
         let size = data;
@@ -472,8 +475,6 @@ function checkClassContainerOrientation() {
         if (rotationTracker == 1) { node.style.flexDirection = "row"; }
         else { node.style.flexDirection = "column"; }
     });
-    console.log("next log is the test")
-    console.log(classContainers);
 }
 //This rotationTracker tells the shipMaker() whether to position ships vertically or horizontally.
     //0 commands shipMaker() to position ships horizontally, 1 vertically.
@@ -485,7 +486,6 @@ function shipMaker(size) {
     container.setAttribute('draggable', 'true');
     container.setAttribute('id', size);
     if (rotationTracker == 1) {
-        console.log('test');
         container.style.flexDirection = "column";
     }
     if (rotationTracker == 0) {
@@ -511,9 +511,7 @@ function transferDataOnDragstart(ev) {
         ev.dataTransfer.clearData();
         ev.dataTransfer.setData("text/plain", ev.target.id);
         const data = ev.dataTransfer.getData("text");
-        console.log(data);
         source = document.getElementById(data);
-        console.log(source);
         ev.currentTarget.removeEventListener("dragend", transferDataOnDragstart);
 }
 function bottomSubcontainerLoader() {
@@ -532,7 +530,6 @@ function shipCounter() {
     sizeThree.classList.add('singleShipClassContainer');
     let sizeFour = document.createElement('div');
     sizeFour.classList.add('singleShipClassContainer');
-    console.log(rotationTracker + "= rotationTracker")
     if (rotationTracker == 1) {
         sizeTwo.style.flexDirection = "row";
         sizeThree.style.flexDirection = "row";
@@ -594,4 +591,4 @@ function clearShipCount() {
     //when mouseover square S, square turns red along with the southward square
     //then add rotate functionality
 
-export { gameBoardLoader, placementModuleLoader }
+export { gameBoardLoader, placementModuleLoader, announceWinnerCard }

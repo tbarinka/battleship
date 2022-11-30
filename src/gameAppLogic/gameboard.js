@@ -39,40 +39,31 @@ class Gameboard {
         if (size > 1) {
             if (direction == "north") {
                 if (yStart < size) {
-                    console.log('overflow at ' + xStart + yStart);
                     return 'overflow!'
                 }
             }
             if (direction == "south") {
                 if ((yStart - 1) > (10 - size)) {
-                    console.log('overflow at ' + xStart + yStart);
                     return 'overflow!'
                 }
             }
             if (direction == "west") {
                 if (this.xAxis.indexOf(xStart) < (size - 1)) {
-                    console.log('overflow at ' + xStart + yStart);
                     return 'overflow!'
                 }
             }
             if (direction == "east") {
                 if (this.xAxis.indexOf(xStart) > (10 - size)) {
-                    console.log('overflow at ' + xStart + yStart);
                     return 'overflow!'
                 }
             }
         }
         let newShip = new Ship(size, xStart, yStart, direction);
-        console.log("new Ship y = " + newShip.yStart);
         newShip.direction = direction;
         let startingSquare = this.grid.find(square => (square.X == newShip.xStart && square.Y == newShip.yStart));
         let squaresContainingNewShip = [];
         startingSquare.containsShip = true;
         startingSquare.ship = newShip;
-        //console.log(this.grid);
-        //console.log(this.grid.indexOf(startingSquare));
-        //console.log(this.grid[this.grid.indexOf(startingSquare)]);
-        //console.log(this.grid[this.grid.indexOf(startingSquare) + 1]);
         squaresContainingNewShip.push(startingSquare);
         let yIndex = this.grid.indexOf(startingSquare);
         while (size > 1) {
@@ -89,7 +80,6 @@ class Gameboard {
                 yIndex += 1
                 //let square = this.grid.find(square => (square.X == newShip.xStart && square.Y == yStart));
                 let square = this.grid[yIndex];
-                //console.log(this.grid[this.grid.indexOf(startingSquare) + 10]);
                 square.containsShip = true;
                 square.ship = newShip;
                 squaresContainingNewShip.push(square)
@@ -135,7 +125,6 @@ class Gameboard {
                 yIndex += 1
                 //let square = this.grid.find(square => (square.X == newShip.xStart && square.Y == yStart));
                 let square = this.grid[yIndex];
-                //console.log(this.grid[this.grid.indexOf(startingSquare) + 10]);
                 square.containsShip = false;
                 square.ship = null;
                 squaresContainingNewShip.push(square)

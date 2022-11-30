@@ -2,6 +2,10 @@ import { Ship } from '../gameAppLogic/ship.js';
 import { Gameboard } from '../gameAppLogic/gameboard.js';
 import { Player } from '../playerControls/player.js';
 import { AI } from '../playerControls/ai.js';
+import { boards } from '../userInterface/controller.js';
+
+
+
 
 let board = new Gameboard();
 board.populateShip(1, 'A', 1);

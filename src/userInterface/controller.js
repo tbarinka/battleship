@@ -67,7 +67,6 @@ function reloadBoards() {
 const aiArray = boards.playerBoard.grid.slice();
 function attackAI(x, y) {
     let found = boards.aiBoard.grid.find(square => (square.X == x && square.Y == y));
-    console.log(found);
     if (found.isHit == true) { alert("You have already attacked that square! Try another.") }
     if (found.isHit == false) {
         let index = boards.aiBoard.grid.indexOf(found);
@@ -131,4 +130,4 @@ function generateForm() {
 
 
 
-export { reloadBoards, generateHUD, attackAI, generateForm, populatePlayer, simplePopulate, simplePopulateAI, depopulatePlayer }
+export { boards, reloadBoards, generateHUD, attackAI, generateForm, populatePlayer, simplePopulate, simplePopulateAI, depopulatePlayer }

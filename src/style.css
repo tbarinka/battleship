@@ -198,7 +198,7 @@ body {
 /*styles for game controller hud*/
 .scoreKeeperContainer {
     display: flex;
-    gap: 443px;
+    gap: 390px;
     text-shadow: #22d3ee 2px 2px;
 
 }
@@ -225,10 +225,23 @@ body {
     margin: 10px;
 }
 .winnerCard {
-    position: absolute;
     background-color: red;
-    top: 35%;
-    left: 49%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 10px;
+    bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    height: 300px;
+    width: 450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.winnerAnnouncement {
+    font-size: 80px;
 }
 .selectSquare {
     
