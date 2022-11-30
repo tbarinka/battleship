@@ -225,7 +225,9 @@ body {
     margin: 10px;
 }
 .winnerCard {
-    background-color: red;
+    background-color: #dc2626;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;
+    border-radius: 20px;
     position: absolute;
     left: 0;
     right: 0;
@@ -233,10 +235,11 @@ body {
     bottom: 0;
     margin-left: auto;
     margin-right: auto;
-    height: 300px;
-    width: 450px;
+    height: 276px;
+    width: 350px;
     display: flex;
     flex-direction: column;
+    gap: 20px;
     justify-content: center;
     align-items: center;
 }

@@ -1,7 +1,7 @@
 import { Gameboard, Square } from '../gameAppLogic/gameboard.js';
 import { AI } from '../playerControls/ai.js';
 import { Player } from '../playerControls/player.js';
-import { attackAI, populatePlayer, simplePopulateAI, depopulatePlayer, reloadBoards } from './controller.js';
+import { attackAI, populatePlayer, simplePopulateAI, depopulatePlayer, reloadBoards, restartBoard } from './controller.js';
 
 
 //suite of functions for loading the two DOM boards & score keeper card
@@ -124,7 +124,8 @@ function announceWinnerCard(text) {
     let card = document.createElement('div');
     card.classList.add('winnerCard');
     card.appendChild(announceWinnerText(text));
-    container.appendChild(card);
+    card.appendChild(restartGameButton());
+    container.firstChild.appendChild(card);
 }
 function announceWinnerText(text) {
     let announcement = document.createElement('h1');
@@ -132,6 +133,15 @@ function announceWinnerText(text) {
     announcement.textContent = text;
     return announcement;
 }
+function restartGameButton() {
+    let button = document.createElement('button');
+    button.textContent = "Restart Game";
+    button.classList.add("placementButton");
+    button.addEventListener('click', restartBoard)
+    return button;
+}
+
+
 
 class gameBoardLoader {
     constructor(playerBoard, player, aiBoard, ai) {
@@ -591,4 +601,4 @@ function clearShipCount() {
     //when mouseover square S, square turns red along with the southward square
     //then add rotate functionality
 
-export { gameBoardLoader, placementModuleLoader, announceWinnerCard }
+export { gameBoardLoader, resetShips, placementModuleLoader, announceWinnerCard, removeAllChildNodes, twoBoardDOMLoader, doubleScoreKeeperGenerator }

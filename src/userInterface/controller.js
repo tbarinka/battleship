@@ -1,4 +1,4 @@
-import { gameBoardLoader, placementModuleLoader } from './boardDOMloader.js';
+import { gameBoardLoader, placementModuleLoader, removeAllChildNodes, twoBoardDOMLoader, doubleScoreKeeperGenerator, resetShips } from './boardDOMloader.js';
 import { Gameboard } from '../gameAppLogic/gameboard.js';
 
 let playerBoard = new Gameboard();
@@ -23,14 +23,20 @@ attackPlayerButton.addEventListener('click', attackPlayer);
 attackPlayerButton.classList.add('populateButton');
 attackPlayerButton.textContent = "Attack Player"
 
-function generateHUD() {
-    boards;
+function restartBoard() {
+    let container = document.getElementById('container');
+    removeAllChildNodes(container);
+    generateHUD();
+    resetShips();
 }
-function generateHUDwithShipPlacement() {
-    boards;
-    document.body.appendChild(generateButtons());
-    document.body.appendChild(generateForm());
-    document.body.appendChild(placementModuleLoader());
+function generateHUD() {
+    playerBoard = new Gameboard();
+    aiBoard = new Gameboard();
+    player = "taylor";
+    ai = "computer";
+    doubleScoreKeeperGenerator("Player", 0, "AI", 0);
+    twoBoardDOMLoader(boards.playerBoard, boards.aiBoard);
+    placementModuleLoader();
 }
 function generateButtons() {
     let container = document.createElement('div');
@@ -130,4 +136,4 @@ function generateForm() {
 
 
 
-export { boards, reloadBoards, generateHUD, attackAI, generateForm, populatePlayer, simplePopulate, simplePopulateAI, depopulatePlayer }
+export { restartBoard, reloadBoards, generateHUD, attackAI, generateForm, populatePlayer, simplePopulate, simplePopulateAI, depopulatePlayer }

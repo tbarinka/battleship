@@ -9,7 +9,6 @@ import { boards } from '../userInterface/controller.js';
 
 let board = new Gameboard();
 board.populateShip(1, 'A', 1);
-
 //tests for Ship class
 test('ship length is 3', () => {
   expect(new Ship(3).size).toBe(3);
