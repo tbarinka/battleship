@@ -22,11 +22,14 @@ function squareLoader(coordinate, player = "ai") {
         square.style.backgroundColor = "red";
         square.textContent = "X";
     }
-    if (player != "ai") {
-        if (coordinate.containsShip == true) {
-            square.style.backgroundColor = "red";
-        }
+    if (coordinate.containsShip == true) {
+        square.style.backgroundColor = "red";
     }
+    //if (player != "ai") {
+        //if (coordinate.containsShip == true) {
+            //square.style.backgroundColor = "red";
+        //}
+    //}
     return square;
 }
 function boardLoader(board, player) {
@@ -183,16 +186,6 @@ class gameBoardLoader {
         container.removeChild(container.firstChild.nextSibling);
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);
     }
-    simplePopulateAI() {
-        this.aiBoard.populateShip(2, 'I', 4, "east");
-        this.aiBoard.populateShip(4, 'C', 5, "east");
-        this.aiBoard.populateShip(3, 'J', 6, "south");
-        this.aiBoard.populateShip(3, 'B', 8, "south");
-        this.aiBoard.populateShip(2, 'E', 9, "east");
-        let container = document.getElementById('container');
-        container.removeChild(container.firstChild.nextSibling);
-        twoBoardDOMLoader(this.playerBoard, this.aiBoard);
-    }
     attackAI(x, y) {
         //if (this.aiBoard.X == x || this.aiBoard.Y == y) {
             //return console.log('repeat hit');
@@ -271,14 +264,66 @@ class gameBoardLoader {
         //for any ship, if ship.hits == size, add +1 to score
         //input score in doubleScoreKeeperGenerator
     }
-    randomParameterProducer() {
-        let x = this.playerBoard.xAxis[Math.trunc(Math.random() * 10)];
-        let y = this.playerBoard.yAxis[Math.trunc(Math.random() * 10)];
-        //let square = opponent.board.grid.find(square => (square.X == x && square.Y == y));
-        return [x, y];
+    copyAIgrid() {
+        let array = this.aiBoard.grid.slice();
+        return array;
+    }
+    randomParameterSelector(array, size) {
+        let random = array[Math.floor(Math.random() * array.length)];
+        let x = random.X;
+        let y = random.Y;
+        let index = array.indexOf(random);
+        let direction = this.randomDirectionProducer();
+        array.splice(index, 1);
+        if (this.aiBoard.populateShip(size, x, y, direction) == 'overflow!') {
+            this.randomParameterSelector(array);
+        }
+        else {
+            this.aiBoard.populateShip(size, x, y, direction);
+        }
+    }
+    randomDirectionProducer() {
+        let num = Math.random();
+        if (num >= .75) { return "east" }
+        if (num <= .25) {return "west"}
+        if (num > .25 && num < .5) { return "south" }
+        else { return "north" }
+    }
+    placeOneAIShipAtRandom(size) {
+        let coordinate = this.randomParameterProducer();
+        let x = coordinate[0];
+        let y = coordinate[1];
+        let direction = this.randomDirectinoProducer();
+        let startingSquare = this.aiBoard.grid.find(square => (square.X == x && square.Y == y));
+        console.log(this.aiBoard.grid);
+        if (startingSquare.containsShip == true) {
+            this.placeOneAIShipAtRandom(size);
+        }
+        if (this.aiBoard.populateShip(size, x, y, direction) == 'overflow!') {
+            this.placeOneAIShipAtRandom(size);
+        }
+        else {
+            this.aiBoard.populateShip(size, x, y, direction);
+        }
+    }
+    simplePopulateAI() {
+        let array = this.copyAIgrid();
+        this.randomParameterSelector(array, 2);
+        this.randomParameterSelector(array, 2);
+        this.randomParameterSelector(array, 3);
+        this.randomParameterSelector(array, 3);
+        this.randomParameterSelector(array, 4);
+        //this.placeOneAIShipAtRandom(4);
+        //this.aiBoard.populateShip(2, x[0], x[1], "east");
+        //this.aiBoard.populateShip(4, 'C', 5, "east");
+        //this.aiBoard.populateShip(3, 'J', 6, "south");
+        //this.aiBoard.populateShip(3, 'B', 8, "south");
+        //this.aiBoard.populateShip(2, 'E', 9, "east");
+        let container = document.getElementById('container');
+        container.removeChild(container.firstChild.nextSibling);
+        twoBoardDOMLoader(this.playerBoard, this.aiBoard);
+    }
 }
-}
-
 
 //suite for loading carrier placement module before game begins
 
