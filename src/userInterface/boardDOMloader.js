@@ -410,11 +410,14 @@ function selectShipSquareLoader(coordinate) {
             let array = [coordinate[1], coordinate[2]]
             y = array.join('');
         }
+        let startingSquare = placementBoard.grid.find(square => (square.X == x && square.Y == y));
+        if (startingSquare.containsShip == true) {
+            return
+        }
         if (rotationTracker == 0) {
             populatePlayer(size, x, y, "east");
             placementBoard.populateShip(size, x, y, "east");
-        }
-        else {
+        } else {
             populatePlayer(size, x, y, "south");
             placementBoard.populateShip(size, x, y, "south");
         }
@@ -508,9 +511,6 @@ function shipMaker(size) {
         size = size - 1;
     }
     container.addEventListener('dragstart', transferDataOnDragstart);
-    container.addEventListener("dragend", function (ev) {
-        ev.target.classList.remove("dragging");
-    });
     return container;
 }
 function transferDataOnDragstart(ev) {

@@ -3,5 +3,5 @@ import { placementModuleLoader, announceWinnerCard } from './userInterface/board
 import { generateHUD, generateHUDwithShipPlacement } from './userInterface/controller.js'
 
 
-//placementModuleLoader();
-announceWinnerCard('You win!');
+placementModuleLoader();
+//announceWinnerCard('You win!');
