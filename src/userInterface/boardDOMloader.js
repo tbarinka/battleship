@@ -22,8 +22,10 @@ function squareLoader(coordinate, player = "ai") {
         square.style.backgroundColor = "red";
         square.textContent = "X";
     }
-    if (coordinate.containsShip == true) {
-        square.style.backgroundColor = "red";
+    if (player != "ai") {
+        if (coordinate.containsShip == true) {
+            square.style.backgroundColor = "red";
+        }
     }
     return square;
 }
