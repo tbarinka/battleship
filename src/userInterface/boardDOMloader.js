@@ -3,6 +3,16 @@ import { AI } from '../playerControls/ai.js';
 import { Player } from '../playerControls/player.js';
 import { attackAI, populatePlayer, simplePopulateAI, depopulatePlayer, reloadBoards, restartBoard } from './controller.js';
 
+function removeDuplicates(arr) {
+    var unique = [];
+    arr.forEach(element => {
+        if (!unique.includes(element)) {
+            unique.push(element);
+        }
+    });
+    return unique;
+}
+ 
 
 //suite of functions for loading the two DOM boards & score keeper card
 function squareLoader(coordinate, player = "ai") {
@@ -274,12 +284,136 @@ class gameBoardLoader {
         let y = random.Y;
         let index = array.indexOf(random);
         let direction = this.randomDirectionProducer();
-        array.splice(index, 1);
+//        array.splice(index, 1);
         if (this.aiBoard.populateShip(size, x, y, direction) == 'overflow!') {
-            this.randomParameterSelector(array);
+            this.randomParameterSelector(array, size);
         }
         else {
             this.aiBoard.populateShip(size, x, y, direction);
+            this.discoverCoordinatesToBeSpliced(size, x, y, array, direction);
+            //The code below makes sure that ships cannot be placed adjacent to one another.
+        }
+    }
+    discoverCoordinatesToBeSpliced(size, x, y, array, direction) {
+        if (typeof x === 'string') {
+            console.log('tested right');
+        } else {
+            console.log('tested wrong');
+            x = x.X;
+        }
+        let startingIndex = array.indexOf(array.find(square => (square.X == x && square.Y == y)));
+        let spliceRecord = [startingIndex];
+        let top = array.find(square => (square.X == x && square.Y == (y - 1)));
+        let bottom = array.find(square => (square.X == x && square.Y == (y + 1)));
+        let xCoordinates = this.findAdjacentXCoordinates(x, y, array);
+        let right = "";
+        let left = "";
+        if (top !== null && top !== undefined) {
+            let index = array.indexOf(top);
+            spliceRecord.push(index);
+        }
+        if (bottom !== null && bottom !== undefined) {
+            spliceRecord.push(array.indexOf(bottom));
+        }
+        if (xCoordinates[0] !== "overflow") {
+            left = xCoordinates[0];
+            spliceRecord.push(array.indexOf(left));
+        }
+        if (xCoordinates[1] !== "overflow") {
+            right = xCoordinates[1];
+            spliceRecord.push(array.indexOf(right));
+        }
+        while (size > 1) {
+            if (direction == "east") {
+                size = size - 1;
+                let newX = xCoordinates[1];
+                let next = this.discoverCoordinatesToBeSpliced(size, newX, y, array, direction);
+                console.log(next);
+                spliceRecord = spliceRecord.concat(next);
+            } else if (direction == "west") {
+                size = size - 1;
+                let newX = xCoordinates[0];
+                let next = this.discoverCoordinatesToBeSpliced((size), newX, y, array, direction);
+                console.log(next);
+                spliceRecord = spliceRecord.concat(next);
+            } else if (direction == "north") {
+                size = size - 1;
+                let next = this.discoverCoordinatesToBeSpliced((size), x, top.Y, array, direction);
+                console.log(next);
+                spliceRecord = spliceRecord.concat(next);
+            } else if (direction == "south") {
+                size = size - 1;
+                let next = this.discoverCoordinatesToBeSpliced((size), x, bottom.Y, array, direction);
+                console.log(next);
+                spliceRecord = spliceRecord.concat(next);
+            }
+        }
+        if (size == 1) {
+            let spliceArray = removeDuplicates(spliceRecord);
+            console.log(spliceArray);
+            let orderedSpliceArray = spliceArray.sort(function( a , b){
+                if(a > b) return -1;
+                if(a < b) return 1;
+                return 0;
+            });
+            //orderedSpliceArray.forEach(index => {
+                //array.splice(index, 1);
+                //console.log(index);
+                //console.log(array);
+            //});
+            return orderedSpliceArray;
+        }
+    }
+    findAdjacentXCoordinates(x, y, array) {
+        if (x == 'A') {
+            let a = "overflow";
+            let b = array.find(square => (square.X == 'B' && square.Y == y));
+            return [a, b];
+        }
+        if (x == 'B') {
+            let a = array.find(square => (square.X == 'A' && square.Y == y));
+            let b = array.find(square => (square.X == 'C' && square.Y == y));
+            return [a, b];
+        }
+        if (x == 'C') {
+            let a = array.find(square => (square.X == 'B' && square.Y == y));
+            let b = array.find(square => (square.X == 'D' && square.Y == y));
+            return [a, b];
+        }
+        if (x == 'D') {
+            let a = array.find(square => (square.X == 'C' && square.Y == y));
+            let b = array.find(square => (square.X == 'E' && square.Y == y));
+            return [a, b];
+        }
+        if (x == 'E') {
+            let a = array.find(square => (square.X == 'D' && square.Y == y));
+            let b = array.find(square => (square.X == 'F' && square.Y == y));
+            return [a, b];
+        }
+        if (x == 'F') {
+            let a = array.find(square => (square.X == 'E' && square.Y == y));
+            let b = array.find(square => (square.X == 'G' && square.Y == y));
+            return [a, b];
+        }
+        if (x == 'G') {
+            let a = array.find(square => (square.X == 'F' && square.Y == y));
+            let b = array.find(square => (square.X == 'H' && square.Y == y));
+            return [a, b];
+        }
+        if (x == 'H') {
+            let a = array.find(square => (square.X == 'G' && square.Y == y));
+            let b = array.find(square => (square.X == 'I' && square.Y == y));
+            return [a, b];
+        }
+        if (x == 'I') {
+            let a = array.find(square => (square.X == 'H' && square.Y == y));
+            let b = array.find(square => (square.X == 'J' && square.Y == y));
+            return [a, b];
+        }
+        if (x == 'J') {
+            let a = array.find(square => (square.X == 'I' && square.Y == y));
+            let b = "overflow";
+            return [a, b];
         }
     }
     randomDirectionProducer() {
@@ -299,7 +433,7 @@ class gameBoardLoader {
         if (startingSquare.containsShip == true) {
             this.placeOneAIShipAtRandom(size);
         }
-        if (this.aiBoard.populateShip(size, x, y, direction) == 'overflow!') {
+        else if (this.aiBoard.populateShip(size, x, y, direction) == 'overflow!') {
             this.placeOneAIShipAtRandom(size);
         }
         else {
@@ -313,7 +447,6 @@ class gameBoardLoader {
         this.randomParameterSelector(array, 3);
         this.randomParameterSelector(array, 3);
         this.randomParameterSelector(array, 4);
-        //this.placeOneAIShipAtRandom(4);
         //this.aiBoard.populateShip(2, x[0], x[1], "east");
         //this.aiBoard.populateShip(4, 'C', 5, "east");
         //this.aiBoard.populateShip(3, 'J', 6, "south");
