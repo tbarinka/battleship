@@ -13,7 +13,6 @@ function removeDuplicates(arr) {
     return unique;
 }
  
-
 //suite of functions for loading the two DOM boards & score keeper card
 function squareLoader(coordinate, player = "ai") {
     let square = document.createElement('div');
@@ -283,26 +282,43 @@ class gameBoardLoader {
         let x = random.X;
         let y = random.Y;
         let index = array.indexOf(random);
+        console.log(index);
+        console.log(random);
         let direction = this.randomDirectionProducer();
         array.splice(index, 1);
         array.splice(index + 1, 1);
         array.splice(index - 1, 1);
         array.splice(index + 10, 1);
         array.splice(index - 10, 1);
+        if (size > 1 && direction == "south") {
+            array.splice(index + 2, 1);
+        }
+        if (size > 1 && direction == "north") {
+            array.splice(index - 2, 1);
+        }
+        if (size > 1 && direction == "east") {
+            array.splice(index + 20);
+        }
+        if (size > 1 && direction == "west") {
+            array.splice(index - 20, 1);
+        }
+        if (size > 2 && direction == "south") {
+            array.splice(index + 3, 1);
+        }
+        if (size > 2 && direction == "north") {
+            array.splice(index - 3, 1);
+        }
+        if (size > 2 && direction == "east") {
+            array.splice(index - 30, 1);
+        }
+        if (size > 2 && direction == "west") {
+            array.splice(index + 30, 1);
+        }
         if (this.aiBoard.populateShip(size, x, y, direction) == 'overflow!') {
             this.randomParameterSelector(array, size);
         }
         else {
-            let obj = {
-                size: size,
-                x: x,
-                y: y,
-                direction: direction,
-                array: array,
-            };
             this.aiBoard.populateShip(size, x, y, direction);
-            return obj;
-            //The code below makes sure that ships cannot be placed adjacent to one another.
         }
     }
     findAdjacentXCoordinates(x, y, array) {
@@ -367,10 +383,15 @@ class gameBoardLoader {
     simplePopulateAI() {
         let array = this.copyAIgrid();
         this.randomParameterSelector(array, 2);
+        console.log(array);
         this.randomParameterSelector(array, 2);
+        console.log(array);
         this.randomParameterSelector(array, 3);
+        console.log(array);
         this.randomParameterSelector(array, 3);
+        console.log(array);
         this.randomParameterSelector(array, 4);
+        console.log(array);
         let container = document.getElementById('container');
         container.removeChild(container.firstChild.nextSibling);
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);
