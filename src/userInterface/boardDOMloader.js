@@ -284,7 +284,11 @@ class gameBoardLoader {
         let y = random.Y;
         let index = array.indexOf(random);
         let direction = this.randomDirectionProducer();
-//        array.splice(index, 1);
+        array.splice(index, 1);
+        array.splice(index + 1, 1);
+        array.splice(index - 1, 1);
+        array.splice(index + 10, 1);
+        array.splice(index - 10, 1);
         if (this.aiBoard.populateShip(size, x, y, direction) == 'overflow!') {
             this.randomParameterSelector(array, size);
         }
@@ -294,81 +298,11 @@ class gameBoardLoader {
                 x: x,
                 y: y,
                 direction: direction,
-                splice: this.discoverCoordinatesToBeSpliced(size, x, y, array, direction),
+                array: array,
             };
             this.aiBoard.populateShip(size, x, y, direction);
             return obj;
             //The code below makes sure that ships cannot be placed adjacent to one another.
-        }
-    }
-    discoverCoordinatesToBeSpliced(size, x, y, array, direction) {
-        if (typeof x === 'string') {
-            console.log('tested right');
-        } else {
-            console.log('tested wrong');
-            x = x.X;
-        }
-        let startingIndex = array.indexOf(array.find(square => (square.X == x && square.Y == y)));
-        let spliceRecord = [startingIndex];
-        let top = array.find(square => (square.X == x && square.Y == (y - 1)));
-        let bottom = array.find(square => (square.X == x && square.Y == (y + 1)));
-        let xCoordinates = this.findAdjacentXCoordinates(x, y, array);
-        let right = "";
-        let left = "";
-        if (top !== null && top !== undefined) {
-            let index = array.indexOf(top);
-            spliceRecord.push(index);
-        }
-        if (bottom !== null && bottom !== undefined) {
-            spliceRecord.push(array.indexOf(bottom));
-        }
-        if (xCoordinates[0] !== "overflow") {
-            left = xCoordinates[0];
-            spliceRecord.push(array.indexOf(left));
-        }
-        if (xCoordinates[1] !== "overflow") {
-            right = xCoordinates[1];
-            spliceRecord.push(array.indexOf(right));
-        }
-        while (size > 1) {
-            if (direction == "east") {
-                size = size - 1;
-                let newX = xCoordinates[1];
-                let next = this.discoverCoordinatesToBeSpliced(size, newX, y, array, direction);
-                //console.log(next);
-                spliceRecord = spliceRecord.concat(next);
-            } else if (direction == "west") {
-                size = size - 1;
-                let newX = xCoordinates[0];
-                let next = this.discoverCoordinatesToBeSpliced((size), newX, y, array, direction);
-                //console.log(next);
-                spliceRecord = spliceRecord.concat(next);
-            } else if (direction == "north") {
-                size = size - 1;
-                let next = this.discoverCoordinatesToBeSpliced((size), x, top.Y, array, direction);
-                //console.log(next);
-                spliceRecord = spliceRecord.concat(next);
-            } else if (direction == "south") {
-                size = size - 1;
-                let next = this.discoverCoordinatesToBeSpliced((size), x, bottom.Y, array, direction);
-                //console.log(next);
-                spliceRecord = spliceRecord.concat(next);
-            }
-        }
-        if (size == 1) {
-            let spliceArray = removeDuplicates(spliceRecord);
-            //console.log(spliceArray);
-            let orderedSpliceArray = spliceArray.sort(function( a , b){
-                if(a > b) return -1;
-                if(a < b) return 1;
-                return 0;
-            });
-            //orderedSpliceArray.forEach(index => {
-                //array.splice(index, 1);
-                //console.log(index);
-                //console.log(array);
-            //});
-            return orderedSpliceArray;
         }
     }
     findAdjacentXCoordinates(x, y, array) {
@@ -430,23 +364,6 @@ class gameBoardLoader {
         if (num > .25 && num < .5) { return "south" }
         else { return "north" }
     }
-    placeOneAIShipAtRandom(size) {
-        let coordinate = this.randomParameterProducer();
-        let x = coordinate[0];
-        let y = coordinate[1];
-        let direction = this.randomDirectinoProducer();
-        let startingSquare = this.aiBoard.grid.find(square => (square.X == x && square.Y == y));
-        console.log(this.aiBoard.grid);
-        if (startingSquare.containsShip == true) {
-            this.placeOneAIShipAtRandom(size);
-        }
-        else if (this.aiBoard.populateShip(size, x, y, direction) == 'overflow!') {
-            this.placeOneAIShipAtRandom(size);
-        }
-        else {
-            this.aiBoard.populateShip(size, x, y, direction);
-        }
-    }
     simplePopulateAI() {
         let array = this.copyAIgrid();
         this.randomParameterSelector(array, 2);
@@ -454,11 +371,6 @@ class gameBoardLoader {
         this.randomParameterSelector(array, 3);
         this.randomParameterSelector(array, 3);
         this.randomParameterSelector(array, 4);
-        //this.aiBoard.populateShip(2, x[0], x[1], "east");
-        //this.aiBoard.populateShip(4, 'C', 5, "east");
-        //this.aiBoard.populateShip(3, 'J', 6, "south");
-        //this.aiBoard.populateShip(3, 'B', 8, "south");
-        //this.aiBoard.populateShip(2, 'E', 9, "east");
         let container = document.getElementById('container');
         container.removeChild(container.firstChild.nextSibling);
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);
