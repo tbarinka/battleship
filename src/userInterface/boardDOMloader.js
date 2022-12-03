@@ -289,8 +289,15 @@ class gameBoardLoader {
             this.randomParameterSelector(array, size);
         }
         else {
+            let obj = {
+                size: size,
+                x: x,
+                y: y,
+                direction: direction,
+                splice: this.discoverCoordinatesToBeSpliced(size, x, y, array, direction),
+            };
             this.aiBoard.populateShip(size, x, y, direction);
-            this.discoverCoordinatesToBeSpliced(size, x, y, array, direction);
+            return obj;
             //The code below makes sure that ships cannot be placed adjacent to one another.
         }
     }
@@ -328,29 +335,29 @@ class gameBoardLoader {
                 size = size - 1;
                 let newX = xCoordinates[1];
                 let next = this.discoverCoordinatesToBeSpliced(size, newX, y, array, direction);
-                console.log(next);
+                //console.log(next);
                 spliceRecord = spliceRecord.concat(next);
             } else if (direction == "west") {
                 size = size - 1;
                 let newX = xCoordinates[0];
                 let next = this.discoverCoordinatesToBeSpliced((size), newX, y, array, direction);
-                console.log(next);
+                //console.log(next);
                 spliceRecord = spliceRecord.concat(next);
             } else if (direction == "north") {
                 size = size - 1;
                 let next = this.discoverCoordinatesToBeSpliced((size), x, top.Y, array, direction);
-                console.log(next);
+                //console.log(next);
                 spliceRecord = spliceRecord.concat(next);
             } else if (direction == "south") {
                 size = size - 1;
                 let next = this.discoverCoordinatesToBeSpliced((size), x, bottom.Y, array, direction);
-                console.log(next);
+                //console.log(next);
                 spliceRecord = spliceRecord.concat(next);
             }
         }
         if (size == 1) {
             let spliceArray = removeDuplicates(spliceRecord);
-            console.log(spliceArray);
+            //console.log(spliceArray);
             let orderedSpliceArray = spliceArray.sort(function( a , b){
                 if(a > b) return -1;
                 if(a < b) return 1;
