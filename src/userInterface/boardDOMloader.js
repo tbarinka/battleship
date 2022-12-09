@@ -197,15 +197,10 @@ class gameBoardLoader {
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);
     }
     attackAI(x, y) {
-        //if (this.aiBoard.X == x || this.aiBoard.Y == y) {
-            //return console.log('repeat hit');
-        //}
-        //else { 
         this.aiBoard.receiveAttack(x, y);
         container.removeChild(container.firstChild.nextSibling);
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);
         this.keepScore()
-        //}
     }
     attackPlayer(x, y) {
         this.playerBoard.receiveAttack(x, y);

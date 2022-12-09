@@ -8,3 +8,5 @@ function loadAppWindow() {
     loadBoards();
     return container;
 }
+
+export { loadAppWindow }
