@@ -1,11 +1,20 @@
 import { gameBoardLoader, placementModuleLoader, removeAllChildNodes, twoBoardDOMLoader, doubleScoreKeeperGenerator, resetShips } from './boardDOMloader.js';
 import { Gameboard } from '../gameAppLogic/gameboard.js';
 
+function controllerElements() {
+
+}
+
 let playerBoard = new Gameboard();
 let aiBoard = new Gameboard();
 let player = "taylor"
 let ai = "computer"
 let boards = new gameBoardLoader(playerBoard, player, aiBoard, ai);
+
+function loadBoards() {
+    twoBoardDOMLoader(boards.playerBoard, boards.aiBoard);
+}
+
 const playerPopulateButton = document.createElement('button');
 playerPopulateButton.addEventListener('click', simplePopulate);
 playerPopulateButton.classList.add('populateButton');
@@ -136,4 +145,4 @@ function generateForm() {
 
 
 
-export { restartBoard, reloadBoards, generateHUD, attackAI, generateForm, populatePlayer, simplePopulate, simplePopulateAI, depopulatePlayer }
+export { loadBoards, restartBoard, reloadBoards, generateHUD, attackAI, generateForm, populatePlayer, simplePopulate, simplePopulateAI, depopulatePlayer }

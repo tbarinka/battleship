@@ -21,6 +21,8 @@ function squareLoader(coordinate, player = "ai") {
         square.style.backgroundColor = "#6ee7b7";
     }
     if (player == "ai") {
+        square.classList.remove('square');
+        square.classList.add('aiSquare');
         square.addEventListener('click', function () {
             let x = coordinate.X;
             let y = coordinate.Y;
@@ -31,14 +33,14 @@ function squareLoader(coordinate, player = "ai") {
         square.style.backgroundColor = "red";
         square.textContent = "X";
     }
-    if (coordinate.containsShip == true) {
-        square.style.backgroundColor = "red";
-    }
-    //if (player != "ai") {
-        //if (coordinate.containsShip == true) {
-            //square.style.backgroundColor = "red";
-        //}
+    //if (coordinate.containsShip == true) {
+        //square.style.backgroundColor = "red";
     //}
+    if (player != "ai") {
+        if (coordinate.containsShip == true) {
+            square.style.backgroundColor = "red";
+        }
+    }
     return square;
 }
 function boardLoader(board, player) {
@@ -164,7 +166,6 @@ class gameBoardLoader {
         this.aiBoard = aiBoard;
         this.ai = ai
         doubleScoreKeeperGenerator("Player", 0, "AI", 0);
-        twoBoardDOMLoader(this.playerBoard, this.aiBoard);
     }
     reloadBoards() {
         this.playerBoard = new Gameboard();
@@ -269,6 +270,10 @@ class gameBoardLoader {
         if (playerTally == 5) {
             announceWinnerCard("AI wins!");
         }
+        let aiSquares = document.querySelectorAll('.aiSquare');
+        console.log(aiSquares);
+
+
         //construct a list of gameboard.grid ships
         //for any ship, if ship.hits == size, add +1 to score
         //input score in doubleScoreKeeperGenerator

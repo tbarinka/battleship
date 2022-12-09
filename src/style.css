@@ -159,7 +159,7 @@ body {
     align-items: center;
     opacity: 1;
 }
-.square {
+.square, .aiSquare {
     border: solid black;
     color: black;
     font-size: 12px;
@@ -167,7 +167,7 @@ body {
     justify-content: center;
     align-items: center;
 }
-.square:hover, .placementSquare:hover {
+.square:hover, .aiSquare:hover, .placementSquare:hover {
     border: solid black;
     color: black;
     font-size: 12px;
