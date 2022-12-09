@@ -1,9 +1,6 @@
 import { gameBoardLoader, placementModuleLoader, removeAllChildNodes, twoBoardDOMLoader, doubleScoreKeeperGenerator, resetShips } from './boardDOMloader.js';
 import { Gameboard } from '../gameAppLogic/gameboard.js';
 
-function controllerElements() {
-
-}
 
 let playerBoard = new Gameboard();
 let aiBoard = new Gameboard();

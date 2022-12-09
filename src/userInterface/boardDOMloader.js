@@ -114,7 +114,7 @@ function twoBoardContentGenerator(playerBoard, opponentBoard) {
     return container;
 }
 function twoBoardDOMLoader(playerBoard, opponentBoard) {
-    let container = document.getElementById('container');
+    let container = document.getElementById('battleShipContainer');
     container.appendChild(twoBoardContentGenerator(playerBoard, opponentBoard)); 
 }
 function scoreKeeperGenerator(player, input) {
