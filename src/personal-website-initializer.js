@@ -3,7 +3,7 @@ import { loadBoards } from './userInterface/controller.js';
 
 function loadAppWindow() {
     let container = document.createElement('div');
-    contaner.setAttribute('id', 'battleShipContainer');
+    container.setAttribute('id', 'battleShipContainer');
     placementModuleLoader();
     loadBoards();
     return container;
