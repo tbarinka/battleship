@@ -33,14 +33,11 @@ function squareLoader(coordinate, player = "ai") {
         square.style.backgroundColor = "red";
         square.textContent = "X";
     }
-    //if (coordinate.containsShip == true) {
-        //square.style.backgroundColor = "red";
-    //}
-    if (player != "ai") {
+    //if (player != "ai") {
         if (coordinate.containsShip == true) {
             square.style.backgroundColor = "red";
         }
-    }
+    //}
     return square;
 }
 function boardLoader(board, player) {
@@ -267,11 +264,6 @@ class gameBoardLoader {
         }
         let aiSquares = document.querySelectorAll('.aiSquare');
         console.log(aiSquares);
-
-
-        //construct a list of gameboard.grid ships
-        //for any ship, if ship.hits == size, add +1 to score
-        //input score in doubleScoreKeeperGenerator
     }
     copyAIgrid() {
         let array = this.aiBoard.grid.slice();
