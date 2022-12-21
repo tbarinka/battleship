@@ -438,7 +438,7 @@ class gameBoardLoader {
         }
         let array4 = this.randomParameterSelector(array3, 3);
         while (array4 == "overflow!") {
-            array4 = this.randomParameterSelector(array3, 2);
+            array4 = this.randomParameterSelector(array3, 3);
         }
         let array5 = this.randomParameterSelector(array4, 3);
         while (array5 == "overflow!") {
