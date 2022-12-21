@@ -1,4 +1,5 @@
 import { Gameboard, Square } from '../gameAppLogic/gameboard.js';
+import { Ship } from '../gameAppLogic/ship.js';
 import { AI } from '../playerControls/ai.js';
 import { Player } from '../playerControls/player.js';
 import { attackAI, populatePlayer, simplePopulateAI, depopulatePlayer, reloadBoards, restartBoard } from './controller.js';
@@ -254,8 +255,6 @@ class gameBoardLoader {
         });
         container.removeChild(container.firstChild);
         doubleScoreKeeperGenerator("Player", aiTally, "AI", playerTally);
-        console.log("aiTally = " + aiTally);
-        console.log("playerTally =" + playerTally);
         if (aiTally == 5) {
             announceWinnerCard("You win!");
         }
@@ -263,7 +262,6 @@ class gameBoardLoader {
             announceWinnerCard("AI wins!");
         }
         let aiSquares = document.querySelectorAll('.aiSquare');
-        console.log(aiSquares);
     }
     copyAIgrid() {
         let array = this.aiBoard.grid.slice();
@@ -274,45 +272,97 @@ class gameBoardLoader {
         let x = random.X;
         let y = random.Y;
         let index = array.indexOf(random);
-        console.log(index);
-        console.log(random);
         let direction = this.randomDirectionProducer();
-        array.splice(index, 1);
-        array.splice(index + 1, 1);
-        array.splice(index - 1, 1);
-        array.splice(index + 10, 1);
-        array.splice(index - 10, 1);
-        if (size > 1 && direction == "south") {
-            array.splice(index + 2, 1);
+        if (this.checkIfShipFits(size, x, y, direction) == "overflow!") {
+            return "overflow!"
         }
-        if (size > 1 && direction == "north") {
-            array.splice(index - 2, 1);
-        }
-        if (size > 1 && direction == "east") {
-            array.splice(index + 20);
-        }
-        if (size > 1 && direction == "west") {
-            array.splice(index - 20, 1);
-        }
-        if (size > 2 && direction == "south") {
-            array.splice(index + 3, 1);
-        }
-        if (size > 2 && direction == "north") {
-            array.splice(index - 3, 1);
-        }
-        if (size > 2 && direction == "east") {
-            array.splice(index - 30, 1);
-        }
-        if (size > 2 && direction == "west") {
-            array.splice(index + 30, 1);
-        }
-        if (this.aiBoard.populateShip(size, x, y, direction) == 'overflow!') {
-            this.randomParameterSelector(array, size);
+        else if (this.aiBoard.populateShip(size, x, y, direction) == 'overflow!') {
+            return "overflow!"
         }
         else {
             this.aiBoard.populateShip(size, x, y, direction);
+            let occupiedCoordinates = this.recordOccupiedCoordinates(size, x, y, direction);
+            return this.removeOccupiedCoordinatesFromGrid(array, occupiedCoordinates, direction);
         }
     }
+    recordOccupiedCoordinates(size, xStart, yStart, direction) {
+        let newShip = new Ship(size, xStart, yStart, direction);
+        newShip.direction = direction;
+        let startingSquare = this.aiBoard.grid.find(square => (square.X == newShip.xStart && square.Y == newShip.yStart));
+        let squaresContainingNewShip = [];
+        squaresContainingNewShip.push(startingSquare);
+        let yIndex = this.aiBoard.grid.indexOf(startingSquare);
+        while (size > 1) {
+            if (direction == "north") {
+                yStart = yStart - 1;
+                let square = this.aiBoard.grid.find(square => (square.X == newShip.xStart && square.Y == yStart));
+                squaresContainingNewShip.push(square)
+                size = size - 1;
+            }
+            if (direction == "south") {
+                yIndex += 1
+                let square = this.aiBoard.grid[yIndex];
+                squaresContainingNewShip.push(square)
+                size = size - 1;
+            } else if (direction == "east") {
+                xStart = this.aiBoard.xAxis[this.aiBoard.xAxis.indexOf(xStart) + 1];
+                let square = this.aiBoard.grid.find(square => (square.X == xStart && square.Y == newShip.yStart))
+                squaresContainingNewShip.push(square);
+                size = size - 1;
+            } else if (direction == "west") {
+                xStart = this.aiBoard.xAxis[this.aiBoard.xAxis.indexOf(xStart) - 1];
+                let square = this.aiBoard.grid.find(square => (square.X == xStart && square.Y == newShip.yStart))
+                squaresContainingNewShip.push(square)
+                size = size - 1;
+            }
+        }
+        return squaresContainingNewShip;
+    }
+    checkIfShipFits(size, xStart, yStart, direction) {
+        let s = size;
+        console.log(this.aiBoard.grid);
+        let newShip = new Ship(s, xStart, yStart, direction);
+        newShip.direction = direction;
+        let startingSquare = this.aiBoard.grid.find(square => (square.X == newShip.xStart && square.Y == newShip.yStart));
+        console.log(startingSquare);
+        if (startingSquare.containsShip == true) { return "overflow!"; }
+        let yIndex = this.aiBoard.grid.indexOf(startingSquare);
+        while (s > 1) {
+            if (direction == "north") {
+                yStart = yStart - 1;
+                let square = this.aiBoard.grid.find(square => (square.X == newShip.xStart && square.Y == yStart));
+                if (square.containsShip == true) return "overflow!";
+                console.log(square);
+                s = s - 1;
+            } else if (direction == "south") {
+                yIndex += 1
+                let square = this.aiBoard.grid[yIndex];
+                if (square.containsShip == true) return "overflow!";
+                console.log(square);
+                s = s - 1;
+            } else if (direction == "east") {
+                xStart = this.aiBoard.xAxis[this.aiBoard.xAxis.indexOf(xStart) + 1];
+                let square = this.aiBoard.grid.find(square => (square.X == xStart && square.Y == newShip.yStart))
+                if (square.containsShip == true) return "overflow!";
+                console.log(square);
+                s = s - 1;
+            } else if (direction == "west") {
+                xStart = this.aiBoard.xAxis[this.aiBoard.xAxis.indexOf(xStart) - 1];
+                let square = this.aiBoard.grid.find(square => (square.X == xStart && square.Y == newShip.yStart))
+                if (square.containsShip == true) return "overflow!";
+                console.log(square);
+                s = s - 1;
+            }
+        }
+    }
+    removeOccupiedCoordinatesFromGrid(array, occupiedCoordinates, direction) {
+        let newArr = array;
+        occupiedCoordinates.forEach(coordinate => {
+            let index = array.indexOf(coordinate);
+            newArr.splice(index, 1);
+        });
+        return newArr;
+    };
     findAdjacentXCoordinates(x, y, array) {
         if (x == 'A') {
             let a = "overflow";
@@ -374,16 +424,26 @@ class gameBoardLoader {
     }
     simplePopulateAI() {
         let array = this.copyAIgrid();
-        this.randomParameterSelector(array, 2);
-        console.log(array);
-        this.randomParameterSelector(array, 2);
-        console.log(array);
-        this.randomParameterSelector(array, 3);
-        console.log(array);
-        this.randomParameterSelector(array, 3);
-        console.log(array);
-        this.randomParameterSelector(array, 4);
-        console.log(array);
+        let array2 = this.randomParameterSelector(array, 2);
+        while (array2 == "overflow!") {
+            array2 = this.randomParameterSelector(array, 2);
+        }
+        let array3 = this.randomParameterSelector(array2, 2);
+        while (array3 == "overflow!") {
+            array3 = this.randomParameterSelector(array2, 2);
+        }
+        let array4 = this.randomParameterSelector(array3, 3);
+        while (array4 == "overflow!") {
+            array4 = this.randomParameterSelector(array3, 2);
+        }
+        let array5 = this.randomParameterSelector(array4, 3);
+        while (array5 == "overflow!") {
+            array5 = this.randomParameterSelector(array4, 3);
+        }
+        let array6 = this.randomParameterSelector(array5, 4);
+        while (array6 == "overflow!") {
+            array6 = this.randomParameterSelector(array5, 4);
+        }
         let container = document.getElementById('container');
         container.removeChild(container.firstChild.nextSibling);
         twoBoardDOMLoader(this.playerBoard, this.aiBoard);
@@ -506,11 +566,9 @@ function selectShipSquareLoader(coordinate) {
     }
     square.setAttribute('id', coordinate.X + coordinate.Y);
     square.addEventListener("dragover", function (ev) {
-        console.log("dragOver");
         ev.preventDefault();
     });
     square.addEventListener("drop", function (ev) {
-        console.log("Drop");
         ev.preventDefault();
         let data = ev.dataTransfer.getData("text");
         let source = document.getElementById(data);
@@ -569,7 +627,7 @@ function selectShipPlayerCoordinatedBoardLoader(board) {
 function placementBoardLoader() {
     return selectShipPlayerCoordinatedBoardLoader(placementBoard);
 };
-const source = "";
+let source = "";
 function rotateShipButtonLoader() {
     let button = document.createElement('button');
     button.textContent = "Rotate";

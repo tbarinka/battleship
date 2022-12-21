@@ -18,12 +18,7 @@ randomParameterSelector(array, size) {
     let y = random.Y;
     let index = array.indexOf(random);
     let direction = this.randomDirectionProducer();
-    array.splice(index, 1);
-    array.splice(index + 1, 1);
-    array.splice(index - 1, 1);
-    array.splice(index + 10, 1);
-    array.splice(index - 10, 1);
-    if (aiBoard.aiBoard.populateShip(size, x, y, direction) == 'overflow!') {
+    if (this.aiBoard.populateShip(size, x, y, direction) == 'overflow!') {
         this.randomParameterSelector(array, size);
     }
     else {
@@ -48,8 +43,41 @@ function locateOccupiedCoordinates(object) {
 
 }
 
+checkIfShipFits(array, size, xStart, yStart, direction) {
+    let newShip = new Ship(size, xStart, yStart, direction);
+    newShip.direction = direction;
+    let startingSquare = aiGrid.find(square => (square.X == newShip.xStart && square.Y == newShip.yStart));
+    console.log(startingSquare);
+    //if (startingSquare.containsShip == true) return "overflow!";
+    //let yIndex = aiGrid.indexOf(startingSquare);
+    while (size > 1) {
+        if (direction == "north") {
+            yStart = yStart - 1;
+            let square = this.grid.find(square => (square.X == newShip.xStart && square.Y == yStart));
+            if (square.containsShip == true) return "overflow!";
+            size = size - 1;
+        }
+        if (direction == "south") {
+            yIndex += 1
+            let square = this.grid[yIndex];
+            if (square.containsShip == true) return "overflow!";
+            size = size - 1;
+        } else if (direction == "east") {
+            xStart = this.xAxis[this.xAxis.indexOf(xStart) + 1];
+            let square = this.grid.find(square => (square.X == xStart && square.Y == newShip.yStart))
+            if (square.containsShip == true) return "overflow!";
+            size = size - 1;
+        } else if (direction == "west") {
+            xStart = this.xAxis[this.xAxis.indexOf(xStart) - 1];
+            let square = this.grid.find(square => (square.X == xStart && square.Y == newShip.yStart))
+            if (square.containsShip == true) return "overflow!";
+            size = size - 1;
+        }
+    }
+    return
+}
 
-removeOccupiedCoordinates(size, xStart, yStart, direction) {
+recordOccupiedCoordinates(size, xStart, yStart, direction) {
     let newShip = new Ship(size, xStart, yStart, direction);
     newShip.direction = direction;
     let startingSquare = aiGrid.find(square => (square.X == newShip.xStart && square.Y == newShip.yStart));
