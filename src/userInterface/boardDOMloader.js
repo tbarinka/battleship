@@ -331,26 +331,30 @@ class gameBoardLoader {
             if (direction == "north") {
                 yStart = yStart - 1;
                 let square = this.aiBoard.grid.find(square => (square.X == newShip.xStart && square.Y == yStart));
-                if (square.containsShip == true) return "overflow!";
                 console.log(square);
+                if (square == undefined) return "overflow!";
+                else if (square.containsShip == true) return "overflow!";
                 s = s - 1;
             } else if (direction == "south") {
                 yIndex += 1
                 let square = this.aiBoard.grid[yIndex];
-                if (square.containsShip == true) return "overflow!";
                 console.log(square);
+                if (square == undefined) return "overflow!";
+                if (square.containsShip == true) return "overflow!";
                 s = s - 1;
             } else if (direction == "east") {
                 xStart = this.aiBoard.xAxis[this.aiBoard.xAxis.indexOf(xStart) + 1];
                 let square = this.aiBoard.grid.find(square => (square.X == xStart && square.Y == newShip.yStart))
-                if (square.containsShip == true) return "overflow!";
                 console.log(square);
+                if (square == undefined) return "overflow!";
+                if (square.containsShip == true) return "overflow!";
                 s = s - 1;
             } else if (direction == "west") {
                 xStart = this.aiBoard.xAxis[this.aiBoard.xAxis.indexOf(xStart) - 1];
                 let square = this.aiBoard.grid.find(square => (square.X == xStart && square.Y == newShip.yStart))
-                if (square.containsShip == true) return "overflow!";
                 console.log(square);
+                if (square == undefined) return "overflow!";
+                if (square.containsShip == true) return "overflow!";
                 s = s - 1;
             }
         }
